@@ -24,6 +24,7 @@ import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 import br.com.denisecastro.safebus.designsystemcatalog.screen.colors.ColorsScreen
 import br.com.denisecastro.safebus.designsystemcatalog.screen.typography.TypographyScreen
 import br.com.denisecastro.safebus.designsystemcatalog.screen.buttons.ButtonsScreen
+import br.com.denisecastro.safebus.designsystemcatalog.screen.cards.CardsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -102,14 +103,15 @@ fun CatalogNavigation(
                             .padding(innerPadding)
                     )
                 }
-                else -> {
-                    CatalogPlaceholderScreen(
-                        title = destination.title,
+                CatalogDestination.CARDS -> {
+                    CardsScreen(
                         modifier = Modifier
                             .fillMaxSize()
+                            .verticalScroll(rememberScrollState())
                             .padding(innerPadding)
                     )
                 }
+                CatalogDestination.HOME -> Unit
             }
         }
     }
