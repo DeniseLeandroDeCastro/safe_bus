@@ -3,6 +3,8 @@ package br.com.denisecastro.safebus.designsystemcatalog.navigation
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -19,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import br.com.denisecastro.safebus.designsystemcatalog.screen.CatalogScreen
 import br.com.denisecastro.safebus.designsystemcatalog.screen.placeholder.CatalogPlaceholderScreen
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
+import br.com.denisecastro.safebus.designsystemcatalog.screen.colors.ColorsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -72,12 +75,25 @@ fun CatalogNavigation(
                 )
             }
         ) { innerPadding ->
-            CatalogPlaceholderScreen(
-                title = destination.title,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-            )
+            when (destination) {
+                CatalogDestination.COLORS -> {
+                    ColorsScreen(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState())
+                            .padding(innerPadding)
+                    )
+                }
+
+                else -> {
+                    CatalogPlaceholderScreen(
+                        title = destination.title,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
+                    )
+                }
+            }
         }
     }
 }
