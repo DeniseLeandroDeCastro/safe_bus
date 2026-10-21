@@ -11,7 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
-import br.com.denisecastro.safebus.designsystemcatalog.screen.CatalogScreen
+import br.com.denisecastro.safebus.designsystemcatalog.navigation.CatalogNavigation
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 
 class CatalogActivity : ComponentActivity() {
@@ -28,61 +28,37 @@ class CatalogActivity : ComponentActivity() {
 }
 
 @Composable
-private fun CatalogApp() {
-    val systemDarkTheme = isSystemInDarkTheme()
-
+private fun CatalogApp(
+    initialDarkTheme: Boolean = isSystemInDarkTheme()
+) {
     var isDarkTheme by rememberSaveable {
-        mutableStateOf(systemDarkTheme)
+        mutableStateOf(initialDarkTheme)
     }
 
     SafeBusTheme(darkTheme = isDarkTheme) {
-        CatalogScreen(
+        CatalogNavigation(
             isDarkTheme = isDarkTheme,
-            onThemeChange = { isDarkTheme = it },
-            onColorsClick = {},
-            onTypographyClick = {},
-            onButtonsClick = {},
-            onCardsClick = {}
+            onThemeChange = { isDarkTheme = it }
         )
     }
 }
 
-
 @Preview(
-    name = "CatalogActivity - Tema claro",
+    name = "CatalogActivity - Claro",
     showBackground = true,
     showSystemUi = true
 )
 @Composable
 private fun CatalogActivityLightPreview() {
-    SafeBusTheme(darkTheme = false) {
-        CatalogScreen(
-            isDarkTheme = false,
-            onThemeChange = {},
-            onColorsClick = {},
-            onTypographyClick = {},
-            onButtonsClick = {},
-            onCardsClick = {}
-        )
-    }
+    CatalogApp(initialDarkTheme = false)
 }
 
 @Preview(
-    name = "CatalogActivity - Tema escuro",
+    name = "CatalogActivity - Escuro",
     showBackground = true,
     showSystemUi = true
 )
 @Composable
 private fun CatalogActivityDarkPreview() {
-    SafeBusTheme(darkTheme = true) {
-        CatalogScreen(
-            isDarkTheme = true,
-            onThemeChange = {},
-            onColorsClick = {},
-            onTypographyClick = {},
-            onButtonsClick = {},
-            onCardsClick = {}
-        )
-    }
+    CatalogApp(initialDarkTheme = true)
 }
-
