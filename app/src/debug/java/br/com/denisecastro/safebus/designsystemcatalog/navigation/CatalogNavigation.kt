@@ -23,6 +23,7 @@ import br.com.denisecastro.safebus.designsystemcatalog.screen.placeholder.Catalo
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 import br.com.denisecastro.safebus.designsystemcatalog.screen.colors.ColorsScreen
 import br.com.denisecastro.safebus.designsystemcatalog.screen.typography.TypographyScreen
+import br.com.denisecastro.safebus.designsystemcatalog.screen.buttons.ButtonsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -87,6 +88,14 @@ fun CatalogNavigation(
                 }
                 CatalogDestination.TYPOGRAPHY -> {
                     TypographyScreen(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState())
+                            .padding(innerPadding)
+                    )
+                }
+                CatalogDestination.BUTTONS -> {
+                    ButtonsScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .verticalScroll(rememberScrollState())
