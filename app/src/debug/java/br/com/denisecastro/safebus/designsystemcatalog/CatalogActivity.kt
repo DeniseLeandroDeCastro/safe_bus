@@ -4,17 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import br.com.denisecastro.safebus.designsystemcatalog.screen.CatalogScreen
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 
 class CatalogActivity : ComponentActivity() {
@@ -25,65 +22,67 @@ class CatalogActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            SafeBusTheme {
-                CatalogContent()
-            }
+            CatalogApp()
         }
     }
 }
 
 @Composable
-private fun CatalogContent() {
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        containerColor = MaterialTheme.colorScheme.background
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(24.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            Text(
-                text = "SafeBus Design System",
-                style = MaterialTheme.typography.headlineMedium,
-                color = MaterialTheme.colorScheme.primary
-            )
+private fun CatalogApp() {
+    val systemDarkTheme = isSystemInDarkTheme()
 
-            Text(
-                text = "Catálogo de componentes visuais",
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onBackground
-            )
+    var isDarkTheme by rememberSaveable {
+        mutableStateOf(systemDarkTheme)
+    }
 
-            Text(
-                text = "Ambiente exclusivo de desenvolvimento.",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
+    SafeBusTheme(darkTheme = isDarkTheme) {
+        CatalogScreen(
+            isDarkTheme = isDarkTheme,
+            onThemeChange = { isDarkTheme = it },
+            onColorsClick = {},
+            onTypographyClick = {},
+            onButtonsClick = {},
+            onCardsClick = {}
+        )
     }
 }
+
 
 @Preview(
-    name = "Catálogo - Tema claro",
-    showBackground = true
+    name = "CatalogActivity - Tema claro",
+    showBackground = true,
+    showSystemUi = true
 )
 @Composable
-private fun CatalogLightPreview() {
+private fun CatalogActivityLightPreview() {
     SafeBusTheme(darkTheme = false) {
-        CatalogContent()
+        CatalogScreen(
+            isDarkTheme = false,
+            onThemeChange = {},
+            onColorsClick = {},
+            onTypographyClick = {},
+            onButtonsClick = {},
+            onCardsClick = {}
+        )
     }
 }
 
 @Preview(
-    name = "Catálogo - Tema escuro",
-    showBackground = true
+    name = "CatalogActivity - Tema escuro",
+    showBackground = true,
+    showSystemUi = true
 )
 @Composable
-private fun CatalogDarkPreview() {
+private fun CatalogActivityDarkPreview() {
     SafeBusTheme(darkTheme = true) {
-        CatalogContent()
+        CatalogScreen(
+            isDarkTheme = true,
+            onThemeChange = {},
+            onColorsClick = {},
+            onTypographyClick = {},
+            onButtonsClick = {},
+            onCardsClick = {}
+        )
     }
 }
+
