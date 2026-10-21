@@ -77,6 +77,7 @@ fun SafeBusTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
+        shapes = SafeBusShapes,
         content = content
     )
 }
