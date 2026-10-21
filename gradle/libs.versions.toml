@@ -1,4 +1,4 @@
-[versions]
+ [versions]
 agp = "9.3.3"
 coreKtx = "1.19.1"
 junit = "4.13.2"
