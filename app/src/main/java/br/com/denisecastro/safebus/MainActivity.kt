@@ -4,44 +4,56 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import br.com.denisecastro.safebus.feature.welcome.screen.WelcomeScreen
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
+
         setContent {
-            SafeBusTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+            SafeBusApp()
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+private fun SafeBusApp(
+    darkTheme: Boolean = androidx.compose.foundation.isSystemInDarkTheme()
+) {
+    SafeBusTheme(darkTheme = darkTheme) {
+        WelcomeScreen(
+            onLoginClick = {
+                // Navegação para LoginScreen será implementada.
+            },
+            onRegisterClick = {
+                // Navegação para RegisterScreen será implementada.
+            }
+        )
+    }
 }
 
-@Preview(showBackground = true)
+@Preview(
+    name = "SafeBus - Tema claro",
+    showBackground = true,
+    showSystemUi = true
+)
 @Composable
-fun GreetingPreview() {
-    SafeBusTheme {
-        Greeting("Android")
-    }
+private fun SafeBusAppLightPreview() {
+    SafeBusApp(darkTheme = false)
+}
+
+@Preview(
+    name = "SafeBus - Tema escuro",
+    showBackground = true,
+    showSystemUi = true
+)
+@Composable
+private fun SafeBusAppDarkPreview() {
+    SafeBusApp(darkTheme = true)
 }
