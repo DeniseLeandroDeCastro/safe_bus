@@ -1,7 +1,5 @@
 package br.com.denisecastro.safebus.feature.register.screen
 
-import android.R.attr.name
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,44 +22,29 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.com.denisecastro.safebus.feature.register.model.RegisterUiState
 import br.com.denisecastro.safebus.feature.welcome.components.fields.StandardTextField
 import br.com.denisecastro.safebus.ui.components.buttons.primary.PrimaryButton
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 
 @Composable
 fun RegisterScreen(
+    uiState: RegisterUiState,
+    onNameChange: (String) -> Unit,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onConfirmPasswordChange: (String) -> Unit,
     onBackClick: () -> Unit,
     onRegisterClick: () -> Unit,
     onLoginClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var name by rememberSaveable {
-        mutableStateOf("")
-    }
-
-    var email by rememberSaveable {
-        mutableStateOf("")
-    }
-
-    var password by rememberSaveable {
-        mutableStateOf("")
-    }
-
-    var confirmPassword by rememberSaveable {
-        mutableStateOf("")
-    }
-
     Surface(
         modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -73,11 +56,11 @@ fun RegisterScreen(
                 .padding(horizontal = 24.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-
             Spacer(modifier = Modifier.height(16.dp))
 
             IconButton(
-                onClick = onBackClick
+                onClick = onBackClick,
+                enabled = !uiState.isLoading
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -103,9 +86,10 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             StandardTextField(
-                value = name,
-                onValueChange = { name = it },
+                value = uiState.name,
+                onValueChange = onNameChange,
                 label = "Nome",
+                enabled = !uiState.isLoading,
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Filled.Person,
@@ -115,10 +99,11 @@ fun RegisterScreen(
             )
 
             StandardTextField(
-                value = email,
-                onValueChange = { email = it },
+                value = uiState.email,
+                onValueChange = onEmailChange,
                 label = "E-mail",
                 keyboardType = KeyboardType.Email,
+                enabled = !uiState.isLoading,
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Filled.Email,
@@ -128,10 +113,11 @@ fun RegisterScreen(
             )
 
             StandardTextField(
-                value = password,
-                onValueChange = { password = it },
+                value = uiState.password,
+                onValueChange = onPasswordChange,
                 label = "Senha",
                 isPassword = true,
+                enabled = !uiState.isLoading,
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Filled.Lock,
@@ -141,10 +127,11 @@ fun RegisterScreen(
             )
 
             StandardTextField(
-                value = confirmPassword,
-                onValueChange = { confirmPassword = it },
+                value = uiState.confirmPassword,
+                onValueChange = onConfirmPasswordChange,
                 label = "Confirmar senha",
                 isPassword = true,
+                enabled = !uiState.isLoading,
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Filled.Lock,
@@ -158,7 +145,9 @@ fun RegisterScreen(
             PrimaryButton(
                 text = "Criar conta",
                 onClick = onRegisterClick,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                enabled = uiState.isFormValid && !uiState.isLoading,
+                isLoading = uiState.isLoading
             )
 
             Row(
@@ -173,7 +162,8 @@ fun RegisterScreen(
                 )
 
                 TextButton(
-                    onClick = onLoginClick
+                    onClick = onLoginClick,
+                    enabled = !uiState.isLoading
                 ) {
                     Text(
                         text = "Entrar",
@@ -206,6 +196,11 @@ fun RegisterScreen(
 private fun RegisterScreenLightPreview() {
     SafeBusTheme(darkTheme = false) {
         RegisterScreen(
+            uiState = RegisterUiState(),
+            onNameChange = {},
+            onEmailChange = {},
+            onPasswordChange = {},
+            onConfirmPasswordChange = {},
             onBackClick = {},
             onRegisterClick = {},
             onLoginClick = {}
@@ -222,6 +217,64 @@ private fun RegisterScreenLightPreview() {
 private fun RegisterScreenDarkPreview() {
     SafeBusTheme(darkTheme = true) {
         RegisterScreen(
+            uiState = RegisterUiState(),
+            onNameChange = {},
+            onEmailChange = {},
+            onPasswordChange = {},
+            onConfirmPasswordChange = {},
+            onBackClick = {},
+            onRegisterClick = {},
+            onLoginClick = {}
+        )
+    }
+}
+
+@Preview(
+    name = "Cadastro - Formulário válido",
+    showBackground = true
+)
+@Composable
+private fun RegisterScreenValidPreview() {
+    SafeBusTheme(darkTheme = false) {
+        RegisterScreen(
+            uiState = RegisterUiState(
+                name = "Ana",
+                email = "ana@email.com",
+                password = "Senha123",
+                confirmPassword = "Senha123",
+                isFormValid = true
+            ),
+            onNameChange = {},
+            onEmailChange = {},
+            onPasswordChange = {},
+            onConfirmPasswordChange = {},
+            onBackClick = {},
+            onRegisterClick = {},
+            onLoginClick = {}
+        )
+    }
+}
+
+@Preview(
+    name = "Cadastro - Carregando",
+    showBackground = true
+)
+@Composable
+private fun RegisterScreenLoadingPreview() {
+    SafeBusTheme(darkTheme = false) {
+        RegisterScreen(
+            uiState = RegisterUiState(
+                name = "Ana",
+                email = "ana@email.com",
+                password = "Senha123",
+                confirmPassword = "Senha123",
+                isFormValid = true,
+                isLoading = true
+            ),
+            onNameChange = {},
+            onEmailChange = {},
+            onPasswordChange = {},
+            onConfirmPasswordChange = {},
             onBackClick = {},
             onRegisterClick = {},
             onLoginClick = {}
