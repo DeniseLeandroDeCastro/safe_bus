@@ -7,5 +7,6 @@ enum class CatalogDestination(
     COLORS("Cores"),
     TYPOGRAPHY("Tipografia"),
     BUTTONS("Botões"),
-    CARDS("Cards")
+    CARDS("Cards"),
+    TEXT_FIELDS("Campos de texto")
 }

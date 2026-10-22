@@ -13,6 +13,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,6 +31,7 @@ fun CatalogScreen(
     onTypographyClick: () -> Unit,
     onButtonsClick: () -> Unit,
     onCardsClick: () -> Unit,
+    onTextFieldsClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -98,6 +100,12 @@ fun CatalogScreen(
                 description = "Componentes de apresentação",
                 onClick = onCardsClick
             )
+
+            CatalogItem(
+                title = "Campos de texto",
+                description = "Campos, senhas e estados de validação",
+                onClick = onTextFieldsClick
+            )
         }
     }
 }
@@ -132,32 +140,48 @@ private fun CatalogItem(
     )
 }
 
-@Preview(name = "Catálogo - Claro", showBackground = true)
+@Preview(
+    name = "Catálogo - Claro",
+    showBackground = true
+)
 @Composable
 private fun CatalogScreenLightPreview() {
     SafeBusTheme(darkTheme = false) {
-        CatalogScreen(
-            isDarkTheme = false,
-            onThemeChange = {},
-            onColorsClick = {},
-            onTypographyClick = {},
-            onButtonsClick = {},
-            onCardsClick = {}
-        )
+        Surface(
+            color = MaterialTheme.colorScheme.background
+        ) {
+            CatalogScreen(
+                isDarkTheme = false,
+                onThemeChange = {},
+                onColorsClick = {},
+                onTypographyClick = {},
+                onButtonsClick = {},
+                onCardsClick = {},
+                onTextFieldsClick = {}
+            )
+        }
     }
 }
 
-@Preview(name = "Catálogo - Escuro", showBackground = true)
+@Preview(
+    name = "Catálogo - Escuro",
+    showBackground = true
+)
 @Composable
 private fun CatalogScreenDarkPreview() {
     SafeBusTheme(darkTheme = true) {
-        CatalogScreen(
-            isDarkTheme = true,
-            onThemeChange = {},
-            onColorsClick = {},
-            onTypographyClick = {},
-            onButtonsClick = {},
-            onCardsClick = {}
-        )
+        Surface(
+            color = MaterialTheme.colorScheme.background
+        ) {
+            CatalogScreen(
+                isDarkTheme = true,
+                onThemeChange = {},
+                onColorsClick = {},
+                onTypographyClick = {},
+                onButtonsClick = {},
+                onCardsClick = {},
+                onTextFieldsClick = {}
+            )
+        }
     }
 }

@@ -25,6 +25,7 @@ import br.com.denisecastro.safebus.designsystemcatalog.screen.colors.ColorsScree
 import br.com.denisecastro.safebus.designsystemcatalog.screen.typography.TypographyScreen
 import br.com.denisecastro.safebus.designsystemcatalog.screen.buttons.ButtonsScreen
 import br.com.denisecastro.safebus.designsystemcatalog.screen.cards.CardsScreen
+import br.com.denisecastro.safebus.designsystemcatalog.screen.textfields.TextFieldsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -105,6 +106,14 @@ fun CatalogNavigation(
                 }
                 CatalogDestination.CARDS -> {
                     CardsScreen(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState())
+                            .padding(innerPadding)
+                    )
+                }
+                CatalogDestination.TEXT_FIELDS -> {
+                    TextFieldsScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .verticalScroll(rememberScrollState())
