@@ -56,6 +56,9 @@ fun CatalogNavigation(
             },
             onCardsClick = {
                 destination = CatalogDestination.CARDS
+            },
+            onTextFieldsClick = {
+                destination = CatalogDestination.TEXT_FIELDS
             }
         )
     } else {
