@@ -1,8 +1,8 @@
 package br.com.denisecastro.safebus.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.material3.MaterialTheme
 
 data class AlertCardColors(
     val background: Color,
@@ -13,10 +13,11 @@ data class AlertCardColors(
 object SafeBusAlertColors {
 
     @Composable
-    fun danger(
-        darkTheme: Boolean = isSystemInDarkTheme()
-    ): AlertCardColors {
-        return if (darkTheme) {
+    fun danger(): AlertCardColors {
+        val isDarkTheme =
+            MaterialTheme.colorScheme.background == DarkBackground
+
+        return if (isDarkTheme) {
             AlertCardColors(
                 background = DangerBackgroundDark,
                 accent = DangerAccentDark,
@@ -32,10 +33,11 @@ object SafeBusAlertColors {
     }
 
     @Composable
-    fun harassment(
-        darkTheme: Boolean = isSystemInDarkTheme()
-    ): AlertCardColors {
-        return if (darkTheme) {
+    fun harassment(): AlertCardColors {
+        val isDarkTheme =
+            MaterialTheme.colorScheme.background == DarkBackground
+
+        return if (isDarkTheme) {
             AlertCardColors(
                 background = HarassmentBackgroundDark,
                 accent = HarassmentAccentDark,
