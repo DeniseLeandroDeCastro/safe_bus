@@ -29,3 +29,20 @@ val Error = Color(0xFFEF3935)
 // Neutral colors
 val TextSecondary = Color(0xFF64748B)
 val BorderColor = Color(0xFFE2E8F0)
+// Alerta de perigo
+val DangerBackgroundLight = Color(0xFFFFE7E5)
+val DangerAccentLight = Color(0xFFFF302A)
+val DangerContentLight = Color(0xFF5A1010)
+
+val DangerBackgroundDark = Color(0xFF402020)
+val DangerAccentDark = Color(0xFFFF453A)
+val DangerContentDark = Color(0xFFFFFFFF)
+
+// Alerta de importunação
+val HarassmentBackgroundLight = Color(0xFFECE6FF)
+val HarassmentAccentLight = Color(0xFF6842F5)
+val HarassmentContentLight = Color(0xFF25145B)
+
+val HarassmentBackgroundDark = Color(0xFF302448)
+val HarassmentAccentDark = Color(0xFF8B6CFF)
+val HarassmentContentDark = Color(0xFFFFFFFF)
