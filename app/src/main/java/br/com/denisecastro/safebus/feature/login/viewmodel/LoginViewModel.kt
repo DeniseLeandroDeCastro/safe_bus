@@ -1,49 +1,86 @@
-
 package br.com.denisecastro.safebus.feature.login.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import br.com.denisecastro.safebus.feature.login.model.LoginUiState
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class LoginViewModel : ViewModel() {
 
-    private val _uiState = MutableStateFlow(LoginUiState())
+    private val auth = FirebaseAuth.getInstance()
 
+    private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
     fun onEmailChange(email: String) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                email = email,
-                errorMessage = null
-            )
+        _uiState.update {
+            it.copy(email = email, errorMessage = null)
         }
     }
 
     fun onPasswordChange(password: String) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                password = password,
-                errorMessage = null
-            )
+        _uiState.update {
+            it.copy(password = password, errorMessage = null)
         }
     }
 
-    fun setLoading(isLoading: Boolean) {
-        _uiState.update { currentState ->
-            currentState.copy(isLoading = isLoading)
-        }
-    }
+    fun login(onSuccess: () -> Unit) {
+        val state = _uiState.value
 
-    fun setError(message: String?) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                isLoading = false,
-                errorMessage = message
-            )
+        if (!state.isFormValid || state.isLoading) return
+
+        _uiState.update {
+            it.copy(isLoading = true, errorMessage = null)
+        }
+
+        viewModelScope.launch {
+            try {
+                auth.signInWithEmailAndPassword(
+                    state.email.trim(),
+                    state.password
+                ).await()
+
+                _uiState.update {
+                    it.copy(isLoading = false)
+                }
+
+                onSuccess()
+            } catch (exception: Exception) {
+                val message = when (
+                    (exception as? FirebaseAuthException)?.errorCode
+                ) {
+                    "ERROR_INVALID_EMAIL" ->
+                        "O e-mail informado é inválido."
+
+                    "ERROR_INVALID_CREDENTIAL",
+                    "ERROR_WRONG_PASSWORD",
+                    "ERROR_USER_NOT_FOUND" ->
+                        "E-mail ou senha incorretos."
+
+                    "ERROR_USER_DISABLED" ->
+                        "Esta conta foi desativada."
+
+                    "ERROR_TOO_MANY_REQUESTS" ->
+                        "Muitas tentativas. Tente novamente mais tarde."
+
+                    else ->
+                        "Não foi possível entrar. Verifique sua conexão e tente novamente."
+                }
+
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        errorMessage = message
+                    )
+                }
+            }
         }
     }
 }
