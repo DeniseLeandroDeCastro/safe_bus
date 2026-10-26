@@ -1,9 +1,10 @@
-package br.com.denisecastro.safebus.feature.login.screen
+package br.com.denisecastro.safebus.feature.home.route
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.getValue
+import br.com.denisecastro.safebus.feature.login.screen.LoginScreen
 import br.com.denisecastro.safebus.feature.login.viewmodel.LoginViewModel
 
 @Composable

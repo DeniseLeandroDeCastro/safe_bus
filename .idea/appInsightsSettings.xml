@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="br.com.denisecastro.safebus" />
+                  <option name="mobileSdkAppId" value="1:311832291087:android:2a4d1f13c8c65b57a3407a" />
+                  <option name="projectId" value="safebus-bb2e7" />
+                  <option name="projectNumber" value="311832291087" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

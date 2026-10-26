@@ -1,13 +1,18 @@
 package br.com.denisecastro.safebus.navigation
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import br.com.denisecastro.safebus.feature.login.screen.LoginRoute
-import br.com.denisecastro.safebus.feature.register.screen.RegisterRoute
+import br.com.denisecastro.safebus.feature.home.route.HomeRoute
+import br.com.denisecastro.safebus.feature.home.route.LoginRoute
+import br.com.denisecastro.safebus.feature.home.route.RegisterRoute
 import br.com.denisecastro.safebus.feature.welcome.screen.WelcomeScreen
+import br.com.denisecastro.safebus.ui.components.navigation.MainScreenScaffold
+import br.com.denisecastro.safebus.ui.components.navigation.SafeBusBottomDestination
 
 @Composable
 fun SafeBusNavHost(
@@ -21,14 +26,10 @@ fun SafeBusNavHost(
         composable(SafeBusDestination.Welcome.route) {
             WelcomeScreen(
                 onLoginClick = {
-                    navController.navigate(
-                        SafeBusDestination.Login.route
-                    )
+                    navController.navigate(SafeBusDestination.Login.route)
                 },
                 onRegisterClick = {
-                    navController.navigate(
-                        SafeBusDestination.Register.route
-                    )
+                    navController.navigate(SafeBusDestination.Register.route)
                 }
             )
         }
@@ -39,15 +40,13 @@ fun SafeBusNavHost(
                     navController.popBackStack()
                 },
                 onLoginClick = {
-                    // A autenticação será implementada posteriormente.
+                    // Autenticação será implementada posteriormente.
                 },
                 onForgotPasswordClick = {
-                    // A recuperação de senha será implementada posteriormente.
+                    // Recuperação de senha será implementada posteriormente.
                 },
                 onRegisterClick = {
-                    navController.navigate(
-                        SafeBusDestination.Register.route
-                    ) {
+                    navController.navigate(SafeBusDestination.Register.route) {
                         popUpTo(SafeBusDestination.Login.route) {
                             inclusive = true
                         }
@@ -63,12 +62,10 @@ fun SafeBusNavHost(
                     navController.popBackStack()
                 },
                 onRegisterClick = {
-                    // O cadastro será integrado posteriormente.
+                    // Cadastro será implementado posteriormente.
                 },
                 onLoginClick = {
-                    navController.navigate(
-                        SafeBusDestination.Login.route
-                    ) {
+                    navController.navigate(SafeBusDestination.Login.route) {
                         popUpTo(SafeBusDestination.Register.route) {
                             inclusive = true
                         }
@@ -76,6 +73,35 @@ fun SafeBusNavHost(
                     }
                 }
             )
+        }
+
+        composable(SafeBusDestination.Home.route) {
+            MainScreenScaffold(
+                selectedDestination = SafeBusBottomDestination.HOME,
+                onDestinationClick = { destination ->
+                    when (destination) {
+                        SafeBusBottomDestination.HOME -> Unit
+
+                        SafeBusBottomDestination.MAP -> Unit
+
+                        SafeBusBottomDestination.CONVERSATIONS -> Unit
+
+                        SafeBusBottomDestination.CONTACTS -> Unit
+
+                        SafeBusBottomDestination.MORE -> Unit
+                    }
+                }
+            ) { innerPadding ->
+                HomeRoute(
+                    modifier = Modifier.padding(innerPadding),
+                    onNotificationsClick = {},
+                    onProfileClick = {},
+                    onTransportClick = {},
+                    onDangerAlertClick = {},
+                    onHarassmentAlertClick = {},
+                    onSafetyTipsClick = {}
+                )
+            }
         }
     }
 }
