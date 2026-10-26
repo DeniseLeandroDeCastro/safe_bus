@@ -1,9 +1,9 @@
 package br.com.denisecastro.safebus.feature.home.route
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.runtime.getValue
 import br.com.denisecastro.safebus.feature.login.screen.LoginScreen
 import br.com.denisecastro.safebus.feature.login.viewmodel.LoginViewModel
 
@@ -22,7 +22,9 @@ fun LoginRoute(
         onEmailChange = viewModel::onEmailChange,
         onPasswordChange = viewModel::onPasswordChange,
         onBackClick = onBackClick,
-        onLoginClick = onLoginClick,
+        onLoginClick = {
+            viewModel.login(onSuccess = onLoginClick)
+        },
         onForgotPasswordClick = onForgotPasswordClick,
         onRegisterClick = onRegisterClick
     )
