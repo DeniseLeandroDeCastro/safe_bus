@@ -11,7 +11,7 @@ private val LightColorScheme = lightColorScheme(
     primary = BluePrimary,
     onPrimary = Color.White,
 
-    primaryContainer = Color(0xFFD6EAF8),
+    primaryContainer = HomeHeroLight,
     onPrimaryContainer = Color(0xFF083A60),
 
     secondary = TurquoiseSecondary,
@@ -39,8 +39,8 @@ private val DarkColorScheme = darkColorScheme(
     primary = DarkPrimary,
     onPrimary = Color(0xFF002F4D),
 
-    primaryContainer = Color(0xFF164D73),
-    onPrimaryContainer = Color(0xFFD6EAF8),
+    primaryContainer = HomeHeroDark,
+    onPrimaryContainer = Color(0xFFE8F5FF),
 
     secondary = Color(0xFF70DED5),
     onSecondary = Color(0xFF003D3A),

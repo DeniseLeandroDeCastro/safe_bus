@@ -46,3 +46,17 @@ val HarassmentContentLight = Color(0xFF25145B)
 val HarassmentBackgroundDark = Color(0xFF302448)
 val HarassmentAccentDark = Color(0xFF8B6CFF)
 val HarassmentContentDark = Color(0xFFFFFFFF)
+
+// Home - superfícies e destaque
+val HomeHeroLight = Color(0xFFBBDDF5)
+val HomeHeroDark = Color(0xFF194D70)
+
+val HomeSurfaceLight = Color(0xFFFFFFFF)
+val HomeSurfaceDark = Color(0xFF1C344D)
+
+val HomeHeroBackground = Color(0xFF103F78)
+val HomeHeroHighlight = Color(0xFF13D3D0)
+
+val HomeTipsBackground = Color(0xFFFFEAD6)
+val HomeTipsTitle = Color(0xFF123047)
+val HomeTipsAccent = Color(0xFF0875DB)
