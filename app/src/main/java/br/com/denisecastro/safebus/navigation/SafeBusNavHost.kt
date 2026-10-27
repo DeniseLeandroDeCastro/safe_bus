@@ -67,7 +67,12 @@ fun SafeBusNavHost(
                     navController.popBackStack()
                 },
                 onRegisterClick = {
-                    // Cadastro será implementado posteriormente.
+                    navController.navigate(SafeBusDestination.Home.route) {
+                        popUpTo(SafeBusDestination.Welcome.route) {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                    }
                 },
                 onLoginClick = {
                     navController.navigate(SafeBusDestination.Login.route) {

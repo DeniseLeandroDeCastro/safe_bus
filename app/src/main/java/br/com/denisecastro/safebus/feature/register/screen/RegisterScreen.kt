@@ -142,6 +142,16 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
+            uiState.errorMessage?.let { message ->
+                Text(
+                    text = message,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
+                )
+            }
+
             PrimaryButton(
                 text = "Criar conta",
                 onClick = onRegisterClick,
@@ -270,6 +280,33 @@ private fun RegisterScreenLoadingPreview() {
                 confirmPassword = "Senha123",
                 isFormValid = true,
                 isLoading = true
+            ),
+            onNameChange = {},
+            onEmailChange = {},
+            onPasswordChange = {},
+            onConfirmPasswordChange = {},
+            onBackClick = {},
+            onRegisterClick = {},
+            onLoginClick = {}
+        )
+    }
+}
+
+@Preview(
+    name = "Cadastro - Erro",
+    showBackground = true
+)
+@Composable
+private fun RegisterScreenErrorPreview() {
+    SafeBusTheme(darkTheme = false) {
+        RegisterScreen(
+            uiState = RegisterUiState(
+                name = "Ana",
+                email = "ana@email.com",
+                password = "Senha123",
+                confirmPassword = "Senha123",
+                isFormValid = true,
+                errorMessage = "Este e-mail já está cadastrado."
             ),
             onNameChange = {},
             onEmailChange = {},
