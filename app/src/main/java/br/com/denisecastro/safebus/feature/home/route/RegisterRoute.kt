@@ -23,7 +23,9 @@ fun RegisterRoute(
         onPasswordChange = viewModel::onPasswordChange,
         onConfirmPasswordChange = viewModel::onConfirmPasswordChange,
         onBackClick = onBackClick,
-        onRegisterClick = onRegisterClick,
+        onRegisterClick = {
+            viewModel.register(onSuccess = onRegisterClick)
+        },
         onLoginClick = onLoginClick
     )
 }
