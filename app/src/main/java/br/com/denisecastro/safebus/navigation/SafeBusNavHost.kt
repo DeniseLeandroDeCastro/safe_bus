@@ -2,6 +2,7 @@ package br.com.denisecastro.safebus.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -13,14 +14,23 @@ import br.com.denisecastro.safebus.feature.home.route.RegisterRoute
 import br.com.denisecastro.safebus.feature.welcome.screen.WelcomeScreen
 import br.com.denisecastro.safebus.ui.components.navigation.MainScreenScaffold
 import br.com.denisecastro.safebus.ui.components.navigation.SafeBusBottomDestination
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun SafeBusNavHost(
     navController: NavHostController = rememberNavController()
 ) {
+    val startDestination = remember {
+        if (FirebaseAuth.getInstance().currentUser != null) {
+            SafeBusDestination.Home.route
+        } else {
+            SafeBusDestination.Welcome.route
+        }
+    }
+
     NavHost(
         navController = navController,
-        startDestination = SafeBusDestination.Welcome.route
+        startDestination = startDestination
     ) {
 
         composable(SafeBusDestination.Welcome.route) {
@@ -91,13 +101,9 @@ fun SafeBusNavHost(
                 onDestinationClick = { destination ->
                     when (destination) {
                         SafeBusBottomDestination.HOME -> Unit
-
                         SafeBusBottomDestination.MAP -> Unit
-
                         SafeBusBottomDestination.CONVERSATIONS -> Unit
-
                         SafeBusBottomDestination.CONTACTS -> Unit
-
                         SafeBusBottomDestination.MORE -> Unit
                     }
                 }
