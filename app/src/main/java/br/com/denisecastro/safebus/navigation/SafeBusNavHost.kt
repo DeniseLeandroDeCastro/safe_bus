@@ -40,7 +40,12 @@ fun SafeBusNavHost(
                     navController.popBackStack()
                 },
                 onLoginClick = {
-                    // Autenticação será implementada posteriormente.
+                    navController.navigate(SafeBusDestination.Home.route) {
+                        popUpTo(SafeBusDestination.Welcome.route) {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                    }
                 },
                 onForgotPasswordClick = {
                     // Recuperação de senha será implementada posteriormente.
