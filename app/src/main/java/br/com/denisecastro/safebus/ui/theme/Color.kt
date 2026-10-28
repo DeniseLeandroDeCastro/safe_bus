@@ -60,3 +60,8 @@ val HomeHeroHighlight = Color(0xFF13D3D0)
 val HomeTipsBackground = Color(0xFFFFEAD6)
 val HomeTipsTitle = Color(0xFF123047)
 val HomeTipsAccent = Color(0xFF0875DB)
+
+val WelcomeBlue = Color(0xFF075DA9)
+val WelcomeCyan = Color(0xFF00BCE8)
+val WelcomeLightBlue = Color(0xFFDDF3FF)
+val WelcomeDarkBlue = Color(0xFF102F50)
