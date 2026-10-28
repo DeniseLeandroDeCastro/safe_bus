@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.com.denisecastro.safebus.feature.login.components.buttons.GoogleSignInButton
 import br.com.denisecastro.safebus.feature.login.model.LoginUiState
 import br.com.denisecastro.safebus.feature.welcome.components.fields.StandardTextField
 import br.com.denisecastro.safebus.ui.components.buttons.primary.PrimaryButton
@@ -43,6 +44,7 @@ fun LoginScreen(
     onLoginClick: () -> Unit,
     onForgotPasswordClick: () -> Unit,
     onRegisterClick: () -> Unit,
+    onGoogleLoginClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -143,6 +145,20 @@ fun LoginScreen(
                 isLoading = uiState.isLoading
             )
 
+            Text(
+                text = "ou",
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            GoogleSignInButton(
+                onClick = onGoogleLoginClick,
+                enabled = !uiState.isLoading,
+                isLoading = false,
+                modifier = Modifier.fillMaxWidth()
+            )
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
@@ -203,6 +219,7 @@ private fun LoginScreenPreviewContent() {
         onBackClick = {},
         onLoginClick = {},
         onForgotPasswordClick = {},
+        onGoogleLoginClick = {},
         onRegisterClick = {}
     )
 }
@@ -224,6 +241,7 @@ private fun LoginScreenValidPreview() {
             onBackClick = {},
             onLoginClick = {},
             onForgotPasswordClick = {},
+            onGoogleLoginClick = {},
             onRegisterClick = {}
         )
     }
@@ -247,6 +265,7 @@ private fun LoginScreenLoadingPreview() {
             onBackClick = {},
             onLoginClick = {},
             onForgotPasswordClick = {},
+            onGoogleLoginClick = {},
             onRegisterClick = {}
         )
     }
@@ -270,6 +289,7 @@ private fun LoginScreenErrorPreview() {
             onBackClick = {},
             onLoginClick = {},
             onForgotPasswordClick = {},
+            onGoogleLoginClick = {},
             onRegisterClick = {}
         )
     }

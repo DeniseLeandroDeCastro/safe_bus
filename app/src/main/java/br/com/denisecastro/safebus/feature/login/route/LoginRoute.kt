@@ -10,6 +10,20 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.denisecastro.safebus.feature.login.components.dialog.ForgotPasswordDialog
 import br.com.denisecastro.safebus.feature.login.screen.LoginScreen
 import br.com.denisecastro.safebus.feature.login.viewmodel.LoginViewModel
+import android.app.Activity
+import android.util.Log
+import androidx.compose.ui.platform.LocalContext
+import androidx.credentials.CredentialManager
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.CustomCredential
+import androidx.credentials.exceptions.GetCredentialCancellationException
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import br.com.denisecastro.safebus.R
+import kotlinx.coroutines.launch
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.res.stringResource
+
 
 @Composable
 fun LoginRoute(
@@ -36,6 +50,70 @@ fun LoginRoute(
         mutableStateOf(false)
     }
 
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+
+    var isGoogleLoading by remember {
+        mutableStateOf(false)
+    }
+
+    val credentialManager = remember(context) {
+        CredentialManager.create(context)
+    }
+    val webClientId = stringResource(R.string.default_web_client_id)
+
+    val onGoogleLoginClick: () -> Unit = {
+        if (!isGoogleLoading && !uiState.isLoading) {
+            isGoogleLoading = true
+
+            scope.launch {
+                try {
+                    val googleIdOption = GetGoogleIdOption.Builder()
+                        .setFilterByAuthorizedAccounts(false)
+                        .setServerClientId(webClientId)
+                        .build()
+
+                    val request = GetCredentialRequest.Builder()
+                        .addCredentialOption(googleIdOption)
+                        .build()
+
+                    val result = credentialManager.getCredential(
+                        context = context as Activity,
+                        request = request
+                    )
+
+                    val credential = result.credential
+
+                    if (
+                        credential is CustomCredential &&
+                        credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
+                    ) {
+                        val googleCredential =
+                            GoogleIdTokenCredential.createFrom(credential.data)
+
+                        viewModel.loginWithGoogle(
+                            idToken = googleCredential.idToken,
+                            onSuccess = onLoginClick
+                        )
+                    } else {
+                        viewModel.onGoogleLoginError()
+                    }
+                } catch (_: GetCredentialCancellationException) {
+                    // O usuário cancelou a seleção da conta.
+                } catch (exception: Exception) {
+                    Log.e(
+                        "SafeBusGoogleLogin",
+                        "Erro ao iniciar login com Google",
+                        exception
+                    )
+                    viewModel.onGoogleLoginError()
+                } finally {
+                    isGoogleLoading = false
+                }
+            }
+        }
+    }
+
     LoginScreen(
         uiState = uiState,
         onEmailChange = viewModel::onEmailChange,
@@ -44,6 +122,7 @@ fun LoginRoute(
         onLoginClick = {
             viewModel.login(onSuccess = onLoginClick)
         },
+        onGoogleLoginClick = onGoogleLoginClick,
         onForgotPasswordClick = {
             resetMessage = null
             resetSuccess = false

@@ -1,5 +1,6 @@
 package br.com.denisecastro.safebus.feature.login.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.denisecastro.safebus.feature.login.model.LoginUiState
@@ -11,6 +12,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import com.google.firebase.auth.GoogleAuthProvider
+
 
 class LoginViewModel : ViewModel() {
 
@@ -121,6 +124,58 @@ class LoginViewModel : ViewModel() {
 
                 onResult(false, message)
             }
+        }
+    }
+
+    fun loginWithGoogle(
+        idToken: String,
+        onSuccess: () -> Unit
+    ) {
+        if (_uiState.value.isLoading) return
+
+        _uiState.update {
+            it.copy(
+                isLoading = true,
+                errorMessage = null
+            )
+        }
+
+        viewModelScope.launch {
+            try {
+                val credential = GoogleAuthProvider.getCredential(
+                    idToken,
+                    null
+                )
+
+                auth.signInWithCredential(credential).await()
+
+                _uiState.update {
+                    it.copy(isLoading = false)
+                }
+
+                onSuccess()
+            } catch (exception: Exception) {
+                Log.e(
+                    "SafeBusGoogleLogin",
+                    "Erro ao autenticar com Firebase",
+                    exception
+                )
+
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        errorMessage = "Não foi possível entrar com Google. Tente novamente."
+                    )
+                }
+            }
+        }
+    }
+
+    fun onGoogleLoginError() {
+        _uiState.update {
+            it.copy(
+                errorMessage = "Não foi possível entrar com Google. Tente novamente."
+            )
         }
     }
 }
