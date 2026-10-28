@@ -9,8 +9,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import br.com.denisecastro.safebus.feature.home.route.HomeRoute
-import br.com.denisecastro.safebus.feature.home.route.LoginRoute
-import br.com.denisecastro.safebus.feature.home.route.RegisterRoute
+import br.com.denisecastro.safebus.feature.login.route.LoginRoute
+import br.com.denisecastro.safebus.feature.register.route.RegisterRoute
 import br.com.denisecastro.safebus.feature.welcome.screen.WelcomeScreen
 import br.com.denisecastro.safebus.ui.components.navigation.MainScreenScaffold
 import br.com.denisecastro.safebus.ui.components.navigation.SafeBusBottomDestination
@@ -56,9 +56,6 @@ fun SafeBusNavHost(
                         }
                         launchSingleTop = true
                     }
-                },
-                onForgotPasswordClick = {
-                    // Recuperação de senha será implementada posteriormente.
                 },
                 onRegisterClick = {
                     navController.navigate(SafeBusDestination.Register.route) {

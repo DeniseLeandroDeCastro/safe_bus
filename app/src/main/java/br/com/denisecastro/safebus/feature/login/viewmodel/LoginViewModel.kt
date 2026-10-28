@@ -83,4 +83,44 @@ class LoginViewModel : ViewModel() {
             }
         }
     }
+
+    fun sendPasswordResetEmail(
+        email: String,
+        onResult: (Boolean, String) -> Unit
+    ) {
+        if (email.isBlank() || !android.util.Patterns.EMAIL_ADDRESS
+                .matcher(email.trim()).matches()
+        ) {
+            onResult(false, "Informe um e-mail válido.")
+            return
+        }
+
+        viewModelScope.launch {
+            try {
+                auth.sendPasswordResetEmail(email.trim()).await()
+
+                onResult(
+                    true,
+                    "Se o e-mail estiver cadastrado, você receberá " +
+                            "um link para redefinir sua senha."
+                )
+            } catch (exception: Exception) {
+                val message = when (
+                    (exception as? FirebaseAuthException)?.errorCode
+                ) {
+                    "ERROR_INVALID_EMAIL" ->
+                        "Informe um e-mail válido."
+
+                    "ERROR_TOO_MANY_REQUESTS" ->
+                        "Muitas solicitações. Tente novamente mais tarde."
+
+                    else ->
+                        "Não foi possível solicitar a recuperação. " +
+                                "Verifique sua conexão e tente novamente."
+                }
+
+                onResult(false, message)
+            }
+        }
+    }
 }

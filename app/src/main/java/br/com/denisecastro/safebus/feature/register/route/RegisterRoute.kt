@@ -1,4 +1,4 @@
-package br.com.denisecastro.safebus.feature.home.route
+package br.com.denisecastro.safebus.feature.register.route
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
