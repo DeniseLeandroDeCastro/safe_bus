@@ -45,6 +45,7 @@ fun LoginScreen(
     onForgotPasswordClick: () -> Unit,
     onRegisterClick: () -> Unit,
     onGoogleLoginClick: () -> Unit,
+    isGoogleLoading: Boolean = false,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -154,8 +155,8 @@ fun LoginScreen(
 
             GoogleSignInButton(
                 onClick = onGoogleLoginClick,
-                enabled = !uiState.isLoading,
-                isLoading = false,
+                enabled = !uiState.isLoading && !isGoogleLoading,
+                isLoading = isGoogleLoading,
                 modifier = Modifier.fillMaxWidth()
             )
 
