@@ -8,5 +8,8 @@ sealed class SafeBusDestination(
     data object Login : SafeBusDestination("login")
 
     data object Register : SafeBusDestination("register")
+
     data object Home : SafeBusDestination("home")
+
+    data object Profile : SafeBusDestination("profile")
 }

@@ -40,6 +40,8 @@ import br.com.denisecastro.safebus.ui.theme.AlertDanger
 import br.com.denisecastro.safebus.ui.theme.SafeBusAlertColors
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 import br.com.denisecastro.safebus.ui.theme.TurquoiseSecondary
+import androidx.compose.material.icons.automirrored.outlined.Logout
+import androidx.compose.ui.res.stringResource
 
 @Composable
 fun HomeScreen(
@@ -50,6 +52,7 @@ fun HomeScreen(
     onDangerAlertClick: () -> Unit,
     onHarassmentAlertClick: () -> Unit,
     onSafetyTipsClick: () -> Unit,
+    onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val dangerColors = SafeBusAlertColors.danger()
@@ -85,9 +88,9 @@ fun HomeScreen(
                 ) {
                     Text(
                         text = if (uiState.userName.isBlank()) {
-                            "Olá!"
+                            stringResource(R.string.home_greeting)
                         } else {
-                            "Olá, ${uiState.userName}!"
+                            stringResource(R.string.home_greeting_name, uiState.userName)
                         },
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
@@ -120,6 +123,16 @@ fun HomeScreen(
                         imageVector = Icons.Filled.Person,
                         contentDescription = "Perfil",
                         tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+
+                IconButton(
+                    onClick = onLogoutClick
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Outlined.Logout,
+                        contentDescription = stringResource(R.string.profile_logout),
+                        tint = MaterialTheme.colorScheme.error
                     )
                 }
             }
@@ -224,6 +237,7 @@ private fun HomeScreenPreviewContent() {
         onTransportClick = {},
         onDangerAlertClick = {},
         onHarassmentAlertClick = {},
+        onLogoutClick = {},
         onSafetyTipsClick = {}
     )
 }

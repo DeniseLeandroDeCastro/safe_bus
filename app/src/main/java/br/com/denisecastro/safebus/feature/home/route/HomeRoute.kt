@@ -12,6 +12,7 @@ import br.com.denisecastro.safebus.feature.home.viewmodel.HomeViewModel
 fun HomeRoute(
     onNotificationsClick: () -> Unit,
     onProfileClick: () -> Unit,
+    onLogoutClick: () -> Unit,
     onTransportClick: () -> Unit,
     onDangerAlertClick: () -> Unit,
     onHarassmentAlertClick: () -> Unit,
@@ -25,6 +26,7 @@ fun HomeRoute(
         uiState = uiState,
         onNotificationsClick = onNotificationsClick,
         onProfileClick = onProfileClick,
+        onLogoutClick = onLogoutClick,
         onTransportClick = onTransportClick,
         onDangerAlertClick = onDangerAlertClick,
         onHarassmentAlertClick = onHarassmentAlertClick,

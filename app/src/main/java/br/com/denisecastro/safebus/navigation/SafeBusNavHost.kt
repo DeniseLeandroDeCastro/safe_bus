@@ -10,12 +10,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import br.com.denisecastro.safebus.feature.home.route.HomeRoute
 import br.com.denisecastro.safebus.feature.login.route.LoginRoute
+import br.com.denisecastro.safebus.feature.profile.route.ProfileRoute
 import br.com.denisecastro.safebus.feature.register.route.RegisterRoute
 import br.com.denisecastro.safebus.feature.welcome.screen.WelcomeScreen
 import br.com.denisecastro.safebus.ui.components.navigation.MainScreenScaffold
 import br.com.denisecastro.safebus.ui.components.navigation.SafeBusBottomDestination
 import com.google.firebase.auth.FirebaseAuth
-
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import br.com.denisecastro.safebus.feature.profile.components.dialog.LogoutConfirmationDialog
 @Composable
 fun SafeBusNavHost(
     navController: NavHostController = rememberNavController()
@@ -28,11 +32,14 @@ fun SafeBusNavHost(
         }
     }
 
+    var showLogoutDialog by remember {
+        mutableStateOf(false)
+    }
+
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-
         composable(SafeBusDestination.Welcome.route) {
             WelcomeScreen(
                 onLoginClick = {
@@ -99,8 +106,13 @@ fun SafeBusNavHost(
                     when (destination) {
                         SafeBusBottomDestination.HOME -> Unit
                         SafeBusBottomDestination.MAP -> Unit
-                        SafeBusBottomDestination.CONVERSATIONS -> Unit
-                        SafeBusBottomDestination.CONTACTS -> Unit
+                        SafeBusBottomDestination.PROFILE -> {
+                            navController.navigate(
+                                SafeBusDestination.Profile.route
+                            ) {
+                                launchSingleTop = true
+                            }
+                        }
                         SafeBusBottomDestination.MORE -> Unit
                     }
                 }
@@ -108,13 +120,67 @@ fun SafeBusNavHost(
                 HomeRoute(
                     modifier = Modifier.padding(innerPadding),
                     onNotificationsClick = {},
-                    onProfileClick = {},
+                    onProfileClick = {
+                        navController.navigate(
+                            SafeBusDestination.Profile.route
+                        ) {
+                            launchSingleTop = true
+                        }
+                    },
                     onTransportClick = {},
                     onDangerAlertClick = {},
                     onHarassmentAlertClick = {},
+                    onLogoutClick = {
+                        showLogoutDialog = true
+                    },
                     onSafetyTipsClick = {}
                 )
             }
         }
+
+        composable(SafeBusDestination.Profile.route) {
+            MainScreenScaffold(
+                selectedDestination = SafeBusBottomDestination.PROFILE,
+                onDestinationClick = { destination ->
+                    when (destination) {
+                        SafeBusBottomDestination.HOME -> {
+                            navController.popBackStack(
+                                SafeBusDestination.Home.route,
+                                false
+                            )
+                        }
+                        SafeBusBottomDestination.MAP -> Unit
+                        SafeBusBottomDestination.PROFILE -> Unit
+                        SafeBusBottomDestination.MORE -> Unit
+                    }
+                }
+            ) { innerPadding ->
+                ProfileRoute(
+                    modifier = Modifier.padding(innerPadding)
+                )
+            }
+        }
+    }
+
+    if (showLogoutDialog) {
+        LogoutConfirmationDialog(
+            onDismiss = {
+                showLogoutDialog = false
+            },
+            onConfirm = {
+                showLogoutDialog = false
+
+                FirebaseAuth.getInstance().signOut()
+
+                navController.navigate(
+                    SafeBusDestination.Welcome.route
+                ) {
+                    popUpTo(navController.graph.id) {
+                        inclusive = true
+                    }
+                    launchSingleTop = true
+                }
+            }
+        )
     }
 }
