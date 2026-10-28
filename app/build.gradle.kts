@@ -59,6 +59,11 @@ dependencies {
     implementation(libs.firebase.auth)
     // Coroutines
     implementation(libs.kotlinx.coroutines.play.services)
+    // Credential Manager
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    // Google ID
+    implementation(libs.googleid)
     // Tests
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
