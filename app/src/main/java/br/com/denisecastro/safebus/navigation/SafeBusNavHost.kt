@@ -22,6 +22,10 @@ import androidx.compose.runtime.setValue
 import br.com.denisecastro.safebus.feature.dangeralert.route.DangerAlertRoute
 import br.com.denisecastro.safebus.feature.profile.components.dialog.LogoutConfirmationDialog
 import br.com.denisecastro.safebus.feature.dangeralert.route.AlertLocationRoute
+import androidx.lifecycle.viewmodel.compose.viewModel
+import br.com.denisecastro.safebus.feature.dangeralert.route.AlertReviewRoute
+import br.com.denisecastro.safebus.feature.dangeralert.viewmodel.EmergencyAlertViewModel
+
 
 @Composable
 fun SafeBusNavHost(
@@ -38,6 +42,8 @@ fun SafeBusNavHost(
     var showLogoutDialog by remember {
         mutableStateOf(false)
     }
+
+    val emergencyAlertViewModel: EmergencyAlertViewModel = viewModel()
 
     NavHost(
         navController = navController,
@@ -164,8 +170,24 @@ fun SafeBusNavHost(
                 onBackClick = {
                     navController.popBackStack()
                 },
-                onContinueClick = {
-                    // Próxima etapa: revisão e envio do alerta.
+                onContinueClick = { location ->
+                    emergencyAlertViewModel.setLocation(location)
+
+                    navController.navigate(SafeBusDestination.AlertReview.route) {
+                        launchSingleTop = true
+                    }
+                }
+            )
+        }
+
+        composable(SafeBusDestination.AlertReview.route) {
+            AlertReviewRoute(
+                viewModel = emergencyAlertViewModel,
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onConfirmClick = {
+                    // Será implementado após configurar o Repository.
                 }
             )
         }

@@ -9,13 +9,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import br.com.denisecastro.safebus.feature.dangeralert.model.AlertLocationUiState
 import br.com.denisecastro.safebus.feature.dangeralert.screens.AlertLocationScreen
 import br.com.denisecastro.safebus.feature.dangeralert.viewmodel.AlertLocationViewModel
 
 @Composable
 fun AlertLocationRoute(
     onBackClick: () -> Unit,
-    onContinueClick: () -> Unit,
+    onContinueClick: (AlertLocationUiState.Success) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AlertLocationViewModel = viewModel()
 ) {
@@ -48,7 +49,12 @@ fun AlertLocationRoute(
             )
         },
         onRetryClick = viewModel::checkLocationPermission,
-        onContinueClick = onContinueClick,
+        onContinueClick = {
+            val location = uiState as? AlertLocationUiState.Success
+            if (location != null) {
+                onContinueClick(location)
+            }
+        },
         onBackClick = onBackClick,
         modifier = modifier
     )

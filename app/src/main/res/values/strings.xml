@@ -74,4 +74,16 @@
     <string name="alert_location_info">Mantenha o aplicativo aberto e a localização do dispositivo ativada durante esta etapa.</string>
     <string name="alert_location_permission_info">Precisamos da sua autorização para acessar a localização.</string>
 
+    <string name="alert_review_title">Revisar alerta</string>
+    <string name="alert_review_heading">Confirme as informações</string>
+    <string name="alert_review_description">Confira os dados antes de registrar sua solicitação de emergência.</string>
+    <string name="alert_review_type_label">Tipo de emergência</string>
+    <string name="alert_review_location_label">Localização identificada</string>
+    <string name="alert_review_coordinates">Latitude: %1$.5f\nLongitude: %2$.5f</string>
+    <string name="alert_review_accuracy">Precisão estimada: %1$.0f metros</string>
+    <string name="alert_review_accuracy_unknown">Precisão não informada</string>
+    <string name="alert_review_warning">O registro do alerta não significa que uma viatura foi acionada.</string>
+    <string name="alert_review_confirm">Confirmar envio</string>
+    <string name="alert_review_back">Voltar</string>
+
 </resources>
