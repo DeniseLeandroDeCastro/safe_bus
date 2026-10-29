@@ -27,12 +27,17 @@ import br.com.denisecastro.safebus.R
 import br.com.denisecastro.safebus.feature.dangeralert.model.AlertLocationUiState
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 import br.com.denisecastro.safebus.feature.dangeralert.components.cards.AlertReviewInfoCard
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.layout.size
+import br.com.denisecastro.safebus.feature.dangeralert.components.cards.AlertSendErrorCard
+import br.com.denisecastro.safebus.feature.dangeralert.data.model.EmergencyAlertSendState
 
 @Composable
 fun AlertReviewScreen(
     location: AlertLocationUiState.Success,
     onConfirmClick: () -> Unit,
     onBackClick: () -> Unit,
+    sendState: EmergencyAlertSendState,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -65,6 +70,9 @@ fun AlertReviewScreen(
             )
 
             AlertReviewInfoCard(location = location)
+            if (sendState == EmergencyAlertSendState.Error) {
+                AlertSendErrorCard()
+            }
 
             Card(
                 modifier = Modifier.fillMaxWidth(),
@@ -91,21 +99,41 @@ fun AlertReviewScreen(
             }
 
             Column(
+                modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
+                val isLoading = sendState == EmergencyAlertSendState.Loading
+
                 Button(
                     onClick = onConfirmClick,
-                    enabled = false,
-                    modifier = Modifier.fillMaxWidth()
+                    enabled = sendState == EmergencyAlertSendState.Idle ||
+                            sendState == EmergencyAlertSendState.Error,
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = MaterialTheme.shapes.extraLarge
                 ) {
-                    Text(stringResource(R.string.alert_review_confirm))
+                    if (isLoading) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(20.dp),
+                            strokeWidth = 2.dp,
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
+                    } else {
+                        Text(
+                            text = stringResource(R.string.alert_review_confirm),
+                            modifier = Modifier.padding(vertical = 8.dp)
+                        )
+                    }
                 }
-
                 OutlinedButton(
                     onClick = onBackClick,
-                    modifier = Modifier.fillMaxWidth()
+                    enabled = !isLoading,
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = MaterialTheme.shapes.extraLarge
                 ) {
-                    Text(stringResource(R.string.alert_review_back))
+                    Text(
+                        text = stringResource(R.string.alert_review_back),
+                        modifier = Modifier.padding(vertical = 8.dp)
+                    )
                 }
             }
         }
@@ -123,6 +151,7 @@ private fun AlertReviewScreenLightPreview() {
                 accuracyMeters = 10f
             ),
             onConfirmClick = {},
+            sendState = EmergencyAlertSendState.Idle,
             onBackClick = {}
         )
     }
@@ -139,6 +168,7 @@ private fun AlertReviewScreenDarkPreview() {
                 accuracyMeters = 10f
             ),
             onConfirmClick = {},
+            sendState = EmergencyAlertSendState.Idle,
             onBackClick = {}
         )
     }

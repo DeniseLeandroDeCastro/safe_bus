@@ -85,5 +85,6 @@
     <string name="alert_review_warning">O registro do alerta não significa que uma viatura foi acionada.</string>
     <string name="alert_review_confirm">Confirmar envio</string>
     <string name="alert_review_back">Voltar</string>
+    <string name="alert_send_error">Não foi possível confirmar o registro do alerta. Verifique sua conexão antes de tentar novamente.</string>
 
 </resources>

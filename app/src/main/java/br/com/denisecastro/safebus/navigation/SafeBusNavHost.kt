@@ -186,8 +186,8 @@ fun SafeBusNavHost(
                 onBackClick = {
                     navController.popBackStack()
                 },
-                onConfirmClick = {
-                    // Será implementado após configurar o Repository.
+                onSuccess = { alertId ->
+                    // Próxima etapa: tela de confirmação do registro.
                 }
             )
         }
