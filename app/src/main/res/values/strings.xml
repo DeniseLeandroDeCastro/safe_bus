@@ -42,4 +42,17 @@
     <string name="home_danger_description">Acione uma viatura próxima.</string>
     <string name="home_harassment_title">Importunação ou assédio sexual</string>
     <string name="home_harassment_description">Peça ajuda de forma discreta.</string>
+
+
+    <string name="danger_alert_screen_title">Alerta de emergência</string>
+    <string name="danger_alert_title">Assalto ou situação de perigo</string>
+    <string name="danger_alert_description">Use este alerta em situações de risco, como assalto, violência ou quando se sentir ameaçada.</string>
+    <string name="danger_alert_location_info">Sua localização poderá ser compartilhada com o serviço responsável pelo atendimento.</string>
+    <string name="danger_alert_safety_info">Se possível, procure um local seguro e evite confrontos.</string>
+    <string name="danger_alert_privacy_info">O alerta será enviado somente após sua confirmação.</string>
+    <string name="danger_alert_confirm">Confirmar alerta</string>
+    <string name="danger_alert_cancel">Cancelar</string>
+    <string name="danger_alert_back">Voltar</string>
+    <string name="danger_alert_image_description">Ilustração de situação de perigo no transporte público</string>
+
 </resources>
