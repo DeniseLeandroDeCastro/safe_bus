@@ -43,7 +43,6 @@
     <string name="home_harassment_title">Importunação ou assédio sexual</string>
     <string name="home_harassment_description">Peça ajuda de forma discreta.</string>
 
-
     <string name="danger_alert_screen_title">Alerta de emergência</string>
     <string name="danger_alert_title">Assalto ou situação de perigo</string>
     <string name="danger_alert_description">Use este alerta em situações de risco, como assalto, violência ou quando se sentir ameaçada.</string>
@@ -54,5 +53,25 @@
     <string name="danger_alert_cancel">Cancelar</string>
     <string name="danger_alert_back">Voltar</string>
     <string name="danger_alert_image_description">Ilustração de situação de perigo no transporte público</string>
+
+    <string name="alert_location_title">Obtendo sua localização</string>
+    <string name="alert_location_description">Estamos verificando sua localização para preparar o alerta de emergência.</string>
+    <string name="alert_location_loading">Buscando localização atual...</string>
+    <string name="alert_location_permission_title">Permissão de localização</string>
+    <string name="alert_location_permission_description">Para preparar o alerta, precisamos acessar sua localização. Você pode autorizar o acesso nas opções do Android.</string>
+    <string name="alert_location_allow">Permitir localização</string>
+    <string name="alert_location_denied">A permissão de localização não foi concedida.</string>
+    <string name="alert_location_unavailable">Não foi possível obter sua localização. Verifique se a localização do dispositivo está ativada e tente novamente.</string>
+    <string name="alert_location_retry">Tentar novamente</string>
+    <string name="alert_location_success">Localização obtida</string>
+    <string name="alert_location_success_description">Sua localização foi identificada. O alerta ainda não foi enviado.</string>
+    <string name="alert_location_accuracy">Precisão estimada: %1$.0f metros</string>
+    <string name="alert_location_continue">Continuar</string>
+    <string name="alert_location_back">Voltar</string>
+
+    <string name="alert_location_status_success">Localização identificada com sucesso</string>
+    <string name="alert_location_status_loading">Verificando a localização do dispositivo...</string>
+    <string name="alert_location_info">Mantenha o aplicativo aberto e a localização do dispositivo ativada durante esta etapa.</string>
+    <string name="alert_location_permission_info">Precisamos da sua autorização para acessar a localização.</string>
 
 </resources>

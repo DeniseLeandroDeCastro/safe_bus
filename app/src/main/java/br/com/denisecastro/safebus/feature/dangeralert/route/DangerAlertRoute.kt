@@ -1,8 +1,8 @@
-package br.com.denisecastro.safebus.feature.danger.alert
+package br.com.denisecastro.safebus.feature.dangeralert.route
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import br.com.denisecastro.safebus.feature.danger.screens.DangerAlertScreen
+import br.com.denisecastro.safebus.feature.dangeralert.screens.DangerAlertScreen
 
 @Composable
 fun DangerAlertRoute(

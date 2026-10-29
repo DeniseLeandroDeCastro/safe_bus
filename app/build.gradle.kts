@@ -64,6 +64,8 @@ dependencies {
     implementation(libs.androidx.credentials.play.services.auth)
     // Google ID
     implementation(libs.googleid)
+    // Location
+    implementation(libs.google.play.services.location)
     // Tests
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))

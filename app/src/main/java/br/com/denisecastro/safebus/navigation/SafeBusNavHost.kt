@@ -19,8 +19,10 @@ import com.google.firebase.auth.FirebaseAuth
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import br.com.denisecastro.safebus.feature.danger.alert.DangerAlertRoute
+import br.com.denisecastro.safebus.feature.dangeralert.route.DangerAlertRoute
 import br.com.denisecastro.safebus.feature.profile.components.dialog.LogoutConfirmationDialog
+import br.com.denisecastro.safebus.feature.dangeralert.route.AlertLocationRoute
+
 @Composable
 fun SafeBusNavHost(
     navController: NavHostController = rememberNavController()
@@ -150,7 +152,20 @@ fun SafeBusNavHost(
                     navController.popBackStack()
                 },
                 onConfirmClick = {
-                    // Próxima etapa: localização e processamento do alerta.
+                    navController.navigate(SafeBusDestination.AlertLocation.route) {
+                        launchSingleTop = true
+                    }
+                }
+            )
+        }
+
+        composable(SafeBusDestination.AlertLocation.route) {
+            AlertLocationRoute(
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onContinueClick = {
+                    // Próxima etapa: revisão e envio do alerta.
                 }
             )
         }

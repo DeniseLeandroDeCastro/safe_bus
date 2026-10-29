@@ -17,6 +17,8 @@ googleServices = "4.4.4"
  # Google Sign-In
  credentials = "1.5.0"
  googleid = "1.1.1"
+ # Location
+ playServicesLocation = "21.3.0"
  # Tests
  junit = "4.13.2"
  junitVersion = "1.3.0"
@@ -47,6 +49,8 @@ kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-cor
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
 androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentials" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
+# Location
+google-play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 # Tests
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

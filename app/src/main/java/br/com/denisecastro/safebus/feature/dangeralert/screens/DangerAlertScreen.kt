@@ -1,4 +1,4 @@
-package br.com.denisecastro.safebus.feature.danger.screens
+package br.com.denisecastro.safebus.feature.dangeralert.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -36,7 +36,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.denisecastro.safebus.R
-import br.com.denisecastro.safebus.feature.danger.alert.AlertInformationCard
+import br.com.denisecastro.safebus.feature.dangeralert.components.cards.AlertInformationCard
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 
 @Composable
