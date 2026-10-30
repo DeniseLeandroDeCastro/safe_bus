@@ -6,8 +6,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.denisecastro.safebus.feature.dangeralert.data.model.EmergencyAlertSendState
-import br.com.denisecastro.safebus.feature.dangeralert.screens.AlertReviewScreen
 import br.com.denisecastro.safebus.feature.dangeralert.viewmodel.EmergencyAlertViewModel
+import br.com.denisecastro.safebus.feature.dangeralert.screens.AlertReviewScreen
 
 @Composable
 fun AlertReviewRoute(
@@ -27,9 +27,9 @@ fun AlertReviewRoute(
         }
     }
 
-    location?.let {
+    location?.let { currentLocation ->
         AlertReviewScreen(
-            location = it,
+            location = currentLocation,
             sendState = sendState,
             onConfirmClick = viewModel::registerAlert,
             onBackClick = onBackClick,

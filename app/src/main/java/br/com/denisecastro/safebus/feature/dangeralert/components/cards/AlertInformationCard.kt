@@ -96,7 +96,7 @@ private fun AlertInformationRow(
     }
 }
 
-@Preview(name = "Informações - Claro", showSystemUi = true)
+@Preview(name = "Informações - Claro", showBackground = true)
 @Composable
 private fun AlertInformationCardLightPreview() {
     SafeBusTheme(darkTheme = false) {
@@ -104,7 +104,7 @@ private fun AlertInformationCardLightPreview() {
     }
 }
 
-@Preview(name = "Informações - Escuro", showSystemUi = true)
+@Preview(name = "Informações - Escuro", showBackground = true)
 @Composable
 private fun AlertInformationCardDarkPreview() {
     SafeBusTheme(darkTheme = true) {

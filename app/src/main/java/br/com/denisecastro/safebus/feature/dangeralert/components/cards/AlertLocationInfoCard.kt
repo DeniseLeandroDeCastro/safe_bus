@@ -1,20 +1,22 @@
 package br.com.denisecastro.safebus.feature.dangeralert.components.cards
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Info
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.denisecastro.safebus.R
@@ -26,36 +28,46 @@ fun AlertLocationInfoCard(
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.large,
+        shape = MaterialTheme.shapes.extraLarge,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+            containerColor = MaterialTheme.colorScheme.primaryContainer
         )
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(18.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.spacedBy(14.dp)
         ) {
-            Icon(
-                imageVector = Icons.Outlined.Info,
+            Image(
+                painter = painterResource(R.drawable.alert_location_active),
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.onPrimaryContainer
+                modifier = Modifier.size(96.dp)
             )
 
-            Text(
-                text = stringResource(R.string.alert_location_info),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
-                modifier = Modifier.weight(1f)
-            )
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.alert_location_info_title),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+
+                Text(
+                    text = stringResource(R.string.alert_location_info_description),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            }
         }
     }
 }
 
-@Preview(name = "Orientações - Tema claro", showSystemUi = true)
+@Preview(name = "Orientação - Claro", showBackground = true)
 @Composable
 private fun AlertLocationInfoCardLightPreview() {
     SafeBusTheme(darkTheme = false) {
@@ -65,7 +77,7 @@ private fun AlertLocationInfoCardLightPreview() {
     }
 }
 
-@Preview(name = "Orientações - Tema escuro", showSystemUi = true)
+@Preview(name = "Orientação - Escuro", showBackground = true)
 @Composable
 private fun AlertLocationInfoCardDarkPreview() {
     SafeBusTheme(darkTheme = true) {

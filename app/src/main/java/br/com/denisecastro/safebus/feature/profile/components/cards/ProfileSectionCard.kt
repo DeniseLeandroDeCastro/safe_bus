@@ -59,7 +59,7 @@ fun ProfileSectionCard(
 
 @Preview(
     name = "ProfileSectionCard - Tema claro",
-    showSystemUi = true
+    showBackground = true
 )
 @Composable
 private fun ProfileSectionCardLightPreview() {
@@ -91,7 +91,7 @@ private fun ProfileSectionCardLightPreview() {
 
 @Preview(
     name = "ProfileSectionCard - Tema escuro",
-    showSystemUi = true
+    showBackground = true
 )
 @Composable
 private fun ProfileSectionCardDarkPreview() {

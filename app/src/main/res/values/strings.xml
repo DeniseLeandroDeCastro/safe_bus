@@ -87,4 +87,20 @@
     <string name="alert_review_back">Voltar</string>
     <string name="alert_send_error">Não foi possível confirmar o registro do alerta. Verifique sua conexão antes de tentar novamente.</string>
 
+    <string name="alert_success_title">Alerta registrado!</string>
+    <string name="alert_success_description">Seu alerta de situação de perigo foi registrado com sucesso.</string>
+    <string name="alert_success_info_title">Informação importante</string>
+    <string name="alert_success_info_description">O registro foi salvo no aplicativo, mas nenhum serviço de emergência foi acionado automaticamente. Se você estiver em perigo, procure um local seguro e entre em contato com os serviços de emergência.</string>
+    <string name="alert_success_protocol">Identificador do registro</string>
+    <string name="alert_success_home">Voltar ao início</string>
+
+    <string name="alert_review_harassment_title">Assédio ou importunação sexual</string>
+    <string name="alert_location_info_title">Mantenha o aplicativo aberto</string>
+    <string name="alert_location_info_description">Mantenha o aplicativo aberto e a localização do dispositivo ativada durante esta etapa.</string>
+
+    <string name="alert_location_success_title">Localização identificada com sucesso</string>
+    <string name="alert_location_permission_message">Para continuar, permita que o SafeBus acesse a localização do dispositivo.</string>
+    <string name="alert_location_unavailable_message">Não foi possível obter sua localização. Verifique se a localização do dispositivo está ativada e tente novamente.</string>
+    <string name="alert_send_error_title">Não foi possível registrar o alerta</string>
+    <string name="alert_review_warning_title">Atenção ao registrar o alerta</string>
 </resources>

@@ -2,6 +2,7 @@ package br.com.denisecastro.safebus.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -23,7 +24,9 @@ import br.com.denisecastro.safebus.feature.dangeralert.route.DangerAlertRoute
 import br.com.denisecastro.safebus.feature.profile.components.dialog.LogoutConfirmationDialog
 import br.com.denisecastro.safebus.feature.dangeralert.route.AlertLocationRoute
 import androidx.lifecycle.viewmodel.compose.viewModel
+import br.com.denisecastro.safebus.feature.dangeralert.data.model.EmergencyAlertSendState
 import br.com.denisecastro.safebus.feature.dangeralert.route.AlertReviewRoute
+import br.com.denisecastro.safebus.feature.dangeralert.screens.AlertSuccessScreen
 import br.com.denisecastro.safebus.feature.dangeralert.viewmodel.EmergencyAlertViewModel
 
 
@@ -186,10 +189,34 @@ fun SafeBusNavHost(
                 onBackClick = {
                     navController.popBackStack()
                 },
-                onSuccess = { alertId ->
-                    // Próxima etapa: tela de confirmação do registro.
+                onSuccess = {
+                    navController.navigate(SafeBusDestination.AlertSuccess.route) {
+                        launchSingleTop = true
+                    }
                 }
             )
+        }
+
+        composable(SafeBusDestination.AlertSuccess.route) {
+            val sendState by emergencyAlertViewModel.sendState.collectAsState()
+
+            val success = sendState as? EmergencyAlertSendState.Success
+
+            if (success != null) {
+                AlertSuccessScreen(
+                    alertId = success.alertId,
+                    onHomeClick = {
+                        emergencyAlertViewModel.clearLocation()
+
+                        navController.navigate(SafeBusDestination.Home.route) {
+                            popUpTo(SafeBusDestination.Home.route) {
+                                inclusive = false
+                            }
+                            launchSingleTop = true
+                        }
+                    }
+                )
+            }
         }
 
         composable(SafeBusDestination.Profile.route) {
