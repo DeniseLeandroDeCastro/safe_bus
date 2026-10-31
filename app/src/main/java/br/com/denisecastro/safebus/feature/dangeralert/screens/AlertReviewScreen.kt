@@ -32,6 +32,7 @@ import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 @Composable
 fun AlertReviewScreen(
     location: AlertLocationUiState.Success,
+    alertType: String,
     onConfirmClick: () -> Unit,
     onBackClick: () -> Unit,
     sendState: EmergencyAlertSendState,
@@ -77,7 +78,8 @@ fun AlertReviewScreen(
                 )
 
                 AlertReviewInfoCard(
-                    location = location
+                    location = location,
+                    alertType = alertType
                 )
 
                 if (sendState == EmergencyAlertSendState.Error) {
@@ -121,6 +123,7 @@ private fun AlertReviewScreenLightPreview() {
                 longitude = -35.21,
                 accuracyMeters = 10f
             ),
+            alertType = "DANGER",
             onConfirmClick = {},
             onBackClick = {},
             sendState = EmergencyAlertSendState.Idle
@@ -138,6 +141,25 @@ private fun AlertReviewScreenDarkPreview() {
                 longitude = -35.21,
                 accuracyMeters = 10f
             ),
+            alertType = "DANGER",
+            onConfirmClick = {},
+            onBackClick = {},
+            sendState = EmergencyAlertSendState.Idle
+        )
+    }
+}
+
+@Preview(name = "Revisão - Assédio", showSystemUi = true)
+@Composable
+private fun AlertReviewScreenHarassmentPreview() {
+    SafeBusTheme(darkTheme = false) {
+        AlertReviewScreen(
+            location = AlertLocationUiState.Success(
+                latitude = -5.79,
+                longitude = -35.21,
+                accuracyMeters = 10f
+            ),
+            alertType = "HARASSMENT",
             onConfirmClick = {},
             onBackClick = {},
             sendState = EmergencyAlertSendState.Idle

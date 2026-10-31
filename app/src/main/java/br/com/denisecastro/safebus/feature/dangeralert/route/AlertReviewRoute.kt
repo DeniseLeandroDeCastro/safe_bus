@@ -6,8 +6,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.denisecastro.safebus.feature.dangeralert.data.model.EmergencyAlertSendState
-import br.com.denisecastro.safebus.feature.dangeralert.viewmodel.EmergencyAlertViewModel
 import br.com.denisecastro.safebus.feature.dangeralert.screens.AlertReviewScreen
+import br.com.denisecastro.safebus.feature.dangeralert.viewmodel.EmergencyAlertViewModel
 
 @Composable
 fun AlertReviewRoute(
@@ -18,6 +18,7 @@ fun AlertReviewRoute(
 ) {
     val location by viewModel.location.collectAsStateWithLifecycle()
     val sendState by viewModel.sendState.collectAsStateWithLifecycle()
+    val alertType by viewModel.alertType.collectAsStateWithLifecycle()
 
     LaunchedEffect(sendState) {
         val success = sendState as? EmergencyAlertSendState.Success
@@ -30,6 +31,7 @@ fun AlertReviewRoute(
     location?.let { currentLocation ->
         AlertReviewScreen(
             location = currentLocation,
+            alertType = alertType,
             sendState = sendState,
             onConfirmClick = viewModel::registerAlert,
             onBackClick = onBackClick,
@@ -37,4 +39,3 @@ fun AlertReviewRoute(
         )
     }
 }
-
