@@ -333,6 +333,9 @@ fun SafeBusNavHost(
             AlertHistoryRoute(
                 onBackClick = {
                     navController.popBackStack()
+                },
+                onAlertClick = { alert ->
+                    // A navegação para os detalhes será conectada na próxima etapa.
                 }
             )
         }

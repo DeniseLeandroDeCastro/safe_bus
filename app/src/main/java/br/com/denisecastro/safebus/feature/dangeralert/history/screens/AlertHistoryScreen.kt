@@ -1,5 +1,6 @@
-package br.com.denisecastro.safebus.feature.dangeralert.screens
+package br.com.denisecastro.safebus.feature.dangeralert.history.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,6 +42,7 @@ fun AlertHistoryScreen(
     uiState: AlertHistoryUiState,
     onBackClick: () -> Unit,
     onRetryClick: () -> Unit,
+    onAlertClick: (AlertHistoryItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -126,7 +128,11 @@ fun AlertHistoryScreen(
                         ) { alert ->
                             AlertHistoryCard(
                                 alert = alert,
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable {
+                                        onAlertClick(alert)
+                                    }
                             )
                         }
                     }
@@ -165,7 +171,8 @@ private fun AlertHistoryPreviewContent(
                 )
             ),
             onBackClick = {},
-            onRetryClick = {}
+            onRetryClick = {},
+            onAlertClick = {}
         )
     }
 }
