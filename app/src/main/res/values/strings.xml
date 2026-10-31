@@ -163,5 +163,18 @@
     <string name="more_contacts">Contatos</string>
     <string name="more_contacts_description">Gerencie seus contatos</string>
 
+    <!-- Histórico de alertas -->
+    <string name="alert_history_unknown_type">Alerta</string>
+    <string name="alert_history_registered">Registrado</string>
+    <string name="alert_history_unknown_status">Status indisponível</string>
+    <string name="alert_history_unknown_date">Data indisponível</string>
+    <string name="alert_history_coordinates">Lat.: %1$.5f | Long.: %2$.5f</string>
+
+    <!-- Tela Histórico de alertas -->
+    <string name="alert_history_title">Histórico de alertas</string>
+    <string name="alert_history_back">Voltar</string>
+    <string name="alert_history_empty">Você ainda não possui alertas registrados.</string>
+    <string name="alert_history_error">Não foi possível carregar seus alertas.</string>
+    <string name="alert_history_retry">Tentar novamente</string>
 
 </resources>

@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import br.com.denisecastro.safebus.feature.dangeralert.data.model.EmergencyAlertSendState
+import br.com.denisecastro.safebus.feature.dangeralert.history.route.AlertHistoryRoute
 import br.com.denisecastro.safebus.feature.dangeralert.route.AlertLocationRoute
 import br.com.denisecastro.safebus.feature.dangeralert.route.AlertReviewRoute
 import br.com.denisecastro.safebus.feature.dangeralert.route.DangerAlertRoute
@@ -317,11 +318,23 @@ fun SafeBusNavHost(
             ) { innerPadding ->
                 MoreScreen(
                     modifier = Modifier.padding(innerPadding),
-                    onAlertHistoryClick = {},
+                    onAlertHistoryClick = {
+                        navController.navigate(SafeBusDestination.AlertHistory.route) {
+                            launchSingleTop = true
+                        }
+                    },
                     onConversationsClick = {},
                     onContactsClick = {}
                 )
             }
+        }
+
+        composable(SafeBusDestination.AlertHistory.route) {
+            AlertHistoryRoute(
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
     if (showLogoutDialog) {

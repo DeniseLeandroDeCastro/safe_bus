@@ -1,8 +1,10 @@
 package br.com.denisecastro.safebus.feature.dangeralert.data.repository
 
+import br.com.denisecastro.safebus.feature.dangeralert.data.model.AlertHistoryItem
 import br.com.denisecastro.safebus.feature.dangeralert.data.model.EmergencyAlert
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.tasks.await
 
 class EmergencyAlertRepository(
@@ -30,6 +32,35 @@ class EmergencyAlertRepository(
             document.set(data).await()
 
             Result.success(document.id)
+        } catch (exception: Exception) {
+            Result.failure(exception)
+        }
+    }
+
+    suspend fun getAlertHistory(
+        userId: String
+    ): Result<List<AlertHistoryItem>> {
+        return try {
+            val snapshot = firestore
+                .collection("emergency_alerts")
+                .whereEqualTo("userId", userId)
+                .orderBy("createdAt", Query.Direction.DESCENDING)
+                .get()
+                .await()
+
+            val alerts = snapshot.documents.map { document ->
+                AlertHistoryItem(
+                    id = document.id,
+                    type = document.getString("type").orEmpty(),
+                    latitude = document.getDouble("latitude") ?: 0.0,
+                    longitude = document.getDouble("longitude") ?: 0.0,
+                    accuracyMeters = document.getDouble("accuracyMeters"),
+                    status = document.getString("status").orEmpty(),
+                    createdAt = document.getTimestamp("createdAt")
+                )
+            }
+
+            Result.success(alerts)
         } catch (exception: Exception) {
             Result.failure(exception)
         }
