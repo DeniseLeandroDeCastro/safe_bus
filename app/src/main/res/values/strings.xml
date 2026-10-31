@@ -135,4 +135,18 @@
     <string name="register_login">Entrar</string>
     <string name="register_terms">Ao criar sua conta, você concorda com os Termos de Uso e a Política de Privacidade.</string>
     <string name="register_preview_error">Este e-mail já está cadastrado.</string>
+
+    <!-- Alerta de assédio -->
+    <string name="harassment_alert_back">Voltar</string>
+    <string name="harassment_alert_screen_title">Alerta de assédio</string>
+    <string name="harassment_alert_image_description">Ilustração do alerta de assédio</string>
+    <string name="harassment_alert_title">Você precisa de ajuda?</string>
+    <string name="harassment_alert_description">Registre uma situação de importunação ou assédio sexual durante sua viagem.</string>
+    <string name="harassment_alert_confirm">Continuar</string>
+    <string name="harassment_alert_cancel">Cancelar</string>
+
+    <!-- Card de orientação -->
+    <string name="harassment_guidance_title">Sua segurança importa</string>
+    <string name="harassment_guidance_description">Sua localização será registrada com o alerta.</string>
+
 </resources>

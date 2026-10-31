@@ -15,6 +15,9 @@ class EmergencyAlertViewModel : ViewModel() {
 
     private val repository = EmergencyAlertRepository()
 
+    private val _alertType = MutableStateFlow("DANGER")
+    val alertType = _alertType.asStateFlow()
+
     private val _location =
         MutableStateFlow<AlertLocationUiState.Success?>(null)
 
@@ -26,6 +29,16 @@ class EmergencyAlertViewModel : ViewModel() {
         )
 
     val sendState = _sendState.asStateFlow()
+
+    fun setAlertType(type: String) {
+        if (type != "DANGER" && type != "HARASSMENT") {
+            return
+        }
+
+        _alertType.value = type
+        _location.value = null
+        _sendState.value = EmergencyAlertSendState.Idle
+    }
 
     fun setLocation(value: AlertLocationUiState.Success) {
         _location.value = value
@@ -52,7 +65,7 @@ class EmergencyAlertViewModel : ViewModel() {
         viewModelScope.launch {
             val alert = EmergencyAlert(
                 userId = userId,
-                type = "DANGER",
+                type = _alertType.value,
                 latitude = currentLocation.latitude,
                 longitude = currentLocation.longitude,
                 accuracyMeters = currentLocation.accuracyMeters?.toDouble()

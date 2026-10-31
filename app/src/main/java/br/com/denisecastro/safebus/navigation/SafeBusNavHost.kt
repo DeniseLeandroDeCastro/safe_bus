@@ -3,32 +3,32 @@ package br.com.denisecastro.safebus.navigation
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import br.com.denisecastro.safebus.feature.dangeralert.data.model.EmergencyAlertSendState
+import br.com.denisecastro.safebus.feature.dangeralert.route.AlertLocationRoute
+import br.com.denisecastro.safebus.feature.dangeralert.route.AlertReviewRoute
+import br.com.denisecastro.safebus.feature.dangeralert.route.DangerAlertRoute
+import br.com.denisecastro.safebus.feature.dangeralert.screens.AlertSuccessScreen
+import br.com.denisecastro.safebus.feature.dangeralert.screens.HarassmentAlertScreen
+import br.com.denisecastro.safebus.feature.dangeralert.viewmodel.EmergencyAlertViewModel
 import br.com.denisecastro.safebus.feature.home.route.HomeRoute
 import br.com.denisecastro.safebus.feature.login.route.LoginRoute
+import br.com.denisecastro.safebus.feature.profile.components.dialog.LogoutConfirmationDialog
 import br.com.denisecastro.safebus.feature.profile.route.ProfileRoute
 import br.com.denisecastro.safebus.feature.register.route.RegisterRoute
 import br.com.denisecastro.safebus.feature.welcome.screen.WelcomeScreen
 import br.com.denisecastro.safebus.ui.components.navigation.MainScreenScaffold
 import br.com.denisecastro.safebus.ui.components.navigation.SafeBusBottomDestination
 import com.google.firebase.auth.FirebaseAuth
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import br.com.denisecastro.safebus.feature.dangeralert.route.DangerAlertRoute
-import br.com.denisecastro.safebus.feature.profile.components.dialog.LogoutConfirmationDialog
-import br.com.denisecastro.safebus.feature.dangeralert.route.AlertLocationRoute
-import androidx.lifecycle.viewmodel.compose.viewModel
-import br.com.denisecastro.safebus.feature.dangeralert.data.model.EmergencyAlertSendState
-import br.com.denisecastro.safebus.feature.dangeralert.route.AlertReviewRoute
-import br.com.denisecastro.safebus.feature.dangeralert.screens.AlertSuccessScreen
-import br.com.denisecastro.safebus.feature.dangeralert.viewmodel.EmergencyAlertViewModel
-
 
 @Composable
 fun SafeBusNavHost(
@@ -117,7 +117,9 @@ fun SafeBusNavHost(
                 onDestinationClick = { destination ->
                     when (destination) {
                         SafeBusBottomDestination.HOME -> Unit
+
                         SafeBusBottomDestination.MAP -> Unit
+
                         SafeBusBottomDestination.PROFILE -> {
                             navController.navigate(
                                 SafeBusDestination.Profile.route
@@ -125,6 +127,7 @@ fun SafeBusNavHost(
                                 launchSingleTop = true
                             }
                         }
+
                         SafeBusBottomDestination.MORE -> Unit
                     }
                 }
@@ -142,11 +145,25 @@ fun SafeBusNavHost(
                     onTransportClick = {},
 
                     onDangerAlertClick = {
-                        navController.navigate(SafeBusDestination.DangerAlert.route) {
+                        emergencyAlertViewModel.setAlertType("DANGER")
+
+                        navController.navigate(
+                            SafeBusDestination.DangerAlert.route
+                        ) {
                             launchSingleTop = true
                         }
                     },
-                    onHarassmentAlertClick = {},
+
+                    onHarassmentAlertClick = {
+                        emergencyAlertViewModel.setAlertType("HARASSMENT")
+
+                        navController.navigate(
+                            SafeBusDestination.HarassmentAlert.route
+                        ) {
+                            launchSingleTop = true
+                        }
+                    },
+
                     onLogoutClick = {
                         showLogoutDialog = true
                     },
@@ -161,7 +178,24 @@ fun SafeBusNavHost(
                     navController.popBackStack()
                 },
                 onConfirmClick = {
-                    navController.navigate(SafeBusDestination.AlertLocation.route) {
+                    navController.navigate(
+                        SafeBusDestination.AlertLocation.route
+                    ) {
+                        launchSingleTop = true
+                    }
+                }
+            )
+        }
+
+        composable(SafeBusDestination.HarassmentAlert.route) {
+            HarassmentAlertScreen(
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onConfirmClick = {
+                    navController.navigate(
+                        SafeBusDestination.AlertLocation.route
+                    ) {
                         launchSingleTop = true
                     }
                 }
@@ -176,7 +210,9 @@ fun SafeBusNavHost(
                 onContinueClick = { location ->
                     emergencyAlertViewModel.setLocation(location)
 
-                    navController.navigate(SafeBusDestination.AlertReview.route) {
+                    navController.navigate(
+                        SafeBusDestination.AlertReview.route
+                    ) {
                         launchSingleTop = true
                     }
                 }
@@ -190,7 +226,9 @@ fun SafeBusNavHost(
                     navController.popBackStack()
                 },
                 onSuccess = {
-                    navController.navigate(SafeBusDestination.AlertSuccess.route) {
+                    navController.navigate(
+                        SafeBusDestination.AlertSuccess.route
+                    ) {
                         launchSingleTop = true
                     }
                 }
@@ -208,7 +246,9 @@ fun SafeBusNavHost(
                     onHomeClick = {
                         emergencyAlertViewModel.clearLocation()
 
-                        navController.navigate(SafeBusDestination.Home.route) {
+                        navController.navigate(
+                            SafeBusDestination.Home.route
+                        ) {
                             popUpTo(SafeBusDestination.Home.route) {
                                 inclusive = false
                             }
@@ -230,6 +270,7 @@ fun SafeBusNavHost(
                                 false
                             )
                         }
+
                         SafeBusBottomDestination.MAP -> Unit
                         SafeBusBottomDestination.PROFILE -> Unit
                         SafeBusBottomDestination.MORE -> Unit
