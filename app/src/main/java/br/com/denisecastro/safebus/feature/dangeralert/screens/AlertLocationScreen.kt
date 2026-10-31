@@ -1,4 +1,3 @@
-
 package br.com.denisecastro.safebus.feature.dangeralert.screens
 
 import androidx.compose.foundation.layout.Arrangement
@@ -11,11 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -26,6 +22,8 @@ import br.com.denisecastro.safebus.feature.dangeralert.components.cards.AlertLoc
 import br.com.denisecastro.safebus.feature.dangeralert.components.cards.AlertLocationStatusCard
 import br.com.denisecastro.safebus.feature.dangeralert.components.header.AlertLocationHeader
 import br.com.denisecastro.safebus.feature.dangeralert.model.AlertLocationUiState
+import br.com.denisecastro.safebus.ui.components.buttons.primary.PrimaryButton
+import br.com.denisecastro.safebus.ui.components.buttons.secondary.SecondaryButton
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 
 @Composable
@@ -82,7 +80,8 @@ fun AlertLocationScreen(
                         R.string.alert_location_loading
                 }
 
-                Button(
+                PrimaryButton(
+                    text = stringResource(buttonText),
                     onClick = {
                         when (uiState) {
                             is AlertLocationUiState.Success ->
@@ -99,25 +98,14 @@ fun AlertLocationScreen(
                         }
                     },
                     enabled = uiState != AlertLocationUiState.Loading,
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = MaterialTheme.shapes.extraLarge
-                ) {
-                    Text(
-                        text = stringResource(buttonText),
-                        modifier = Modifier.padding(vertical = 8.dp)
-                    )
-                }
+                    modifier = Modifier.fillMaxWidth()
+                )
 
-                OutlinedButton(
+                SecondaryButton(
+                    text = stringResource(R.string.alert_location_back),
                     onClick = onBackClick,
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = MaterialTheme.shapes.extraLarge
-                ) {
-                    Text(
-                        text = stringResource(R.string.alert_location_back),
-                        modifier = Modifier.padding(vertical = 8.dp)
-                    )
-                }
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         }
     }

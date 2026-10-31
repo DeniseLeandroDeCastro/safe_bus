@@ -7,14 +7,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +25,8 @@ import br.com.denisecastro.safebus.feature.dangeralert.components.cards.AlertRev
 import br.com.denisecastro.safebus.feature.dangeralert.components.cards.AlertSendErrorCard
 import br.com.denisecastro.safebus.feature.dangeralert.data.model.EmergencyAlertSendState
 import br.com.denisecastro.safebus.feature.dangeralert.model.AlertLocationUiState
+import br.com.denisecastro.safebus.ui.components.buttons.primary.PrimaryButton
+import br.com.denisecastro.safebus.ui.components.buttons.secondary.SecondaryButton
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 
 @Composable
@@ -93,38 +91,21 @@ fun AlertReviewScreen(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Button(
+                PrimaryButton(
+                    text = stringResource(R.string.alert_review_confirm),
                     onClick = onConfirmClick,
                     enabled = sendState == EmergencyAlertSendState.Idle ||
                             sendState == EmergencyAlertSendState.Error,
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = MaterialTheme.shapes.extraLarge
-                ) {
-                    if (isLoading) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(20.dp),
-                            strokeWidth = 2.dp,
-                            color = MaterialTheme.colorScheme.onPrimary
-                        )
-                    } else {
-                        Text(
-                            text = stringResource(R.string.alert_review_confirm),
-                            modifier = Modifier.padding(vertical = 8.dp)
-                        )
-                    }
-                }
+                    isLoading = isLoading,
+                    modifier = Modifier.fillMaxWidth()
+                )
 
-                OutlinedButton(
+                SecondaryButton(
+                    text = stringResource(R.string.alert_review_back),
                     onClick = onBackClick,
                     enabled = !isLoading,
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = MaterialTheme.shapes.extraLarge
-                ) {
-                    Text(
-                        text = stringResource(R.string.alert_review_back),
-                        modifier = Modifier.padding(vertical = 8.dp)
-                    )
-                }
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         }
     }

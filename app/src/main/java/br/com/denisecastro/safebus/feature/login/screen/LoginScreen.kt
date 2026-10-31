@@ -26,9 +26,11 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.com.denisecastro.safebus.R
 import br.com.denisecastro.safebus.feature.login.components.buttons.GoogleSignInButton
 import br.com.denisecastro.safebus.feature.login.model.LoginUiState
 import br.com.denisecastro.safebus.feature.welcome.components.fields.StandardTextField
@@ -68,7 +70,7 @@ fun LoginScreen(
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Voltar",
+                    contentDescription = stringResource(R.string.login_back),
                     tint = MaterialTheme.colorScheme.primary
                 )
             }
@@ -76,13 +78,13 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Entrar",
+                text = stringResource(R.string.login_title),
                 style = MaterialTheme.typography.headlineLarge,
                 color = MaterialTheme.colorScheme.onBackground
             )
 
             Text(
-                text = "Acesse sua conta para continuar sua viagem com o SafeBus.",
+                text = stringResource(R.string.login_description),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -92,7 +94,7 @@ fun LoginScreen(
             StandardTextField(
                 value = uiState.email,
                 onValueChange = onEmailChange,
-                label = "E-mail",
+                label = stringResource(R.string.login_email),
                 keyboardType = KeyboardType.Email,
                 enabled = !uiState.isLoading,
                 leadingIcon = {
@@ -106,7 +108,7 @@ fun LoginScreen(
             StandardTextField(
                 value = uiState.password,
                 onValueChange = onPasswordChange,
-                label = "Senha",
+                label = stringResource(R.string.login_password),
                 isPassword = true,
                 enabled = !uiState.isLoading,
                 leadingIcon = {
@@ -123,7 +125,7 @@ fun LoginScreen(
                 modifier = Modifier.align(Alignment.End)
             ) {
                 Text(
-                    text = "Esqueceu sua senha?",
+                    text = stringResource(R.string.login_forgot_password),
                     style = MaterialTheme.typography.labelLarge
                 )
             }
@@ -139,7 +141,7 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             PrimaryButton(
-                text = "Entrar",
+                text = stringResource(R.string.login_title),
                 onClick = onLoginClick,
                 modifier = Modifier.fillMaxWidth(),
                 enabled = uiState.isFormValid && !uiState.isLoading,
@@ -147,7 +149,7 @@ fun LoginScreen(
             )
 
             Text(
-                text = "ou",
+                text = stringResource(R.string.login_or),
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -166,7 +168,7 @@ fun LoginScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Ainda não tem uma conta?",
+                    text = stringResource(R.string.login_no_account),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onBackground
                 )
@@ -176,7 +178,7 @@ fun LoginScreen(
                     enabled = !uiState.isLoading
                 ) {
                     Text(
-                        text = "Criar conta",
+                        text = stringResource(R.string.login_create_account),
                         style = MaterialTheme.typography.labelLarge
                     )
                 }
@@ -187,11 +189,7 @@ fun LoginScreen(
     }
 }
 
-@Preview(
-    name = "Login - Tema claro",
-    showBackground = true,
-    showSystemUi = true
-)
+@Preview(name = "Login - Tema claro", showSystemUi = true)
 @Composable
 private fun LoginScreenLightPreview() {
     SafeBusTheme(darkTheme = false) {
@@ -199,11 +197,7 @@ private fun LoginScreenLightPreview() {
     }
 }
 
-@Preview(
-    name = "Login - Tema escuro",
-    showBackground = true,
-    showSystemUi = true
-)
+@Preview(name = "Login - Tema escuro", showSystemUi = true)
 @Composable
 private fun LoginScreenDarkPreview() {
     SafeBusTheme(darkTheme = true) {
@@ -225,10 +219,7 @@ private fun LoginScreenPreviewContent() {
     )
 }
 
-@Preview(
-    name = "Login - Formulário válido",
-    showBackground = true
-)
+@Preview(name = "Login - Formulário válido", showSystemUi = true)
 @Composable
 private fun LoginScreenValidPreview() {
     SafeBusTheme(darkTheme = false) {
@@ -248,10 +239,7 @@ private fun LoginScreenValidPreview() {
     }
 }
 
-@Preview(
-    name = "Login - Carregando",
-    showBackground = true
-)
+@Preview(name = "Login - Carregando", showSystemUi = true)
 @Composable
 private fun LoginScreenLoadingPreview() {
     SafeBusTheme(darkTheme = false) {
@@ -272,10 +260,7 @@ private fun LoginScreenLoadingPreview() {
     }
 }
 
-@Preview(
-    name = "Login - Erro",
-    showBackground = true
-)
+@Preview(name = "Login - Erro", showSystemUi = true)
 @Composable
 private fun LoginScreenErrorPreview() {
     SafeBusTheme(darkTheme = false) {
@@ -283,7 +268,7 @@ private fun LoginScreenErrorPreview() {
             uiState = LoginUiState(
                 email = "ana@email.com",
                 password = "Senha123",
-                errorMessage = "Não foi possível entrar. Verifique seus dados."
+                errorMessage = stringResource(R.string.login_preview_error)
             ),
             onEmailChange = {},
             onPasswordChange = {},

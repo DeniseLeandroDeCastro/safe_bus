@@ -17,11 +17,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,6 +35,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.denisecastro.safebus.R
 import br.com.denisecastro.safebus.feature.dangeralert.components.cards.AlertInformationCard
+import br.com.denisecastro.safebus.ui.components.buttons.primary.PrimaryButton
+import br.com.denisecastro.safebus.ui.components.buttons.secondary.SecondaryButton
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 
 @Composable
@@ -113,6 +113,7 @@ fun DangerAlertScreen(
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
+
             Spacer(modifier = Modifier.padding(bottom = 4.dp))
 
             AlertInformationCard()
@@ -122,31 +123,17 @@ fun DangerAlertScreen(
             Column(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Button(
+                PrimaryButton(
+                    text = stringResource(R.string.danger_alert_confirm),
                     onClick = onConfirmClick,
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = MaterialTheme.shapes.extraLarge
-                ) {
-                    Text(
-                        text = stringResource(
-                            R.string.danger_alert_confirm
-                        ),
-                        modifier = Modifier.padding(vertical = 8.dp)
-                    )
-                }
+                    modifier = Modifier.fillMaxWidth()
+                )
 
-                OutlinedButton(
+                SecondaryButton(
+                    text = stringResource(R.string.danger_alert_cancel),
                     onClick = onBackClick,
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = MaterialTheme.shapes.extraLarge
-                ) {
-                    Text(
-                        text = stringResource(
-                            R.string.danger_alert_cancel
-                        ),
-                        modifier = Modifier.padding(vertical = 8.dp)
-                    )
-                }
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         }
     }

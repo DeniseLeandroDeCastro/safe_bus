@@ -12,8 +12,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.com.denisecastro.safebus.R
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 
 @Composable
@@ -41,10 +43,7 @@ fun StandardCard(
     }
 }
 
-@Preview(
-    name = "StandardCard - Claro",
-    showBackground = true
-)
+@Preview(name = "StandardCard - Claro", showBackground = true)
 @Composable
 private fun StandardCardLightPreview() {
     SafeBusTheme(darkTheme = false) {
@@ -54,22 +53,19 @@ private fun StandardCardLightPreview() {
                 .padding(16.dp)
         ) {
             Text(
-                text = "Transporte atual",
+                text = stringResource(R.string.standard_card_transport_title),
                 style = MaterialTheme.typography.titleMedium
             )
 
             Text(
-                text = "Linha 320 - Centro / Bairro",
+                text = stringResource(R.string.standard_card_transport_example),
                 style = MaterialTheme.typography.bodyMedium
             )
         }
     }
 }
 
-@Preview(
-    name = "StandardCard - Escuro",
-    showBackground = true
-)
+@Preview(name = "StandardCard - Escuro", showBackground = true)
 @Composable
 private fun StandardCardDarkPreview() {
     SafeBusTheme(darkTheme = true) {
@@ -79,12 +75,12 @@ private fun StandardCardDarkPreview() {
                 .padding(16.dp)
         ) {
             Text(
-                text = "Transporte atual",
+                text = stringResource(R.string.standard_card_transport_title),
                 style = MaterialTheme.typography.titleMedium
             )
 
             Text(
-                text = "Linha 320 - Centro / Bairro",
+                text = stringResource(R.string.standard_card_transport_example),
                 style = MaterialTheme.typography.bodyMedium
             )
         }
@@ -105,12 +101,12 @@ private fun StandardCardCustomPreview() {
             contentPadding = PaddingValues(20.dp)
         ) {
             Text(
-                text = "Dicas de segurança",
+                text = stringResource(R.string.standard_card_safety_title),
                 style = MaterialTheme.typography.titleMedium
             )
 
             Text(
-                text = "Fique atento ao seu entorno durante a viagem.",
+                text = stringResource(R.string.standard_card_safety_description),
                 style = MaterialTheme.typography.bodyMedium
             )
         }

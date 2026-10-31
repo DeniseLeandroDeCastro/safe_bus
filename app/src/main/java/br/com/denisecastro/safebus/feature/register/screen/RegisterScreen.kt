@@ -27,10 +27,12 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.com.denisecastro.safebus.R
 import br.com.denisecastro.safebus.feature.register.model.RegisterUiState
 import br.com.denisecastro.safebus.feature.welcome.components.fields.StandardTextField
 import br.com.denisecastro.safebus.ui.components.buttons.primary.PrimaryButton
@@ -68,7 +70,7 @@ fun RegisterScreen(
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Voltar",
+                    contentDescription = stringResource(R.string.register_back),
                     tint = MaterialTheme.colorScheme.primary
                 )
             }
@@ -76,13 +78,13 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Criar conta",
+                text = stringResource(R.string.register_title),
                 style = MaterialTheme.typography.headlineLarge,
                 color = MaterialTheme.colorScheme.onBackground
             )
 
             Text(
-                text = "Preencha seus dados para utilizar o SafeBus.",
+                text = stringResource(R.string.register_description),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -92,7 +94,7 @@ fun RegisterScreen(
             StandardTextField(
                 value = uiState.name,
                 onValueChange = onNameChange,
-                label = "Nome",
+                label = stringResource(R.string.register_name),
                 enabled = !uiState.isLoading,
                 leadingIcon = {
                     Icon(
@@ -105,7 +107,7 @@ fun RegisterScreen(
             StandardTextField(
                 value = uiState.email,
                 onValueChange = onEmailChange,
-                label = "E-mail",
+                label = stringResource(R.string.register_email),
                 keyboardType = KeyboardType.Email,
                 enabled = !uiState.isLoading,
                 leadingIcon = {
@@ -119,7 +121,7 @@ fun RegisterScreen(
             StandardTextField(
                 value = uiState.password,
                 onValueChange = onPasswordChange,
-                label = "Senha",
+                label = stringResource(R.string.register_password),
                 isPassword = true,
                 enabled = !uiState.isLoading,
                 leadingIcon = {
@@ -133,7 +135,7 @@ fun RegisterScreen(
             StandardTextField(
                 value = uiState.confirmPassword,
                 onValueChange = onConfirmPasswordChange,
-                label = "Confirmar senha",
+                label = stringResource(R.string.register_confirm_password),
                 isPassword = true,
                 enabled = !uiState.isLoading,
                 leadingIcon = {
@@ -157,7 +159,7 @@ fun RegisterScreen(
             }
 
             PrimaryButton(
-                text = "Criar conta",
+                text = stringResource(R.string.register_title),
                 onClick = onRegisterClick,
                 modifier = Modifier.fillMaxWidth(),
                 enabled = uiState.isFormValid && !uiState.isLoading,
@@ -170,7 +172,7 @@ fun RegisterScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Já tem uma conta?",
+                    text = stringResource(R.string.register_has_account),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onBackground
                 )
@@ -180,7 +182,7 @@ fun RegisterScreen(
                     enabled = !uiState.isLoading
                 ) {
                     Text(
-                        text = "Entrar",
+                        text = stringResource(R.string.register_login),
                         style = MaterialTheme.typography.labelLarge
                     )
                 }
@@ -189,7 +191,7 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.height(12.dp))
 
             Text(
-                text = "Ao criar sua conta, você concorda com os Termos de Uso e a Política de Privacidade.",
+                text = stringResource(R.string.register_terms),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
@@ -201,11 +203,7 @@ fun RegisterScreen(
     }
 }
 
-@Preview(
-    name = "Cadastro - Tema claro",
-    showBackground = true,
-    showSystemUi = true
-)
+@Preview(name = "Cadastro - Tema claro", showSystemUi = true)
 @Composable
 private fun RegisterScreenLightPreview() {
     SafeBusTheme(darkTheme = false) {
@@ -222,11 +220,7 @@ private fun RegisterScreenLightPreview() {
     }
 }
 
-@Preview(
-    name = "Cadastro - Tema escuro",
-    showBackground = true,
-    showSystemUi = true
-)
+@Preview(name = "Cadastro - Tema escuro", showSystemUi = true)
 @Composable
 private fun RegisterScreenDarkPreview() {
     SafeBusTheme(darkTheme = true) {
@@ -243,10 +237,7 @@ private fun RegisterScreenDarkPreview() {
     }
 }
 
-@Preview(
-    name = "Cadastro - Formulário válido",
-    showBackground = true
-)
+@Preview(name = "Cadastro - Formulário válido", showSystemUi = true)
 @Composable
 private fun RegisterScreenValidPreview() {
     SafeBusTheme(darkTheme = false) {
@@ -269,10 +260,7 @@ private fun RegisterScreenValidPreview() {
     }
 }
 
-@Preview(
-    name = "Cadastro - Carregando",
-    showBackground = true
-)
+@Preview(name = "Cadastro - Carregando", showSystemUi = true)
 @Composable
 private fun RegisterScreenLoadingPreview() {
     SafeBusTheme(darkTheme = false) {
@@ -296,10 +284,7 @@ private fun RegisterScreenLoadingPreview() {
     }
 }
 
-@Preview(
-    name = "Cadastro - Erro",
-    showBackground = true
-)
+@Preview(name = "Cadastro - Erro", showSystemUi = true)
 @Composable
 private fun RegisterScreenErrorPreview() {
     SafeBusTheme(darkTheme = false) {
@@ -310,7 +295,7 @@ private fun RegisterScreenErrorPreview() {
                 password = "Senha123",
                 confirmPassword = "Senha123",
                 isFormValid = true,
-                errorMessage = "Este e-mail já está cadastrado."
+                errorMessage = stringResource(R.string.register_preview_error)
             ),
             onNameChange = {},
             onEmailChange = {},

@@ -13,8 +13,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.com.denisecastro.safebus.R
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 
 @Composable
@@ -23,15 +25,15 @@ fun SecondaryButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    isLoading: Boolean = false
+    isLoading: Boolean = false,
+    leadingIcon: (@Composable () -> Unit)? = null
 ) {
     val primaryColor = MaterialTheme.colorScheme.primary
-    val isButtonEnabled = enabled && !isLoading
 
     OutlinedButton(
         onClick = onClick,
         modifier = modifier.defaultMinSize(minHeight = 52.dp),
-        enabled = isButtonEnabled,
+        enabled = enabled && !isLoading,
         shape = MaterialTheme.shapes.large,
         border = BorderStroke(
             width = 1.dp,
@@ -60,10 +62,16 @@ fun SecondaryButton(
                     color = primaryColor,
                     strokeWidth = 2.dp
                 )
+            } else {
+                leadingIcon?.invoke()
             }
 
             Text(
-                text = if (isLoading) "Aguarde..." else text,
+                text = if (isLoading) {
+                    stringResource(R.string.button_loading)
+                } else {
+                    text
+                },
                 style = MaterialTheme.typography.labelLarge
             )
         }
@@ -75,7 +83,7 @@ fun SecondaryButton(
 private fun SecondaryButtonLightPreview() {
     SafeBusTheme(darkTheme = false) {
         SecondaryButton(
-            text = "Criar conta",
+            text = stringResource(R.string.button_preview_create_account),
             onClick = {}
         )
     }
@@ -86,7 +94,7 @@ private fun SecondaryButtonLightPreview() {
 private fun SecondaryButtonDarkPreview() {
     SafeBusTheme(darkTheme = true) {
         SecondaryButton(
-            text = "Criar conta",
+            text = stringResource(R.string.button_preview_create_account),
             onClick = {}
         )
     }
@@ -97,7 +105,7 @@ private fun SecondaryButtonDarkPreview() {
 private fun SecondaryButtonLoadingPreview() {
     SafeBusTheme(darkTheme = false) {
         SecondaryButton(
-            text = "Criar conta",
+            text = stringResource(R.string.button_preview_create_account),
             onClick = {},
             isLoading = true
         )
@@ -109,7 +117,7 @@ private fun SecondaryButtonLoadingPreview() {
 private fun SecondaryButtonDisabledPreview() {
     SafeBusTheme(darkTheme = false) {
         SecondaryButton(
-            text = "Criar conta",
+            text = stringResource(R.string.button_preview_create_account),
             onClick = {},
             enabled = false
         )

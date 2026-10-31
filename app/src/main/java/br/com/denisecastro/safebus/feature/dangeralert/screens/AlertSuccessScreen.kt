@@ -9,9 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -20,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import br.com.denisecastro.safebus.R
 import br.com.denisecastro.safebus.feature.dangeralert.components.cards.AlertSuccessCard
 import br.com.denisecastro.safebus.feature.dangeralert.components.cards.AlertSuccessInfoCard
+import br.com.denisecastro.safebus.ui.components.buttons.primary.PrimaryButton
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 
 @Composable
@@ -45,16 +43,11 @@ fun AlertSuccessScreen(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Button(
+        PrimaryButton(
+            text = stringResource(R.string.alert_success_home),
             onClick = onHomeClick,
-            modifier = Modifier.fillMaxWidth(),
-            shape = MaterialTheme.shapes.extraLarge
-        ) {
-            Text(
-                text = stringResource(R.string.alert_success_home),
-                modifier = Modifier.padding(vertical = 8.dp)
-            )
-        }
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }
 

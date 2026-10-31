@@ -103,4 +103,36 @@
     <string name="alert_location_unavailable_message">Não foi possível obter sua localização. Verifique se a localização do dispositivo está ativada e tente novamente.</string>
     <string name="alert_send_error_title">Não foi possível registrar o alerta</string>
     <string name="alert_review_warning_title">Atenção ao registrar o alerta</string>
+
+    <string name="button_loading">Aguarde...</string>
+    <string name="button_preview_create_account">Criar conta</string>
+    <string name="google_sign_in_button">Continuar com Google</string>
+
+    <string name="login_back">Voltar</string>
+    <string name="login_title">Entrar</string>
+    <string name="login_description">Acesse sua conta para continuar sua viagem com o SafeBus.</string>
+    <string name="login_email">E-mail</string>
+    <string name="login_password">Senha</string>
+    <string name="login_forgot_password">Esqueceu sua senha?</string>
+    <string name="login_or">ou</string>
+    <string name="login_no_account">Ainda não tem uma conta?</string>
+    <string name="login_create_account">Criar conta</string>
+    <string name="login_preview_error">Não foi possível entrar. Verifique seus dados.</string>
+
+    <string name="standard_card_transport_title">Transporte atual</string>
+    <string name="standard_card_transport_example">Linha 320 - Centro / Bairro</string>
+    <string name="standard_card_safety_title">Dicas de segurança</string>
+    <string name="standard_card_safety_description">Fique atento ao seu entorno durante a viagem.</string>
+
+    <string name="register_back">Voltar</string>
+    <string name="register_title">Criar conta</string>
+    <string name="register_description">Preencha seus dados para utilizar o SafeBus.</string>
+    <string name="register_name">Nome</string>
+    <string name="register_email">E-mail</string>
+    <string name="register_password">Senha</string>
+    <string name="register_confirm_password">Confirmar senha</string>
+    <string name="register_has_account">Já tem uma conta?</string>
+    <string name="register_login">Entrar</string>
+    <string name="register_terms">Ao criar sua conta, você concorda com os Termos de Uso e a Política de Privacidade.</string>
+    <string name="register_preview_error">Este e-mail já está cadastrado.</string>
 </resources>
