@@ -4,9 +4,13 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Lock
@@ -23,11 +27,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.denisecastro.safebus.R
-import br.com.denisecastro.safebus.feature.profile.components.optionrow.ProfileOptionRow
+import br.com.denisecastro.safebus.feature.profile.components.optionrow.OptionRow
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 
 @Composable
-fun ProfileSectionCard(
+fun SectionCard(
     @StringRes titleRes: Int,
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit
@@ -57,21 +61,21 @@ fun ProfileSectionCard(
     }
 }
 
-@Preview(
-    name = "ProfileSectionCard - Tema claro",
-    showBackground = true
-)
 @Composable
-private fun ProfileSectionCardLightPreview() {
-    SafeBusTheme(darkTheme = false) {
-        Surface(
-            color = MaterialTheme.colorScheme.background
+private fun SectionCardPreviewContent() {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        Column(
+            modifier = Modifier
+                .windowInsetsPadding(WindowInsets.statusBars)
+                .padding(16.dp)
         ) {
-            ProfileSectionCard(
-                titleRes = R.string.profile_account_section,
-                modifier = Modifier.padding(16.dp)
+            SectionCard(
+                titleRes = R.string.profile_account_section
             ) {
-                ProfileOptionRow(
+                OptionRow(
                     titleRes = R.string.profile_personal_data,
                     descriptionRes = R.string.profile_personal_data_description,
                     icon = Icons.Outlined.PersonOutline
@@ -79,7 +83,7 @@ private fun ProfileSectionCardLightPreview() {
 
                 HorizontalDivider()
 
-                ProfileOptionRow(
+                OptionRow(
                     titleRes = R.string.profile_security,
                     descriptionRes = R.string.profile_security_description,
                     icon = Icons.Outlined.Lock
@@ -89,34 +93,18 @@ private fun ProfileSectionCardLightPreview() {
     }
 }
 
-@Preview(
-    name = "ProfileSectionCard - Tema escuro",
-    showBackground = true
-)
+@Preview(name = "SectionCard - Claro", showBackground = true)
 @Composable
-private fun ProfileSectionCardDarkPreview() {
+private fun SectionCardLightPreview() {
+    SafeBusTheme(darkTheme = false) {
+        SectionCardPreviewContent()
+    }
+}
+
+@Preview(name = "SectionCard - Escuro", showBackground = true)
+@Composable
+private fun SectionCardDarkPreview() {
     SafeBusTheme(darkTheme = true) {
-        Surface(
-            color = MaterialTheme.colorScheme.background
-        ) {
-            ProfileSectionCard(
-                titleRes = R.string.profile_account_section,
-                modifier = Modifier.padding(16.dp)
-            ) {
-                ProfileOptionRow(
-                    titleRes = R.string.profile_personal_data,
-                    descriptionRes = R.string.profile_personal_data_description,
-                    icon = Icons.Outlined.PersonOutline
-                )
-
-                HorizontalDivider()
-
-                ProfileOptionRow(
-                    titleRes = R.string.profile_security,
-                    descriptionRes = R.string.profile_security_description,
-                    icon = Icons.Outlined.Lock
-                )
-            }
-        }
+        SectionCardPreviewContent()
     }
 }

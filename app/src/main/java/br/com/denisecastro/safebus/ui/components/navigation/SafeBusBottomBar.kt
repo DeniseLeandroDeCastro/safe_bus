@@ -64,7 +64,7 @@ fun SafeBusBottomBar(
     }
 }
 
-@Preview(name = "Navegação inferior - Claro", showSystemUi = true)
+@Preview(name = "Navegação inferior - Claro", showBackground = true)
 @Composable
 private fun SafeBusBottomBarLightPreview() {
     SafeBusTheme(darkTheme = false) {
@@ -77,7 +77,7 @@ private fun SafeBusBottomBarLightPreview() {
     }
 }
 
-@Preview(name = "Navegação inferior - Escuro", showSystemUi = true)
+@Preview(name = "Navegação inferior - Escuro", showBackground = true)
 @Composable
 private fun SafeBusBottomBarDarkPreview() {
     SafeBusTheme(darkTheme = true) {

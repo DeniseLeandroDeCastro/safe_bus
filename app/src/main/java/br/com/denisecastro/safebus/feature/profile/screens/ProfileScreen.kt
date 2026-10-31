@@ -28,9 +28,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.denisecastro.safebus.R
-import br.com.denisecastro.safebus.feature.profile.components.cards.ProfileSectionCard
+import br.com.denisecastro.safebus.feature.profile.components.cards.SectionCard
 import br.com.denisecastro.safebus.feature.profile.components.header.ProfileHeader
-import br.com.denisecastro.safebus.feature.profile.components.optionrow.ProfileOptionRow
+import br.com.denisecastro.safebus.feature.profile.components.optionrow.OptionRow
 import br.com.denisecastro.safebus.feature.profile.model.ProfileUiState
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 
@@ -59,10 +59,10 @@ fun ProfileScreen(
             isEmailVerified = uiState.isEmailVerified
         )
 
-        ProfileSectionCard(
+        SectionCard(
             titleRes = R.string.profile_account_section
         ) {
-            ProfileOptionRow(
+            OptionRow(
                 titleRes = R.string.profile_personal_data,
                 descriptionRes = R.string.profile_personal_data_description,
                 icon = Icons.Outlined.PersonOutline
@@ -70,17 +70,17 @@ fun ProfileScreen(
 
             HorizontalDivider()
 
-            ProfileOptionRow(
+            OptionRow(
                 titleRes = R.string.profile_security,
                 descriptionRes = R.string.profile_security_description,
                 icon = Icons.Outlined.Lock
             )
         }
 
-        ProfileSectionCard(
+        SectionCard(
             titleRes = R.string.profile_preferences_section
         ) {
-            ProfileOptionRow(
+            OptionRow(
                 titleRes = R.string.profile_notifications,
                 descriptionRes = R.string.profile_notifications_description,
                 icon = Icons.Outlined.NotificationsNone
@@ -88,17 +88,17 @@ fun ProfileScreen(
 
             HorizontalDivider()
 
-            ProfileOptionRow(
+            OptionRow(
                 titleRes = R.string.profile_appearance,
                 descriptionRes = R.string.profile_appearance_description,
                 icon = Icons.Outlined.DarkMode
             )
         }
 
-        ProfileSectionCard(
+        SectionCard(
             titleRes = R.string.profile_about_section
         ) {
-            ProfileOptionRow(
+            OptionRow(
                 titleRes = R.string.profile_version,
                 descriptionRes = null,
                 icon = Icons.Outlined.Info
@@ -106,7 +106,7 @@ fun ProfileScreen(
 
             HorizontalDivider()
 
-            ProfileOptionRow(
+            OptionRow(
                 titleRes = R.string.profile_terms,
                 descriptionRes = R.string.profile_terms_description,
                 icon = Icons.Outlined.Description
@@ -116,7 +116,7 @@ fun ProfileScreen(
     }
 }
 
-@Preview(name = "Perfil - Claro", showBackground = true)
+@Preview(name = "Perfil - Claro", showSystemUi = true)
 @Composable
 private fun ProfileScreenLightPreview() {
     SafeBusTheme(darkTheme = false) {
@@ -132,7 +132,7 @@ private fun ProfileScreenLightPreview() {
     }
 }
 
-@Preview(name = "Perfil - Escuro", showBackground = true)
+@Preview(name = "Perfil - Escuro", showSystemUi = true)
 @Composable
 private fun ProfileScreenDarkPreview() {
     SafeBusTheme(darkTheme = true) {
