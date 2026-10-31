@@ -149,4 +149,19 @@
     <string name="harassment_guidance_title">Sua segurança importa</string>
     <string name="harassment_guidance_description">Sua localização será registrada com o alerta.</string>
 
+    <!-- Tela Mais -->
+    <string name="more_title">Mais</string>
+
+    <string name="more_records_section">Meus registros</string>
+    <string name="more_alert_history">Histórico de alertas</string>
+    <string name="more_alert_history_description">Consulte seus alertas registrados</string>
+
+    <string name="more_communication_section">Comunicação</string>
+    <string name="more_conversations">Conversas</string>
+    <string name="more_conversations_description">Acesse suas mensagens</string>
+
+    <string name="more_contacts">Contatos</string>
+    <string name="more_contacts_description">Gerencie seus contatos</string>
+
+
 </resources>

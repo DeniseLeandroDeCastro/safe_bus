@@ -29,6 +29,7 @@ import br.com.denisecastro.safebus.feature.welcome.screen.WelcomeScreen
 import br.com.denisecastro.safebus.ui.components.navigation.MainScreenScaffold
 import br.com.denisecastro.safebus.ui.components.navigation.SafeBusBottomDestination
 import com.google.firebase.auth.FirebaseAuth
+import br.com.denisecastro.safebus.feature.more.screens.MoreScreen
 
 @Composable
 fun SafeBusNavHost(
@@ -128,7 +129,11 @@ fun SafeBusNavHost(
                             }
                         }
 
-                        SafeBusBottomDestination.MORE -> Unit
+                        SafeBusBottomDestination.MORE -> {
+                            navController.navigate(SafeBusDestination.More.route) {
+                                launchSingleTop = true
+                            }
+                        }
                     }
                 }
             ) { innerPadding ->
@@ -273,7 +278,11 @@ fun SafeBusNavHost(
 
                         SafeBusBottomDestination.MAP -> Unit
                         SafeBusBottomDestination.PROFILE -> Unit
-                        SafeBusBottomDestination.MORE -> Unit
+                        SafeBusBottomDestination.MORE -> {
+                            navController.navigate(SafeBusDestination.More.route) {
+                                launchSingleTop = true
+                            }
+                        }
                     }
                 }
             ) { innerPadding ->
@@ -282,8 +291,39 @@ fun SafeBusNavHost(
                 )
             }
         }
-    }
 
+        composable(SafeBusDestination.More.route) {
+            MainScreenScaffold(
+                selectedDestination = SafeBusBottomDestination.MORE,
+                onDestinationClick = { destination ->
+                    when (destination) {
+                        SafeBusBottomDestination.HOME -> {
+                            navController.navigate(SafeBusDestination.Home.route) {
+                                launchSingleTop = true
+                            }
+                        }
+
+                        SafeBusBottomDestination.MAP -> Unit
+
+                        SafeBusBottomDestination.PROFILE -> {
+                            navController.navigate(SafeBusDestination.Profile.route) {
+                                launchSingleTop = true
+                            }
+                        }
+
+                        SafeBusBottomDestination.MORE -> Unit
+                    }
+                }
+            ) { innerPadding ->
+                MoreScreen(
+                    modifier = Modifier.padding(innerPadding),
+                    onAlertHistoryClick = {},
+                    onConversationsClick = {},
+                    onContactsClick = {}
+                )
+            }
+        }
+    }
     if (showLogoutDialog) {
         LogoutConfirmationDialog(
             onDismiss = {
