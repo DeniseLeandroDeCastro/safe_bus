@@ -177,4 +177,12 @@
     <string name="alert_history_error">Não foi possível carregar seus alertas.</string>
     <string name="alert_history_retry">Tentar novamente</string>
 
+    <string name="alert_details_title">Detalhes do alerta</string>
+    <string name="alert_details_location">Localização registrada</string>
+    <string name="alert_details_identifier">Identificador do alerta</string>
+    <string name="alert_details_accuracy">Precisão da localização</string>
+    <string name="alert_details_accuracy_value">%1$.0f metros</string>
+    <string name="alert_details_unavailable">Não disponível</string>
+    <string name="alert_details_view_map">Ver no mapa</string>
+
 </resources>
