@@ -7,6 +7,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.denisecastro.safebus.feature.profile.screens.ProfileScreen
 import br.com.denisecastro.safebus.feature.profile.viewmodel.ProfileViewModel
+import androidx.lifecycle.compose.LifecycleResumeEffect
 
 @Composable
 fun ProfileRoute(
@@ -15,6 +16,12 @@ fun ProfileRoute(
     onPersonalDataClick: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LifecycleResumeEffect(viewModel) {
+        viewModel.loadProfile()
+
+        onPauseOrDispose { }
+    }
 
     ProfileScreen(
         uiState = uiState,

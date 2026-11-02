@@ -204,4 +204,10 @@
     <string name="personal_data_verified">Verificado</string>
     <string name="personal_data_not_verified">Não verificado</string>
 
+    <!-- Edição dos dados pessoais -->
+    <string name="personal_data_edit_name">Editar nome</string>
+    <string name="personal_data_save">Salvar alterações</string>
+    <string name="personal_data_save_success">Nome atualizado com sucesso!</string>
+    <string name="personal_data_save_error">Não foi possível atualizar o nome. Tente novamente.</string>
+
 </resources>

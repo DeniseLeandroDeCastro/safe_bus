@@ -332,7 +332,9 @@ fun SafeBusNavHost(
                 uiState = uiState,
                 onBackClick = {
                     navController.popBackStack()
-                }
+                },
+                onSaveName = profileViewModel::updateName,
+                onClearNameUpdateResult = profileViewModel::clearNameUpdateResult
             )
         }
 
