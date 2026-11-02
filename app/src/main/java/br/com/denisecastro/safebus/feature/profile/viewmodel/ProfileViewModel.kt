@@ -23,7 +23,8 @@ class ProfileViewModel : ViewModel() {
         _uiState.value = ProfileUiState(
             name = user?.displayName.orEmpty(),
             email = user?.email.orEmpty(),
-            photoUrl = user?.photoUrl?.toString()
+            photoUrl = user?.photoUrl?.toString(),
+            isEmailVerified = user?.isEmailVerified == true
         )
     }
 

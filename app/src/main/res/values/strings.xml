@@ -192,4 +192,16 @@
     <string name="map_location_unavailable">Endereço não disponível</string>
     <string name="map_location_accuracy">Precisão estimada: %1$d m</string>
 
+    <string name="personal_data_preview_name">Ana Silva</string>
+    <string name="personal_data_preview_email">ana@email.com</string>
+
+    <!-- Dados pessoais -->
+    <string name="personal_data_back">Voltar</string>
+    <string name="personal_data_information">Informações pessoais</string>
+    <string name="personal_data_name">Nome</string>
+    <string name="personal_data_email">E-mail</string>
+    <string name="personal_data_email_status">Situação do e-mail</string>
+    <string name="personal_data_verified">Verificado</string>
+    <string name="personal_data_not_verified">Não verificado</string>
+
 </resources>

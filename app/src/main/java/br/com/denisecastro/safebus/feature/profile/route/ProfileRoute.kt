@@ -11,12 +11,14 @@ import br.com.denisecastro.safebus.feature.profile.viewmodel.ProfileViewModel
 @Composable
 fun ProfileRoute(
     modifier: Modifier = Modifier,
-    viewModel: ProfileViewModel = viewModel()
+    viewModel: ProfileViewModel = viewModel(),
+    onPersonalDataClick: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     ProfileScreen(
         uiState = uiState,
-        modifier = modifier
+        modifier = modifier,
+        onPersonalDataClick = onPersonalDataClick
     )
 }

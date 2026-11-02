@@ -41,6 +41,8 @@ import android.content.ActivityNotFoundException
 import android.widget.Toast
 import br.com.denisecastro.safebus.R
 import br.com.denisecastro.safebus.feature.map.screens.MapScreen
+import br.com.denisecastro.safebus.feature.profile.screens.PersonalDataScreen
+import br.com.denisecastro.safebus.feature.profile.viewmodel.ProfileViewModel
 
 @Composable
 fun SafeBusNavHost(
@@ -312,9 +314,26 @@ fun SafeBusNavHost(
                 }
             ) { innerPadding ->
                 ProfileRoute(
-                    modifier = Modifier.padding(innerPadding)
+                    modifier = Modifier.padding(innerPadding),
+                    onPersonalDataClick = {
+                        navController.navigate(
+                            SafeBusDestination.PersonalData.route
+                        )
+                    }
                 )
             }
+        }
+
+        composable(SafeBusDestination.PersonalData.route) {
+            val profileViewModel: ProfileViewModel = viewModel()
+            val uiState by profileViewModel.uiState.collectAsState()
+
+            PersonalDataScreen(
+                uiState = uiState,
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(SafeBusDestination.More.route) {

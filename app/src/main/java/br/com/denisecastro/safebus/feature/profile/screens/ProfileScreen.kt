@@ -37,7 +37,8 @@ import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 @Composable
 fun ProfileScreen(
     uiState: ProfileUiState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onPersonalDataClick: () -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -65,7 +66,8 @@ fun ProfileScreen(
             OptionRow(
                 titleRes = R.string.profile_personal_data,
                 descriptionRes = R.string.profile_personal_data_description,
-                icon = Icons.Outlined.PersonOutline
+                icon = Icons.Outlined.PersonOutline,
+                onClick = onPersonalDataClick
             )
 
             HorizontalDivider()
