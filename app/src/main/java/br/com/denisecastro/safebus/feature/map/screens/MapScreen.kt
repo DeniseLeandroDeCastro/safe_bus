@@ -2,6 +2,10 @@ package br.com.denisecastro.safebus.feature.map.screens
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Point
 import android.location.Location
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -34,7 +38,7 @@ import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.Overlay
 
 @Composable
 fun MapScreen(
@@ -138,20 +142,17 @@ fun MapScreen(
                 location.longitude
             )
 
-            mapView.controller.setZoom(17.0)
+            mapView.controller.setZoom(16.5)
             mapView.controller.animateTo(point)
 
-            mapView.overlays.removeAll { it is Marker }
-
-            val marker = Marker(mapView).apply {
-                position = point
-                setAnchor(
-                    Marker.ANCHOR_CENTER,
-                    Marker.ANCHOR_BOTTOM
-                )
+            mapView.overlays.removeAll {
+                it is UserLocationOverlay
             }
 
-            mapView.overlays.add(marker)
+            mapView.overlays.add(
+                UserLocationOverlay(point)
+            )
+
             mapView.invalidate()
         }
     }
@@ -169,6 +170,60 @@ fun MapScreen(
         factory = { mapView },
         modifier = modifier.fillMaxSize()
     )
+}
+
+private class UserLocationOverlay(
+    private val location: GeoPoint
+) : Overlay() {
+
+    private val accuracyPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.argb(45, 33, 150, 243)
+        style = Paint.Style.FILL
+    }
+
+    private val borderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.WHITE
+        style = Paint.Style.FILL
+    }
+
+    private val locationPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.rgb(33, 150, 243)
+        style = Paint.Style.FILL
+    }
+
+    override fun draw(
+        canvas: Canvas,
+        mapView: MapView,
+        shadow: Boolean
+    ) {
+        if (shadow) return
+
+        val point = Point()
+        mapView.projection.toPixels(location, point)
+
+        val density = mapView.resources.displayMetrics.density
+
+        canvas.drawCircle(
+            point.x.toFloat(),
+            point.y.toFloat(),
+            28f * density,
+            accuracyPaint
+        )
+
+        canvas.drawCircle(
+            point.x.toFloat(),
+            point.y.toFloat(),
+            11f * density,
+            borderPaint
+        )
+
+        canvas.drawCircle(
+            point.x.toFloat(),
+            point.y.toFloat(),
+            8f * density,
+            locationPaint
+        )
+    }
 }
 
 @Preview(

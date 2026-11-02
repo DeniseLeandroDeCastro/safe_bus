@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.denisecastro.safebus.feature.dangeralert.location.model.AlertLocationUiState
+import com.google.android.gms.location.CurrentLocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withTimeoutOrNull
+import kotlin.time.Duration.Companion.seconds
 
 class AlertLocationViewModel(
     application: Application
@@ -79,13 +81,20 @@ class AlertLocationViewModel(
             val cancellationTokenSource = CancellationTokenSource()
 
             try {
-                val location = withTimeoutOrNull(15000L) {
-                    locationClient.getCurrentLocation(
+                val request = CurrentLocationRequest.Builder()
+                    .setPriority(
                         if (fineGranted) {
                             Priority.PRIORITY_HIGH_ACCURACY
                         } else {
                             Priority.PRIORITY_BALANCED_POWER_ACCURACY
-                        },
+                        }
+                    )
+                    .setMaxUpdateAgeMillis(0L)
+                    .build()
+
+                val location = withTimeoutOrNull(15.seconds) {
+                    locationClient.getCurrentLocation(
+                        request,
                         cancellationTokenSource.token
                     ).await()
                 }
