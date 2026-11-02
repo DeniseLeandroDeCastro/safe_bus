@@ -186,5 +186,10 @@
     <string name="alert_details_view_map">Ver no mapa</string>
 
     <string name="map_app_not_found">Nenhum aplicativo de mapas encontrado.</string>
+    <string name="map_my_location">Minha localização</string>
+
+    <string name="map_location_title">Sua localização aproximada</string>
+    <string name="map_location_unavailable">Endereço não disponível</string>
+    <string name="map_location_accuracy">Precisão estimada: %1$d m</string>
 
 </resources>
