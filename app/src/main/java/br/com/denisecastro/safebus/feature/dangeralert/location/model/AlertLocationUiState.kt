@@ -1,4 +1,4 @@
-package br.com.denisecastro.safebus.feature.dangeralert.model
+package br.com.denisecastro.safebus.feature.dangeralert.location.model
 
 sealed interface AlertLocationUiState {
     data object Loading : AlertLocationUiState

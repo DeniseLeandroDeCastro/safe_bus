@@ -1,4 +1,4 @@
-package br.com.denisecastro.safebus.feature.dangeralert.route
+package br.com.denisecastro.safebus.feature.dangeralert.location.route
 
 import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -9,9 +9,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import br.com.denisecastro.safebus.feature.dangeralert.model.AlertLocationUiState
-import br.com.denisecastro.safebus.feature.dangeralert.screens.AlertLocationScreen
-import br.com.denisecastro.safebus.feature.dangeralert.viewmodel.AlertLocationViewModel
+import br.com.denisecastro.safebus.feature.dangeralert.location.model.AlertLocationUiState
+import br.com.denisecastro.safebus.feature.dangeralert.location.screens.AlertLocationScreen
+import br.com.denisecastro.safebus.feature.dangeralert.location.viewmodel.AlertLocationViewModel
 
 @Composable
 fun AlertLocationRoute(

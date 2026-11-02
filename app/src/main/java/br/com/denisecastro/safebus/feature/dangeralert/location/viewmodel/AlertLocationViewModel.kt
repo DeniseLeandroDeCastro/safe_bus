@@ -1,4 +1,4 @@
-package br.com.denisecastro.safebus.feature.dangeralert.viewmodel
+package br.com.denisecastro.safebus.feature.dangeralert.location.viewmodel
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -7,7 +7,7 @@ import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.denisecastro.safebus.feature.dangeralert.model.AlertLocationUiState
+import br.com.denisecastro.safebus.feature.dangeralert.location.model.AlertLocationUiState
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource

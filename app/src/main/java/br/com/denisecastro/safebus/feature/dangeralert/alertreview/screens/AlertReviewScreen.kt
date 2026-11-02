@@ -1,4 +1,4 @@
-package br.com.denisecastro.safebus.feature.dangeralert.screens
+package br.com.denisecastro.safebus.feature.dangeralert.alertreview.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,11 +20,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.denisecastro.safebus.R
-import br.com.denisecastro.safebus.feature.dangeralert.components.cards.AlertReviewInfoCard
-import br.com.denisecastro.safebus.feature.dangeralert.components.cards.AlertReviewWarningCard
-import br.com.denisecastro.safebus.feature.dangeralert.components.cards.AlertSendErrorCard
+import br.com.denisecastro.safebus.feature.dangeralert.alertreview.cards.AlertReviewInfoCard
+import br.com.denisecastro.safebus.feature.dangeralert.alertreview.cards.AlertReviewWarningCard
+import br.com.denisecastro.safebus.feature.dangeralert.alerterror.cards.AlertSendErrorCard
 import br.com.denisecastro.safebus.feature.dangeralert.data.model.EmergencyAlertSendState
-import br.com.denisecastro.safebus.feature.dangeralert.model.AlertLocationUiState
+import br.com.denisecastro.safebus.feature.dangeralert.location.model.AlertLocationUiState
 import br.com.denisecastro.safebus.ui.components.buttons.primary.PrimaryButton
 import br.com.denisecastro.safebus.ui.components.buttons.secondary.SecondaryButton
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme

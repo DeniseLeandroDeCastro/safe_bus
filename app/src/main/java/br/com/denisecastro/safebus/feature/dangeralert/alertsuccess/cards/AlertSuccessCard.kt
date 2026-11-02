@@ -1,4 +1,4 @@
-package br.com.denisecastro.safebus.feature.dangeralert.components.cards
+package br.com.denisecastro.safebus.feature.dangeralert.alertsuccess.cards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*

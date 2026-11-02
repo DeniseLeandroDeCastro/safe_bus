@@ -185,4 +185,6 @@
     <string name="alert_details_unavailable">Não disponível</string>
     <string name="alert_details_view_map">Ver no mapa</string>
 
+    <string name="map_app_not_found">Nenhum aplicativo de mapas encontrado.</string>
+
 </resources>

@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import br.com.denisecastro.safebus.feature.dangeralert.data.model.EmergencyAlert
 import br.com.denisecastro.safebus.feature.dangeralert.data.model.EmergencyAlertSendState
 import br.com.denisecastro.safebus.feature.dangeralert.data.repository.EmergencyAlertRepository
-import br.com.denisecastro.safebus.feature.dangeralert.model.AlertLocationUiState
+import br.com.denisecastro.safebus.feature.dangeralert.location.model.AlertLocationUiState
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

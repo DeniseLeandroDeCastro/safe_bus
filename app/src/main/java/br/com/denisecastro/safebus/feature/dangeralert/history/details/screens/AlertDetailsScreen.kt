@@ -1,4 +1,4 @@
-package br.com.denisecastro.safebus.feature.dangeralert.screens
+package br.com.denisecastro.safebus.feature.dangeralert.history.details.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -44,6 +44,16 @@ import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import android.location.Geocoder
+import android.os.Build
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -79,6 +89,48 @@ fun AlertDetailsScreen(
     val timeText = date?.let {
         SimpleDateFormat("HH:mm", Locale.getDefault()).format(it)
     } ?: stringResource(R.string.alert_history_unknown_date)
+
+    val context = LocalContext.current
+
+    var addressText by remember(alert.id) {
+        mutableStateOf<String?>(null)
+    }
+
+    LaunchedEffect(alert.id, alert.latitude, alert.longitude) {
+        addressText = null
+
+        addressText = withContext(Dispatchers.IO) {
+            try {
+                val geocoder = Geocoder(
+                    context,
+                    Locale("pt", "BR")
+                )
+
+                @Suppress("DEPRECATION")
+                val address = geocoder.getFromLocation(
+                    alert.latitude,
+                    alert.longitude,
+                    1
+                )?.firstOrNull()
+
+                address?.let {
+                    listOfNotNull(
+                        it.thoroughfare,
+                        it.subThoroughfare,
+                        it.subLocality,
+                        it.locality,
+                        it.adminArea
+                    )
+                        .filter { part -> part.isNotBlank() }
+                        .distinct()
+                        .joinToString(", ")
+                        .ifBlank { null }
+                }
+            } catch (e: Exception) {
+                null
+            }
+        }
+    }
 
     Scaffold(
         modifier = modifier,
@@ -185,11 +237,14 @@ fun AlertDetailsScreen(
                 AlertDetailInfoRow(
                     icon = Icons.Outlined.LocationOn,
                     title = stringResource(R.string.alert_details_location),
-                    value = stringResource(
-                        R.string.alert_history_coordinates,
-                        alert.latitude,
-                        alert.longitude
-                    )
+                    value = listOfNotNull(
+                        addressText,
+                        stringResource(
+                            R.string.alert_history_coordinates,
+                            alert.latitude,
+                            alert.longitude
+                        )
+                    ).joinToString("\n")
                 )
 
                 HorizontalDivider()

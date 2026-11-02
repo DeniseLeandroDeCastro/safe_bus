@@ -1,5 +1,4 @@
-
-package br.com.denisecastro.safebus.feature.dangeralert.components.cards
+package br.com.denisecastro.safebus.feature.dangeralert.alerterror.cards
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

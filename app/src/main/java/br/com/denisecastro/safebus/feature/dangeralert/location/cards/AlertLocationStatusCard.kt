@@ -1,4 +1,4 @@
-package br.com.denisecastro.safebus.feature.dangeralert.components.cards
+package br.com.denisecastro.safebus.feature.dangeralert.location.cards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.denisecastro.safebus.R
-import br.com.denisecastro.safebus.feature.dangeralert.model.AlertLocationUiState
+import br.com.denisecastro.safebus.feature.dangeralert.location.model.AlertLocationUiState
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 
 @Composable

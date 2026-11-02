@@ -1,4 +1,4 @@
-package br.com.denisecastro.safebus.feature.dangeralert.screens
+package br.com.denisecastro.safebus.feature.dangeralert.alertsuccess.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,8 +15,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.denisecastro.safebus.R
-import br.com.denisecastro.safebus.feature.dangeralert.components.cards.AlertSuccessCard
-import br.com.denisecastro.safebus.feature.dangeralert.components.cards.AlertSuccessInfoCard
+import br.com.denisecastro.safebus.feature.dangeralert.alertsuccess.cards.AlertSuccessCard
+import br.com.denisecastro.safebus.feature.dangeralert.alertsuccess.cards.AlertSuccessInfoCard
 import br.com.denisecastro.safebus.ui.components.buttons.primary.PrimaryButton
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 

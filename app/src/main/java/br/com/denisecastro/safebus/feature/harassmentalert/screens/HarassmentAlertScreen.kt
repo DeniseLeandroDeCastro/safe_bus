@@ -1,4 +1,4 @@
-package br.com.denisecastro.safebus.feature.dangeralert.screens
+package br.com.denisecastro.safebus.feature.harassmentalert.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -34,7 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.denisecastro.safebus.R
-import br.com.denisecastro.safebus.feature.dangeralert.components.cards.HarassmentGuidanceCard
+import br.com.denisecastro.safebus.feature.harassmentalert.cards.HarassmentGuidanceCard
 import br.com.denisecastro.safebus.ui.components.buttons.primary.PrimaryButton
 import br.com.denisecastro.safebus.ui.components.buttons.secondary.SecondaryButton
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme

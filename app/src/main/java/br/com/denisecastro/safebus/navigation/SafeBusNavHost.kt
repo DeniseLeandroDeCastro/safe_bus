@@ -15,11 +15,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import br.com.denisecastro.safebus.feature.dangeralert.data.model.EmergencyAlertSendState
 import br.com.denisecastro.safebus.feature.dangeralert.history.route.AlertHistoryRoute
-import br.com.denisecastro.safebus.feature.dangeralert.route.AlertLocationRoute
-import br.com.denisecastro.safebus.feature.dangeralert.route.AlertReviewRoute
+import br.com.denisecastro.safebus.feature.dangeralert.location.route.AlertLocationRoute
+import br.com.denisecastro.safebus.feature.dangeralert.alertreview.route.AlertReviewRoute
 import br.com.denisecastro.safebus.feature.dangeralert.route.DangerAlertRoute
-import br.com.denisecastro.safebus.feature.dangeralert.screens.AlertSuccessScreen
-import br.com.denisecastro.safebus.feature.dangeralert.screens.HarassmentAlertScreen
+import br.com.denisecastro.safebus.feature.dangeralert.alertsuccess.screens.AlertSuccessScreen
+import br.com.denisecastro.safebus.feature.dangeralert.data.model.AlertHistoryItem
+import br.com.denisecastro.safebus.feature.dangeralert.history.details.screens.AlertDetailsScreen
+import br.com.denisecastro.safebus.feature.harassmentalert.screens.HarassmentAlertScreen
 import br.com.denisecastro.safebus.feature.dangeralert.viewmodel.EmergencyAlertViewModel
 import br.com.denisecastro.safebus.feature.home.route.HomeRoute
 import br.com.denisecastro.safebus.feature.login.route.LoginRoute
@@ -31,6 +33,13 @@ import br.com.denisecastro.safebus.ui.components.navigation.MainScreenScaffold
 import br.com.denisecastro.safebus.ui.components.navigation.SafeBusBottomDestination
 import com.google.firebase.auth.FirebaseAuth
 import br.com.denisecastro.safebus.feature.more.screens.MoreScreen
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.net.toUri
+import android.content.ActivityNotFoundException
+import android.widget.Toast
+import br.com.denisecastro.safebus.R
 
 @Composable
 fun SafeBusNavHost(
@@ -49,6 +58,12 @@ fun SafeBusNavHost(
     }
 
     val emergencyAlertViewModel: EmergencyAlertViewModel = viewModel()
+
+    var selectedAlert by remember {
+        mutableStateOf<AlertHistoryItem?>(null)
+    }
+
+    val context = LocalContext.current
 
     NavHost(
         navController = navController,
@@ -335,9 +350,43 @@ fun SafeBusNavHost(
                     navController.popBackStack()
                 },
                 onAlertClick = { alert ->
-                    // A navegação para os detalhes será conectada na próxima etapa.
+                    selectedAlert = alert
+
+                    navController.navigate(
+                        SafeBusDestination.AlertDetails.route
+                    ) {
+                        launchSingleTop = true
+                    }
                 }
             )
+        }
+
+        composable(SafeBusDestination.AlertDetails.route) {
+            selectedAlert?.let { alert ->
+                AlertDetailsScreen(
+                    alert = alert,
+                    onBackClick = {
+                        navController.popBackStack()
+                    },
+                    onMapClick = {
+                        val uri = Uri.parse(
+                            "geo:0,0?q=${alert.latitude},${alert.longitude}"
+                        )
+
+                        val intent = Intent(Intent.ACTION_VIEW, uri)
+
+                        try {
+                            context.startActivity(intent)
+                        } catch (e: ActivityNotFoundException) {
+                            Toast.makeText(
+                                context,
+                                R.string.map_app_not_found,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                )
+            }
         }
     }
     if (showLogoutDialog) {

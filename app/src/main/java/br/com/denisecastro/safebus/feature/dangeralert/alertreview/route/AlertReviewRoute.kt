@@ -1,4 +1,4 @@
-package br.com.denisecastro.safebus.feature.dangeralert.route
+package br.com.denisecastro.safebus.feature.dangeralert.alertreview.route
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -6,7 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.denisecastro.safebus.feature.dangeralert.data.model.EmergencyAlertSendState
-import br.com.denisecastro.safebus.feature.dangeralert.screens.AlertReviewScreen
+import br.com.denisecastro.safebus.feature.dangeralert.alertreview.screens.AlertReviewScreen
 import br.com.denisecastro.safebus.feature.dangeralert.viewmodel.EmergencyAlertViewModel
 
 @Composable

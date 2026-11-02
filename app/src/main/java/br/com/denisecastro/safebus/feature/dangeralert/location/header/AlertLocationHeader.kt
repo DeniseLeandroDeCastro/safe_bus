@@ -1,4 +1,4 @@
-package br.com.denisecastro.safebus.feature.dangeralert.components.header
+package br.com.denisecastro.safebus.feature.dangeralert.location.header
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

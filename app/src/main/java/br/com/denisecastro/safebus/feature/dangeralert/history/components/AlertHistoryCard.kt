@@ -28,11 +28,13 @@ import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 import br.com.denisecastro.safebus.utils.DateUtils
 import com.google.firebase.Timestamp
 import java.util.Date
+import androidx.compose.foundation.clickable
 
 @Composable
 fun AlertHistoryCard(
     alert: AlertHistoryItem,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {}
 ) {
     val alertTitle = when (alert.type) {
         "DANGER" -> R.string.danger_alert_title
@@ -56,7 +58,9 @@ fun AlertHistoryCard(
     } ?: stringResource(R.string.alert_history_unknown_date)
 
     StandardCard(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
