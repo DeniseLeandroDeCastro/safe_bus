@@ -19,6 +19,8 @@ googleServices = "4.4.4"
  googleid = "1.1.1"
  # Location
  playServicesLocation = "21.3.0"
+ # OpenStreetMap
+ osmdroid = "6.1.20"
  # Tests
  junit = "4.13.2"
  junitVersion = "1.3.0"
@@ -44,7 +46,6 @@ androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecyc
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
-
 # Coroutines
 kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutines" }
 # Google Sign-In - Credential Manager
@@ -53,6 +54,8 @@ androidx-credentials-play-services-auth = { module = "androidx.credentials:crede
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
 # Location
 google-play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
+# OpenStreetMap
+osmdroid-android = { module = "org.osmdroid:osmdroid-android", version.ref = "osmdroid" }
 # Tests
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

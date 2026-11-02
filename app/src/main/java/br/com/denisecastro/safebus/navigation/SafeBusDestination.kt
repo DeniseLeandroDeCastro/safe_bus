@@ -16,4 +16,5 @@ sealed class SafeBusDestination(
     data object More : SafeBusDestination("more")
     data object AlertHistory : SafeBusDestination("alert_history")
     data object AlertDetails : SafeBusDestination("alert_details")
+    data object Map : SafeBusDestination("map")
 }

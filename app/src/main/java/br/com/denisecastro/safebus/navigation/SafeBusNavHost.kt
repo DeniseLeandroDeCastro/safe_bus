@@ -40,6 +40,7 @@ import androidx.core.net.toUri
 import android.content.ActivityNotFoundException
 import android.widget.Toast
 import br.com.denisecastro.safebus.R
+import br.com.denisecastro.safebus.feature.map.screens.MapScreen
 
 @Composable
 fun SafeBusNavHost(
@@ -135,7 +136,11 @@ fun SafeBusNavHost(
                     when (destination) {
                         SafeBusBottomDestination.HOME -> Unit
 
-                        SafeBusBottomDestination.MAP -> Unit
+                        SafeBusBottomDestination.MAP -> {
+                            navController.navigate(SafeBusDestination.Map.route) {
+                                launchSingleTop = true
+                            }
+                        }
 
                         SafeBusBottomDestination.PROFILE -> {
                             navController.navigate(
@@ -292,7 +297,11 @@ fun SafeBusNavHost(
                             )
                         }
 
-                        SafeBusBottomDestination.MAP -> Unit
+                        SafeBusBottomDestination.MAP -> {
+                            navController.navigate(SafeBusDestination.Map.route) {
+                                launchSingleTop = true
+                            }
+                        }
                         SafeBusBottomDestination.PROFILE -> Unit
                         SafeBusBottomDestination.MORE -> {
                             navController.navigate(SafeBusDestination.More.route) {
@@ -319,7 +328,11 @@ fun SafeBusNavHost(
                             }
                         }
 
-                        SafeBusBottomDestination.MAP -> Unit
+                        SafeBusBottomDestination.MAP -> {
+                            navController.navigate(SafeBusDestination.Map.route) {
+                                launchSingleTop = true
+                            }
+                        }
 
                         SafeBusBottomDestination.PROFILE -> {
                             navController.navigate(SafeBusDestination.Profile.route) {
@@ -385,6 +398,39 @@ fun SafeBusNavHost(
                             ).show()
                         }
                     }
+                )
+            }
+        }
+
+        composable(SafeBusDestination.Map.route) {
+            MainScreenScaffold(
+                selectedDestination = SafeBusBottomDestination.MAP,
+                onDestinationClick = { destination ->
+                    when (destination) {
+                        SafeBusBottomDestination.HOME -> {
+                            navController.navigate(SafeBusDestination.Home.route) {
+                                launchSingleTop = true
+                            }
+                        }
+
+                        SafeBusBottomDestination.MAP -> Unit
+
+                        SafeBusBottomDestination.PROFILE -> {
+                            navController.navigate(SafeBusDestination.Profile.route) {
+                                launchSingleTop = true
+                            }
+                        }
+
+                        SafeBusBottomDestination.MORE -> {
+                            navController.navigate(SafeBusDestination.More.route) {
+                                launchSingleTop = true
+                            }
+                        }
+                    }
+                }
+            ) { innerPadding ->
+                MapScreen(
+                    modifier = Modifier.padding(innerPadding)
                 )
             }
         }

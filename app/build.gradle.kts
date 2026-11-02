@@ -67,6 +67,8 @@ dependencies {
     implementation(libs.googleid)
     // Location
     implementation(libs.google.play.services.location)
+    // OpenStreetMap
+    implementation(libs.osmdroid.android)
     // Tests
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
