@@ -19,14 +19,20 @@ class ProfileViewModel : ViewModel() {
     }
 
     fun loadProfile() {
-        val user = auth.currentUser
+        val user = auth.currentUser ?: return
 
-        _uiState.value = _uiState.value.copy(
-            name = user?.displayName.orEmpty(),
-            email = user?.email.orEmpty(),
-            photoUrl = user?.photoUrl?.toString(),
-            isEmailVerified = user?.isEmailVerified == true
-        )
+        user.reload().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val updatedUser = auth.currentUser ?: return@addOnCompleteListener
+
+                _uiState.value = _uiState.value.copy(
+                    name = updatedUser.displayName.orEmpty(),
+                    email = updatedUser.email.orEmpty(),
+                    photoUrl = updatedUser.photoUrl?.toString(),
+                    isEmailVerified = updatedUser.isEmailVerified
+                )
+            }
+        }
     }
 
     fun updateName(name: String) {
