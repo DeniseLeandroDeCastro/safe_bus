@@ -334,7 +334,8 @@ fun SafeBusNavHost(
                     navController.popBackStack()
                 },
                 onSaveName = profileViewModel::updateName,
-                onClearNameUpdateResult = profileViewModel::clearNameUpdateResult
+                onClearNameUpdateResult = profileViewModel::clearNameUpdateResult,
+                onPhotoSelected = profileViewModel::updatePhoto
             )
         }
 

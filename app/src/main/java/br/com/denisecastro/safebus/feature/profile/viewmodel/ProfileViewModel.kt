@@ -1,15 +1,26 @@
 package br.com.denisecastro.safebus.feature.profile.viewmodel
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import android.net.Uri
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import br.com.denisecastro.safebus.feature.profile.data.ProfilePhotoStorage
 import br.com.denisecastro.safebus.feature.profile.model.ProfileUiState
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel(
+    application: Application
+) : AndroidViewModel(application) {
 
     private val auth = FirebaseAuth.getInstance()
+
+    private val photoStorage = ProfilePhotoStorage(application)
 
     private val _uiState = MutableStateFlow(ProfileUiState())
     val uiState = _uiState.asStateFlow()
@@ -23,14 +34,50 @@ class ProfileViewModel : ViewModel() {
 
         user.reload().addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                val updatedUser = auth.currentUser ?: return@addOnCompleteListener
+                val updatedUser =
+                    auth.currentUser ?: return@addOnCompleteListener
+
+                val userId = updatedUser.uid
+                val firebasePhotoUrl =
+                    updatedUser.photoUrl?.toString()
 
                 _uiState.value = _uiState.value.copy(
                     name = updatedUser.displayName.orEmpty(),
                     email = updatedUser.email.orEmpty(),
-                    photoUrl = updatedUser.photoUrl?.toString(),
                     isEmailVerified = updatedUser.isEmailVerified
                 )
+
+                viewModelScope.launch {
+                    val localPhotoUrl = withContext(Dispatchers.IO) {
+                        photoStorage.getPhoto(userId)
+                    }
+
+                    if (auth.currentUser?.uid == userId) {
+                        _uiState.value = _uiState.value.copy(
+                            photoUrl = localPhotoUrl ?: firebasePhotoUrl
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    fun updatePhoto(uri: Uri) {
+        val userId = auth.currentUser?.uid ?: return
+
+        viewModelScope.launch {
+            try {
+                val photoUrl = withContext(Dispatchers.IO) {
+                    photoStorage.savePhoto(uri, userId)
+                }
+
+                if (auth.currentUser?.uid == userId) {
+                    _uiState.value = _uiState.value.copy(
+                        photoUrl = photoUrl
+                    )
+                }
+            } catch (exception: Exception) {
+                // Mantém a foto anterior se não conseguir salvar.
             }
         }
     }

@@ -36,6 +36,11 @@ import br.com.denisecastro.safebus.feature.profile.model.ProfileUiState
 import br.com.denisecastro.safebus.ui.components.buttons.primary.PrimaryButton
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 import br.com.denisecastro.safebus.feature.profile.components.avatar.ProfileAvatar
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 
 @Composable
 fun PersonalDataScreen(
@@ -43,11 +48,20 @@ fun PersonalDataScreen(
     onBackClick: () -> Unit,
     onSaveName: (String) -> Unit,
     onClearNameUpdateResult: () -> Unit,
+    onPhotoSelected: (Uri) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var isEditingName by remember { mutableStateOf(false) }
     var editedName by remember(uiState.name) {
         mutableStateOf(uiState.name)
+    }
+
+    val photoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
+        if (uri != null) {
+            onPhotoSelected(uri)
+        }
     }
 
     LaunchedEffect(uiState.nameUpdateSuccess) {
@@ -83,8 +97,23 @@ fun PersonalDataScreen(
 
         ProfileAvatar(
             photoUrl = uiState.photoUrl,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .clickable {
+                    photoPickerLauncher.launch(
+                        PickVisualMediaRequest(
+                            ActivityResultContracts.PickVisualMedia.ImageOnly
+                        )
+                    )
+                },
             size = 104.dp
+        )
+
+        Text(
+            text = stringResource(R.string.personal_data_change_photo),
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.primary
         )
 
         SectionCard(
@@ -188,7 +217,8 @@ private fun PersonalDataScreenLightPreview() {
                 ),
                 onBackClick = {},
                 onSaveName = {},
-                onClearNameUpdateResult = {}
+                onClearNameUpdateResult = {},
+                onPhotoSelected = {}
             )
         }
     }
@@ -207,7 +237,8 @@ private fun PersonalDataScreenDarkPreview() {
                 ),
                 onBackClick = {},
                 onSaveName = {},
-                onClearNameUpdateResult = {}
+                onClearNameUpdateResult = {},
+                onPhotoSelected = {}
             )
         }
     }

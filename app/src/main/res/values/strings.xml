@@ -209,5 +209,6 @@
     <string name="personal_data_save">Salvar alterações</string>
     <string name="personal_data_save_success">Nome atualizado com sucesso!</string>
     <string name="personal_data_save_error">Não foi possível atualizar o nome. Tente novamente.</string>
+    <string name="personal_data_change_photo">Toque na foto para alterar</string>
 
 </resources>
