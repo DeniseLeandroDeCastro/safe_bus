@@ -57,7 +57,8 @@ fun ProfileScreen(
         ProfileHeader(
             name = uiState.name,
             email = uiState.email,
-            isEmailVerified = uiState.isEmailVerified
+            isEmailVerified = uiState.isEmailVerified,
+            photoUrl = uiState.photoUrl
         )
 
         SectionCard(

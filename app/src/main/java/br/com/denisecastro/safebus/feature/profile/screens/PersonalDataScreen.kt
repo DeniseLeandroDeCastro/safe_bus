@@ -35,6 +35,7 @@ import br.com.denisecastro.safebus.feature.profile.components.fields.NameEditFie
 import br.com.denisecastro.safebus.feature.profile.model.ProfileUiState
 import br.com.denisecastro.safebus.ui.components.buttons.primary.PrimaryButton
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
+import br.com.denisecastro.safebus.feature.profile.components.avatar.ProfileAvatar
 
 @Composable
 fun PersonalDataScreen(
@@ -79,6 +80,12 @@ fun PersonalDataScreen(
                 color = MaterialTheme.colorScheme.onBackground
             )
         }
+
+        ProfileAvatar(
+            photoUrl = uiState.photoUrl,
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            size = 104.dp
+        )
 
         SectionCard(
             titleRes = R.string.personal_data_information

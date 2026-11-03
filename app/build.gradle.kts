@@ -69,6 +69,9 @@ dependencies {
     implementation(libs.google.play.services.location)
     // OpenStreetMap
     implementation(libs.osmdroid.android)
+    // Coil
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
     // Tests
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
