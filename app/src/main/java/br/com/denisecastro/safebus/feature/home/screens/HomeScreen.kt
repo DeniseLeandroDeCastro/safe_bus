@@ -1,47 +1,24 @@
 package br.com.denisecastro.safebus.feature.home.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.NotificationsNone
-import androidx.compose.material.icons.filled.PanTool
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.com.denisecastro.safebus.R
-import br.com.denisecastro.safebus.feature.home.components.cards.HomeAlertCard
 import br.com.denisecastro.safebus.feature.home.components.cards.SafetyTipsCard
 import br.com.denisecastro.safebus.feature.home.components.cards.TransportInfoCard
 import br.com.denisecastro.safebus.feature.home.components.cards.TravelSafetyCard
+import br.com.denisecastro.safebus.feature.home.components.header.HomeHeader
+import br.com.denisecastro.safebus.feature.home.components.sections.HomeAlertsSection
 import br.com.denisecastro.safebus.feature.home.model.HomeUiState
-import br.com.denisecastro.safebus.ui.theme.AlertDanger
-import br.com.denisecastro.safebus.ui.theme.SafeBusAlertColors
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
-import br.com.denisecastro.safebus.ui.theme.TurquoiseSecondary
-import androidx.compose.material.icons.automirrored.outlined.Logout
-import androidx.compose.ui.res.stringResource
 
 @Composable
 fun HomeScreen(
@@ -55,9 +32,6 @@ fun HomeScreen(
     onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val dangerColors = SafeBusAlertColors.danger()
-    val harassmentColors = SafeBusAlertColors.harassment()
-
     Surface(
         modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -74,67 +48,14 @@ fun HomeScreen(
                 ),
             verticalArrangement = Arrangement.spacedBy(32.dp)
         ) {
-
             // Cabeçalho
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Text(
-                        text = if (uiState.userName.isBlank()) {
-                            stringResource(R.string.home_greeting)
-                        } else {
-                            stringResource(R.string.home_greeting_name, uiState.userName)
-                        },
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-
-                    Text(
-                        text = "Mais segurança nas suas viagens.",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-
-                IconButton(onClick = onNotificationsClick) {
-                    Icon(
-                        imageVector = Icons.Filled.NotificationsNone,
-                        contentDescription = "Notificações",
-                        tint = MaterialTheme.colorScheme.onBackground
-                    )
-                }
-
-                IconButton(
-                    onClick = onProfileClick,
-                    modifier = Modifier.background(
-                        color = MaterialTheme.colorScheme.primaryContainer,
-                        shape = CircleShape
-                    )
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Person,
-                        contentDescription = "Perfil",
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                }
-
-                IconButton(
-                    onClick = onLogoutClick
-                ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Outlined.Logout,
-                        contentDescription = stringResource(R.string.profile_logout),
-                        tint = MaterialTheme.colorScheme.error
-                    )
-                }
-            }
+            HomeHeader(
+                userName = uiState.userName,
+                photoUrl = uiState.photoUrl,
+                onNotificationsClick = onNotificationsClick,
+                onProfileClick = onProfileClick,
+                onLogoutClick = onLogoutClick
+            )
 
             // Card ilustrado
             TravelSafetyCard()
@@ -154,56 +75,21 @@ fun HomeScreen(
             }
 
             // Alertas de emergência
-            Column(
-                verticalArrangement = Arrangement.spacedBy(14.dp)
-            ) {
-                Text(
-                    text = "Alertas de emergência",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onBackground
-                )
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    verticalAlignment = Alignment.Top
-                ) {
-                    HomeAlertCard(
-                        title = "Assalto ou situação de perigo",
-                        description = "Acione uma viatura próxima.",
-                        imageRes = R.drawable.alert_danger,
-                        accentColor = AlertDanger,
-                        onClick = onDangerAlertClick,
-                        modifier = Modifier.weight(1f)
-                    )
-
-                    HomeAlertCard(
-                        title = "Importunação ou assédio sexual",
-                        description = "Peça ajuda de forma discreta.",
-                        imageRes = R.drawable.alert_harassment,
-                        accentColor = TurquoiseSecondary,
-                        onClick = onHarassmentAlertClick,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-            }
+            HomeAlertsSection(
+                onDangerAlertClick = onDangerAlertClick,
+                onHarassmentAlertClick = onHarassmentAlertClick
+            )
 
             // Dicas de segurança
-            Column(
-                verticalArrangement = Arrangement.spacedBy(14.dp)
-            ) {
-                SafetyTipsCard(
-                    onClick = onSafetyTipsClick
-                )
-            }
+            SafetyTipsCard(
+                onClick = onSafetyTipsClick
+            )
         }
     }
 }
 
 @Preview(
     name = "Home - Tema claro",
-    showBackground = true,
     showSystemUi = true
 )
 @Composable
@@ -215,7 +101,6 @@ private fun HomeScreenLightPreview() {
 
 @Preview(
     name = "Home - Tema escuro",
-    showBackground = true,
     showSystemUi = true
 )
 @Composable
