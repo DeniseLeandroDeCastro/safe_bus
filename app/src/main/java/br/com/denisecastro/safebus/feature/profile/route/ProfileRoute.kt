@@ -1,19 +1,21 @@
+
 package br.com.denisecastro.safebus.feature.profile.route
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.denisecastro.safebus.feature.profile.screens.ProfileScreen
 import br.com.denisecastro.safebus.feature.profile.viewmodel.ProfileViewModel
-import androidx.lifecycle.compose.LifecycleResumeEffect
 
 @Composable
 fun ProfileRoute(
     modifier: Modifier = Modifier,
     viewModel: ProfileViewModel = viewModel(),
-    onPersonalDataClick: () -> Unit
+    onPersonalDataClick: () -> Unit,
+    onSecurityClick: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -26,6 +28,7 @@ fun ProfileRoute(
     ProfileScreen(
         uiState = uiState,
         modifier = modifier,
-        onPersonalDataClick = onPersonalDataClick
+        onPersonalDataClick = onPersonalDataClick,
+        onSecurityClick = onSecurityClick
     )
 }

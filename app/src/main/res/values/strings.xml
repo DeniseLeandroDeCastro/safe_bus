@@ -211,4 +211,18 @@
     <string name="personal_data_save_error">Não foi possível atualizar o nome. Tente novamente.</string>
     <string name="personal_data_change_photo">Toque na foto para alterar</string>
 
+    <string name="back">Voltar</string>
+    <string name="security_authentication_method">Método de autenticação</string>
+    <string name="security_google">Google</string>
+    <string name="security_email_password">E-mail e senha</string>
+    <string name="security_unknown">Não identificado</string>
+
+    <string name="security_reset_password_title">Redefinir senha</string>
+    <string name="security_reset_password_description">Enviaremos um link para o e-mail cadastrado para que você possa definir uma nova senha.</string>
+    <string name="security_reset_password_button">Enviar e-mail de redefinição</string>
+    <string name="security_reset_password_success">Se o endereço estiver habilitado para redefinição, você receberá um e-mail com as instruções.</string>
+    <string name="security_reset_password_error">Não foi possível solicitar a redefinição de senha. Tente novamente.</string>
+
+    <string name="security_authentication_description">Método utilizado para acessar sua conta no SafeBus.</string>
+
 </resources>

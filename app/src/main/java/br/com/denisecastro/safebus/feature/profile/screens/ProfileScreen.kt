@@ -38,7 +38,8 @@ import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 fun ProfileScreen(
     uiState: ProfileUiState,
     modifier: Modifier = Modifier,
-    onPersonalDataClick: () -> Unit = {}
+    onPersonalDataClick: () -> Unit = {},
+    onSecurityClick: () -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -76,7 +77,8 @@ fun ProfileScreen(
             OptionRow(
                 titleRes = R.string.profile_security,
                 descriptionRes = R.string.profile_security_description,
-                icon = Icons.Outlined.Lock
+                icon = Icons.Outlined.Lock,
+                onClick = onSecurityClick
             )
         }
 

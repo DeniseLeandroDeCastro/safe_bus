@@ -1,5 +1,9 @@
 package br.com.denisecastro.safebus.navigation
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -8,41 +12,38 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import br.com.denisecastro.safebus.feature.dangeralert.data.model.EmergencyAlertSendState
-import br.com.denisecastro.safebus.feature.dangeralert.history.route.AlertHistoryRoute
-import br.com.denisecastro.safebus.feature.dangeralert.location.route.AlertLocationRoute
+import br.com.denisecastro.safebus.R
 import br.com.denisecastro.safebus.feature.dangeralert.alertreview.route.AlertReviewRoute
-import br.com.denisecastro.safebus.feature.dangeralert.route.DangerAlertRoute
 import br.com.denisecastro.safebus.feature.dangeralert.alertsuccess.screens.AlertSuccessScreen
 import br.com.denisecastro.safebus.feature.dangeralert.data.model.AlertHistoryItem
+import br.com.denisecastro.safebus.feature.dangeralert.data.model.EmergencyAlertSendState
 import br.com.denisecastro.safebus.feature.dangeralert.history.details.screens.AlertDetailsScreen
-import br.com.denisecastro.safebus.feature.harassmentalert.screens.HarassmentAlertScreen
+import br.com.denisecastro.safebus.feature.dangeralert.history.route.AlertHistoryRoute
+import br.com.denisecastro.safebus.feature.dangeralert.location.route.AlertLocationRoute
+import br.com.denisecastro.safebus.feature.dangeralert.route.DangerAlertRoute
 import br.com.denisecastro.safebus.feature.dangeralert.viewmodel.EmergencyAlertViewModel
+import br.com.denisecastro.safebus.feature.harassmentalert.screens.HarassmentAlertScreen
 import br.com.denisecastro.safebus.feature.home.route.HomeRoute
 import br.com.denisecastro.safebus.feature.login.route.LoginRoute
+import br.com.denisecastro.safebus.feature.map.screens.MapScreen
+import br.com.denisecastro.safebus.feature.more.screens.MoreScreen
 import br.com.denisecastro.safebus.feature.profile.components.dialog.LogoutConfirmationDialog
 import br.com.denisecastro.safebus.feature.profile.route.ProfileRoute
+import br.com.denisecastro.safebus.feature.profile.screens.PersonalDataScreen
+import br.com.denisecastro.safebus.feature.profile.screens.SecurityScreen
+import br.com.denisecastro.safebus.feature.profile.viewmodel.ProfileViewModel
 import br.com.denisecastro.safebus.feature.register.route.RegisterRoute
 import br.com.denisecastro.safebus.feature.welcome.screen.WelcomeScreen
 import br.com.denisecastro.safebus.ui.components.navigation.MainScreenScaffold
 import br.com.denisecastro.safebus.ui.components.navigation.SafeBusBottomDestination
 import com.google.firebase.auth.FirebaseAuth
-import br.com.denisecastro.safebus.feature.more.screens.MoreScreen
-import android.content.Intent
-import android.net.Uri
-import androidx.compose.ui.platform.LocalContext
-import androidx.core.net.toUri
-import android.content.ActivityNotFoundException
-import android.widget.Toast
-import br.com.denisecastro.safebus.R
-import br.com.denisecastro.safebus.feature.map.screens.MapScreen
-import br.com.denisecastro.safebus.feature.profile.screens.PersonalDataScreen
-import br.com.denisecastro.safebus.feature.profile.viewmodel.ProfileViewModel
 
 @Composable
 fun SafeBusNavHost(
@@ -319,6 +320,13 @@ fun SafeBusNavHost(
                         navController.navigate(
                             SafeBusDestination.PersonalData.route
                         )
+                    },
+                    onSecurityClick = {
+                        navController.navigate(
+                            SafeBusDestination.Security.route
+                        ) {
+                            launchSingleTop = true
+                        }
                     }
                 )
             }
@@ -336,6 +344,57 @@ fun SafeBusNavHost(
                 onSaveName = profileViewModel::updateName,
                 onClearNameUpdateResult = profileViewModel::clearNameUpdateResult,
                 onPhotoSelected = profileViewModel::updatePhoto
+            )
+        }
+
+        composable(SafeBusDestination.Security.route) {
+            val user = FirebaseAuth.getInstance().currentUser
+
+            val providerIds = user?.providerData
+                ?.map { it.providerId }
+                .orEmpty()
+
+            val authenticationMethod = when {
+                "google.com" in providerIds -> {
+                    stringResource(R.string.security_google)
+                }
+
+                "password" in providerIds -> {
+                    stringResource(R.string.security_email_password)
+                }
+
+                else -> {
+                    stringResource(R.string.security_unknown)
+                }
+            }
+
+            SecurityScreen(
+                authenticationMethod = authenticationMethod,
+                canResetPassword = "password" in providerIds,
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onResetPasswordClick = {
+                    val email = user?.email
+
+                    if (!email.isNullOrBlank()) {
+                        FirebaseAuth.getInstance()
+                            .sendPasswordResetEmail(email)
+                            .addOnCompleteListener { task ->
+                                val messageRes = if (task.isSuccessful) {
+                                    R.string.security_reset_password_success
+                                } else {
+                                    R.string.security_reset_password_error
+                                }
+
+                                Toast.makeText(
+                                    context,
+                                    messageRes,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                    }
+                }
             )
         }
 
