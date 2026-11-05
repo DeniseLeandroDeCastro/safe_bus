@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
+import androidx.compose.ui.res.stringResource
+import br.com.denisecastro.safebus.R
 
 @Composable
 fun PrimaryButton(
@@ -60,7 +62,11 @@ fun PrimaryButton(
             }
 
             Text(
-                text = if (isLoading) "Aguarde..." else text,
+                text = if (isLoading) {
+                    stringResource(R.string.button_loading)
+                } else {
+                    text
+                },
                 style = MaterialTheme.typography.labelLarge
             )
         }
