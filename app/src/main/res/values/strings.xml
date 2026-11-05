@@ -224,5 +224,13 @@
     <string name="security_reset_password_error">Não foi possível solicitar a redefinição de senha. Tente novamente.</string>
 
     <string name="security_authentication_description">Método utilizado para acessar sua conta no SafeBus.</string>
+    <string name="security_header_description">Gerencie as opções de segurança e proteção da sua conta.</string>
+
+    <string name="security_email_verification_title">Verificação de e-mail</string>
+    <string name="security_email_verified">Seu endereço de e-mail está verificado.</string>
+    <string name="security_email_not_verified">Seu endereço de e-mail ainda não foi verificado.</string>
+    <string name="security_verify_email_button">Enviar e-mail de verificação</string>
+    <string name="security_verify_email_success">Se for possível enviar a verificação, você receberá um e-mail com as instruções.</string>
+    <string name="security_verify_email_error">Não foi possível enviar o e-mail de verificação. Tente novamente.</string>
 
 </resources>

@@ -1,5 +1,4 @@
-
-package br.com.denisecastro.safebus.feature.profile.screens
+package br.com.denisecastro.safebus.feature.security.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,14 +19,18 @@ import androidx.compose.ui.unit.dp
 import br.com.denisecastro.safebus.R
 import br.com.denisecastro.safebus.feature.profile.components.cards.PasswordResetCard
 import br.com.denisecastro.safebus.feature.profile.components.security.AuthenticationMethodCard
+import br.com.denisecastro.safebus.feature.security.components.cards.EmailVerificationCard
+import br.com.denisecastro.safebus.feature.security.components.header.SecurityHeader
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 
 @Composable
 fun SecurityScreen(
     authenticationMethod: String,
     canResetPassword: Boolean,
+    isEmailVerified: Boolean,
     onBackClick: () -> Unit,
     onResetPasswordClick: () -> Unit,
+    onVerifyEmailClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -43,10 +46,8 @@ fun SecurityScreen(
                 .padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            androidx.compose.material3.Text(
-                text = stringResource(R.string.profile_security),
-                style = MaterialTheme.typography.headlineLarge,
-                color = MaterialTheme.colorScheme.onBackground
+            SecurityHeader(
+                onBackClick = onBackClick
             )
 
             AuthenticationMethodCard(
@@ -58,6 +59,11 @@ fun SecurityScreen(
                     onResetPasswordClick = onResetPasswordClick
                 )
             }
+
+            EmailVerificationCard(
+                isEmailVerified = isEmailVerified,
+                onVerifyEmailClick = onVerifyEmailClick
+            )
         }
     }
 }
@@ -66,14 +72,7 @@ fun SecurityScreen(
 @Composable
 private fun SecurityScreenLightPreview() {
     SafeBusTheme(darkTheme = false) {
-        SecurityScreen(
-            authenticationMethod = stringResource(
-                R.string.security_email_password
-            ),
-            canResetPassword = true,
-            onBackClick = {},
-            onResetPasswordClick = {}
-        )
+        SecurityScreenPreviewContent()
     }
 }
 
@@ -81,13 +80,18 @@ private fun SecurityScreenLightPreview() {
 @Composable
 private fun SecurityScreenDarkPreview() {
     SafeBusTheme(darkTheme = true) {
-        SecurityScreen(
-            authenticationMethod = stringResource(
-                R.string.security_email_password
-            ),
-            canResetPassword = true,
-            onBackClick = {},
-            onResetPasswordClick = {}
-        )
+        SecurityScreenPreviewContent()
     }
+}
+
+@Composable
+private fun SecurityScreenPreviewContent() {
+    SecurityScreen(
+        authenticationMethod = stringResource(R.string.security_email_password),
+        canResetPassword = true,
+        isEmailVerified = false,
+        onBackClick = {},
+        onResetPasswordClick = {},
+        onVerifyEmailClick = {}
+    )
 }

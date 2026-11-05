@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -37,9 +38,9 @@ import br.com.denisecastro.safebus.feature.more.screens.MoreScreen
 import br.com.denisecastro.safebus.feature.profile.components.dialog.LogoutConfirmationDialog
 import br.com.denisecastro.safebus.feature.profile.route.ProfileRoute
 import br.com.denisecastro.safebus.feature.profile.screens.PersonalDataScreen
-import br.com.denisecastro.safebus.feature.profile.screens.SecurityScreen
 import br.com.denisecastro.safebus.feature.profile.viewmodel.ProfileViewModel
 import br.com.denisecastro.safebus.feature.register.route.RegisterRoute
+import br.com.denisecastro.safebus.feature.security.screens.SecurityScreen
 import br.com.denisecastro.safebus.feature.welcome.screen.WelcomeScreen
 import br.com.denisecastro.safebus.ui.components.navigation.MainScreenScaffold
 import br.com.denisecastro.safebus.ui.components.navigation.SafeBusBottomDestination
@@ -172,7 +173,6 @@ fun SafeBusNavHost(
                         }
                     },
                     onTransportClick = {},
-
                     onDangerAlertClick = {
                         emergencyAlertViewModel.setAlertType("DANGER")
 
@@ -182,7 +182,6 @@ fun SafeBusNavHost(
                             launchSingleTop = true
                         }
                     },
-
                     onHarassmentAlertClick = {
                         emergencyAlertViewModel.setAlertType("HARASSMENT")
 
@@ -192,7 +191,6 @@ fun SafeBusNavHost(
                             launchSingleTop = true
                         }
                     },
-
                     onLogoutClick = {
                         showLogoutDialog = true
                     },
@@ -305,7 +303,9 @@ fun SafeBusNavHost(
                                 launchSingleTop = true
                             }
                         }
+
                         SafeBusBottomDestination.PROFILE -> Unit
+
                         SafeBusBottomDestination.MORE -> {
                             navController.navigate(SafeBusDestination.More.route) {
                                 launchSingleTop = true
@@ -368,9 +368,23 @@ fun SafeBusNavHost(
                 }
             }
 
+            var isEmailVerified by remember(user?.uid) {
+                mutableStateOf(user?.isEmailVerified == true)
+            }
+
+            LifecycleResumeEffect(user?.uid) {
+                user?.reload()
+                    ?.addOnSuccessListener {
+                        isEmailVerified = user.isEmailVerified
+                    }
+
+                onPauseOrDispose { }
+            }
+
             SecurityScreen(
                 authenticationMethod = authenticationMethod,
                 canResetPassword = "password" in providerIds,
+                isEmailVerified = isEmailVerified,
                 onBackClick = {
                     navController.popBackStack()
                 },
@@ -394,6 +408,20 @@ fun SafeBusNavHost(
                                 ).show()
                             }
                     }
+                },
+                onVerifyEmailClick = {
+                    user?.sendEmailVerification()
+                        ?.addOnCompleteListener { task ->
+                            Toast.makeText(
+                                context,
+                                if (task.isSuccessful) {
+                                    R.string.security_verify_email_success
+                                } else {
+                                    R.string.security_verify_email_error
+                                },
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                 }
             )
         }
@@ -516,6 +544,7 @@ fun SafeBusNavHost(
             }
         }
     }
+
     if (showLogoutDialog) {
         LogoutConfirmationDialog(
             onDismiss = {
