@@ -327,6 +327,13 @@ fun SafeBusNavHost(
                         ) {
                             launchSingleTop = true
                         }
+                    },
+                    onNotificationsClick = {
+                        navController.navigate(
+                            SafeBusDestination.Notifications.route
+                        ) {
+                            launchSingleTop = true
+                        }
                     }
                 )
             }

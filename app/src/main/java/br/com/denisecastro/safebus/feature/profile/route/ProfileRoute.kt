@@ -15,7 +15,8 @@ fun ProfileRoute(
     modifier: Modifier = Modifier,
     viewModel: ProfileViewModel = viewModel(),
     onPersonalDataClick: () -> Unit,
-    onSecurityClick: () -> Unit
+    onSecurityClick: () -> Unit,
+    onNotificationsClick: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -29,6 +30,7 @@ fun ProfileRoute(
         uiState = uiState,
         modifier = modifier,
         onPersonalDataClick = onPersonalDataClick,
-        onSecurityClick = onSecurityClick
+        onSecurityClick = onSecurityClick,
+        onNotificationsClick = onNotificationsClick
     )
 }

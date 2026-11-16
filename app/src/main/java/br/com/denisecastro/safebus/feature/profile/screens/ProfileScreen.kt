@@ -39,7 +39,8 @@ fun ProfileScreen(
     uiState: ProfileUiState,
     modifier: Modifier = Modifier,
     onPersonalDataClick: () -> Unit = {},
-    onSecurityClick: () -> Unit = {}
+    onSecurityClick: () -> Unit = {},
+    onNotificationsClick: () -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -112,9 +113,10 @@ fun ProfileScreen(
             HorizontalDivider()
 
             OptionRow(
-                titleRes = R.string.profile_terms,
-                descriptionRes = R.string.profile_terms_description,
-                icon = Icons.Outlined.Description
+                titleRes = R.string.profile_notifications,
+                descriptionRes = R.string.profile_notifications_description,
+                icon = Icons.Outlined.NotificationsNone,
+                onClick = onNotificationsClick
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
