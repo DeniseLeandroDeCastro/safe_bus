@@ -1,4 +1,3 @@
-
 package br.com.denisecastro.safebus.feature.notifications.service
 
 import android.Manifest
@@ -25,7 +24,9 @@ class SafeBusMessagingService : FirebaseMessagingService() {
 
         val body = message.notification?.body ?: return
 
-        showNotification(title, body)
+        val isSecurityAlert = message.data["type"] == "security_alert"
+
+        showNotification(title, body, isSecurityAlert)
     }
 
     override fun onNewToken(token: String) {
@@ -34,15 +35,43 @@ class SafeBusMessagingService : FirebaseMessagingService() {
         Log.d(TAG, "FCM token updated")
     }
 
-    private fun showNotification(title: String, body: String) {
+    private fun showNotification(
+        title: String,
+        body: String,
+        isSecurityAlert: Boolean
+    ) {
         val notificationManager = getSystemService(
             NotificationManager::class.java
         )
 
-        val channel = NotificationChannel(
-            CHANNEL_ID,
-            getString(R.string.notification_channel_name),
+        val channelId = if (isSecurityAlert) {
+            SECURITY_CHANNEL_ID
+        } else {
+            GENERAL_CHANNEL_ID
+        }
+
+        val channelName = if (isSecurityAlert) {
+            getString(R.string.notification_security_channel)
+        } else {
+            getString(R.string.notification_general_channel)
+        }
+
+        val importance = if (isSecurityAlert) {
+            NotificationManager.IMPORTANCE_HIGH
+        } else {
             NotificationManager.IMPORTANCE_DEFAULT
+        }
+
+        val priority = if (isSecurityAlert) {
+            NotificationCompat.PRIORITY_HIGH
+        } else {
+            NotificationCompat.PRIORITY_DEFAULT
+        }
+
+        val channel = NotificationChannel(
+            channelId,
+            channelName,
+            importance
         )
 
         notificationManager.createNotificationChannel(channel)
@@ -57,12 +86,12 @@ class SafeBusMessagingService : FirebaseMessagingService() {
             return
         }
 
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+        val notification = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(title)
             .setContentText(body)
             .setStyle(NotificationCompat.BigTextStyle().bigText(body))
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(priority)
             .setAutoCancel(true)
             .build()
 
@@ -74,6 +103,8 @@ class SafeBusMessagingService : FirebaseMessagingService() {
 
     companion object {
         private const val TAG = "SafeBusFCM"
-        private const val CHANNEL_ID = "safebus_notifications"
+
+        private const val SECURITY_CHANNEL_ID = "safebus_security"
+        private const val GENERAL_CHANNEL_ID = "safebus_general"
     }
 }

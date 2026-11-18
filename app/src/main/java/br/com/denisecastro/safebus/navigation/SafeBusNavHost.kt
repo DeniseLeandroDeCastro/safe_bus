@@ -45,6 +45,7 @@ import br.com.denisecastro.safebus.feature.welcome.screen.WelcomeScreen
 import br.com.denisecastro.safebus.ui.components.navigation.MainScreenScaffold
 import br.com.denisecastro.safebus.ui.components.navigation.SafeBusBottomDestination
 import com.google.firebase.auth.FirebaseAuth
+import br.com.denisecastro.safebus.feature.notifications.screens.NotificationsScreen
 
 @Composable
 fun SafeBusNavHost(
@@ -429,6 +430,13 @@ fun SafeBusNavHost(
                                 Toast.LENGTH_LONG
                             ).show()
                         }
+                }
+            )
+        }
+        composable(SafeBusDestination.Notifications.route) {
+            NotificationsScreen(
+                onBackClick = {
+                    navController.popBackStack()
                 }
             )
         }

@@ -234,5 +234,14 @@
     <string name="security_verify_email_error">Não foi possível enviar o e-mail de verificação. Tente novamente.</string>
 
     <string name="notification_channel_name">Notificações do SafeBus</string>
+    <string name="notification_security_channel">Alertas de segurança</string>
+    <string name="notification_general_channel">Notificações gerais</string>
+    <string name="notifications_description">Escolha como deseja receber os avisos e comunicados do SafeBus.</string>
+
+    <string name="notifications_security_description">Receba avisos importantes relacionados à segurança.</string>
+    <string name="notifications_general_description">Receba informações e comunicados do SafeBus.</string>
+    <string name="notifications_enabled">Ativadas</string>
+    <string name="notifications_disabled">Desativadas</string>
+    <string name="notifications_preferences_title">Preferências de notificações</string>
 
 </resources>

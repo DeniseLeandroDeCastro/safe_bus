@@ -89,7 +89,8 @@ fun ProfileScreen(
             OptionRow(
                 titleRes = R.string.profile_notifications,
                 descriptionRes = R.string.profile_notifications_description,
-                icon = Icons.Outlined.NotificationsNone
+                icon = Icons.Outlined.NotificationsNone,
+                onClick = onNotificationsClick
             )
 
             HorizontalDivider()
@@ -108,15 +109,6 @@ fun ProfileScreen(
                 titleRes = R.string.profile_version,
                 descriptionRes = null,
                 icon = Icons.Outlined.Info
-            )
-
-            HorizontalDivider()
-
-            OptionRow(
-                titleRes = R.string.profile_notifications,
-                descriptionRes = R.string.profile_notifications_description,
-                icon = Icons.Outlined.NotificationsNone,
-                onClick = onNotificationsClick
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
