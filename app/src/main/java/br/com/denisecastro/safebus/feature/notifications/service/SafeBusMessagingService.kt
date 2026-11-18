@@ -9,6 +9,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import br.com.denisecastro.safebus.R
+import br.com.denisecastro.safebus.feature.notifications.channel.NotificationChannels
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -45,21 +46,9 @@ class SafeBusMessagingService : FirebaseMessagingService() {
         )
 
         val channelId = if (isSecurityAlert) {
-            SECURITY_CHANNEL_ID
+            NotificationChannels.SECURITY_CHANNEL_ID
         } else {
-            GENERAL_CHANNEL_ID
-        }
-
-        val channelName = if (isSecurityAlert) {
-            getString(R.string.notification_security_channel)
-        } else {
-            getString(R.string.notification_general_channel)
-        }
-
-        val importance = if (isSecurityAlert) {
-            NotificationManager.IMPORTANCE_HIGH
-        } else {
-            NotificationManager.IMPORTANCE_DEFAULT
+            NotificationChannels.GENERAL_CHANNEL_ID
         }
 
         val priority = if (isSecurityAlert) {
@@ -67,14 +56,6 @@ class SafeBusMessagingService : FirebaseMessagingService() {
         } else {
             NotificationCompat.PRIORITY_DEFAULT
         }
-
-        val channel = NotificationChannel(
-            channelId,
-            channelName,
-            importance
-        )
-
-        notificationManager.createNotificationChannel(channel)
 
         if (
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&

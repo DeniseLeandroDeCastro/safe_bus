@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import br.com.denisecastro.safebus.navigation.SafeBusNavHost
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
 import android.util.Log
+import br.com.denisecastro.safebus.feature.notifications.channel.NotificationChannels
 import com.google.firebase.messaging.FirebaseMessaging
 
 class MainActivity : ComponentActivity() {
@@ -24,7 +25,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        NotificationChannels.create(this)
         enableEdgeToEdge()
 
         setContent {

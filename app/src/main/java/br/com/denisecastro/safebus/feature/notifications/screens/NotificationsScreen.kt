@@ -29,18 +29,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import br.com.denisecastro.safebus.R
+import br.com.denisecastro.safebus.feature.notifications.channel.NotificationChannels
 import br.com.denisecastro.safebus.feature.notifications.components.row.NotificationPreferenceRow
 import br.com.denisecastro.safebus.feature.profile.components.cards.SectionCard
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
-import androidx.compose.ui.platform.LocalInspectionMode
-
-private const val SECURITY_CHANNEL_ID = "safebus_security"
-private const val GENERAL_CHANNEL_ID = "safebus_general"
 
 @Composable
 fun NotificationsScreen(
@@ -49,6 +47,7 @@ fun NotificationsScreen(
 ) {
     val context = LocalContext.current
     val isPreview = LocalInspectionMode.current
+
     val notificationManager = remember(context, isPreview) {
         if (isPreview) {
             null
@@ -62,18 +61,19 @@ fun NotificationsScreen(
 
     if (!isPreview) {
         LifecycleResumeEffect(Unit) {
-            val appEnabled = notificationManager?.areNotificationsEnabled() == true
+            val appEnabled =
+                notificationManager?.areNotificationsEnabled() == true
 
             securityEnabled = appEnabled &&
                     notificationManager?.getNotificationChannel(
-                        SECURITY_CHANNEL_ID
+                        NotificationChannels.SECURITY_CHANNEL_ID
                     )?.importance?.let {
                         it != NotificationManager.IMPORTANCE_NONE
                     } == true
 
             generalEnabled = appEnabled &&
                     notificationManager?.getNotificationChannel(
-                        GENERAL_CHANNEL_ID
+                        NotificationChannels.GENERAL_CHANNEL_ID
                     )?.importance?.let {
                         it != NotificationManager.IMPORTANCE_NONE
                     } == true
@@ -83,10 +83,19 @@ fun NotificationsScreen(
     }
 
     fun openChannelSettings(channelId: String) {
-        val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).apply {
-            putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
-            putExtra(Settings.EXTRA_CHANNEL_ID, channelId)
+        val intent = Intent(
+            Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS
+        ).apply {
+            putExtra(
+                Settings.EXTRA_APP_PACKAGE,
+                context.packageName
+            )
+            putExtra(
+                Settings.EXTRA_CHANNEL_ID,
+                channelId
+            )
         }
+
         context.startActivity(intent)
     }
 
@@ -99,10 +108,15 @@ fun NotificationsScreen(
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 20.dp, vertical = 24.dp),
+                .padding(
+                    horizontal = 20.dp,
+                    vertical = 24.dp
+                ),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            IconButton(onClick = onBackClick) {
+            IconButton(
+                onClick = onBackClick
+            ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(R.string.back)
@@ -111,7 +125,8 @@ fun NotificationsScreen(
 
             Text(
                 text = stringResource(R.string.profile_notifications),
-                style = MaterialTheme.typography.headlineLarge
+                style = MaterialTheme.typography.headlineLarge,
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             Text(
@@ -129,7 +144,9 @@ fun NotificationsScreen(
                     icon = Icons.Outlined.Shield,
                     isEnabled = securityEnabled,
                     onClick = {
-                        openChannelSettings(SECURITY_CHANNEL_ID)
+                        openChannelSettings(
+                            NotificationChannels.SECURITY_CHANNEL_ID
+                        )
                     }
                 )
 
@@ -141,7 +158,9 @@ fun NotificationsScreen(
                     icon = Icons.Outlined.NotificationsNone,
                     isEnabled = generalEnabled,
                     onClick = {
-                        openChannelSettings(GENERAL_CHANNEL_ID)
+                        openChannelSettings(
+                            NotificationChannels.GENERAL_CHANNEL_ID
+                        )
                     }
                 )
             }
@@ -153,7 +172,9 @@ fun NotificationsScreen(
 @Composable
 private fun NotificationsScreenLightPreview() {
     SafeBusTheme(darkTheme = false) {
-        NotificationsScreen(onBackClick = {})
+        NotificationsScreen(
+            onBackClick = {}
+        )
     }
 }
 
@@ -161,6 +182,8 @@ private fun NotificationsScreenLightPreview() {
 @Composable
 private fun NotificationsScreenDarkPreview() {
     SafeBusTheme(darkTheme = true) {
-        NotificationsScreen(onBackClick = {})
+        NotificationsScreen(
+            onBackClick = {}
+        )
     }
 }
