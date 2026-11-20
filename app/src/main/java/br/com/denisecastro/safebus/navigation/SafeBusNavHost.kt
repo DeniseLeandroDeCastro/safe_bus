@@ -21,6 +21,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import br.com.denisecastro.safebus.R
+import br.com.denisecastro.safebus.feature.contacts.screens.AddContactScreen
 import br.com.denisecastro.safebus.feature.contacts.screens.ContactsScreen
 import br.com.denisecastro.safebus.feature.dangeralert.alertreview.route.AlertReviewRoute
 import br.com.denisecastro.safebus.feature.dangeralert.alertsuccess.screens.AlertSuccessScreen
@@ -519,7 +520,54 @@ fun SafeBusNavHost(
             ) { innerPadding ->
                 ContactsScreen(
                     modifier = Modifier.padding(innerPadding),
-                    onAddContactClick = {}
+                    onAddContactClick = {
+                        navController.navigate(SafeBusDestination.AddContact.route) {
+                            launchSingleTop = true
+                        }
+                    }
+                )
+            }
+        }
+
+        composable(SafeBusDestination.AddContact.route) {
+            MainScreenScaffold(
+                selectedDestination = SafeBusBottomDestination.MORE,
+                onDestinationClick = { destination ->
+                    when (destination) {
+                        SafeBusBottomDestination.HOME -> {
+                            navController.navigate(SafeBusDestination.Home.route) {
+                                launchSingleTop = true
+                            }
+                        }
+
+                        SafeBusBottomDestination.MAP -> {
+                            navController.navigate(SafeBusDestination.Map.route) {
+                                launchSingleTop = true
+                            }
+                        }
+
+                        SafeBusBottomDestination.PROFILE -> {
+                            navController.navigate(SafeBusDestination.Profile.route) {
+                                launchSingleTop = true
+                            }
+                        }
+
+                        SafeBusBottomDestination.MORE -> {
+                            navController.navigate(SafeBusDestination.More.route) {
+                                launchSingleTop = true
+                            }
+                        }
+                    }
+                }
+            ) { innerPadding ->
+                AddContactScreen(
+                    modifier = Modifier.padding(innerPadding),
+                    onBackClick = {
+                        navController.popBackStack()
+                    },
+                    onSaveClick = { name, phone, relationship ->
+                        // Integraremos o cadastro ao Firestore na próxima etapa.
+                    }
                 )
             }
         }
