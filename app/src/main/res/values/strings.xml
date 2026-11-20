@@ -244,4 +244,11 @@
     <string name="notifications_disabled">Desativadas</string>
     <string name="notifications_preferences_title">Preferências de notificações</string>
 
+    <string name="contacts_empty_title">Nenhum contato cadastrado</string>
+    <string name="contacts_empty_description">Adicione pessoas de confiança para manter seus contatos organizados.</string>
+
+    <string name="contacts_title">Contatos de confiança</string>
+    <string name="contacts_description">Gerencie as pessoas que poderão receber seus alertas de segurança.</string>
+    <string name="contacts_add">Adicionar contato</string>
+
 </resources>

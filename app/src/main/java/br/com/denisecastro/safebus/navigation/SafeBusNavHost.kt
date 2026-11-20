@@ -21,6 +21,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import br.com.denisecastro.safebus.R
+import br.com.denisecastro.safebus.feature.contacts.screens.ContactsScreen
 import br.com.denisecastro.safebus.feature.dangeralert.alertreview.route.AlertReviewRoute
 import br.com.denisecastro.safebus.feature.dangeralert.alertsuccess.screens.AlertSuccessScreen
 import br.com.denisecastro.safebus.feature.dangeralert.data.model.AlertHistoryItem
@@ -476,7 +477,49 @@ fun SafeBusNavHost(
                         }
                     },
                     onConversationsClick = {},
-                    onContactsClick = {}
+                    onContactsClick = {
+                        navController.navigate(SafeBusDestination.Contacts.route) {
+                            launchSingleTop = true
+                        }
+                    }
+                )
+            }
+        }
+
+        composable(SafeBusDestination.Contacts.route) {
+            MainScreenScaffold(
+                selectedDestination = SafeBusBottomDestination.MORE,
+                onDestinationClick = { destination ->
+                    when (destination) {
+                        SafeBusBottomDestination.HOME -> {
+                            navController.navigate(SafeBusDestination.Home.route) {
+                                launchSingleTop = true
+                            }
+                        }
+
+                        SafeBusBottomDestination.MAP -> {
+                            navController.navigate(SafeBusDestination.Map.route) {
+                                launchSingleTop = true
+                            }
+                        }
+
+                        SafeBusBottomDestination.PROFILE -> {
+                            navController.navigate(SafeBusDestination.Profile.route) {
+                                launchSingleTop = true
+                            }
+                        }
+
+                        SafeBusBottomDestination.MORE -> {
+                            navController.navigate(SafeBusDestination.More.route) {
+                                launchSingleTop = true
+                            }
+                        }
+                    }
+                }
+            ) { innerPadding ->
+                ContactsScreen(
+                    modifier = Modifier.padding(innerPadding),
+                    onAddContactClick = {}
                 )
             }
         }
