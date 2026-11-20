@@ -251,4 +251,8 @@
     <string name="contacts_description">Gerencie as pessoas que poderão receber seus alertas de segurança.</string>
     <string name="contacts_add">Adicionar contato</string>
 
+    <string name="contact_name">Nome</string>
+    <string name="contact_phone">Telefone</string>
+    <string name="contact_relationship">Vínculo (opcional)</string>
+
 </resources>
