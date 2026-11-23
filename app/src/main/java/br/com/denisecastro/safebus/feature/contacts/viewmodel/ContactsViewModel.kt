@@ -17,8 +17,21 @@ class ContactsViewModel : ViewModel() {
     private val repository = ContactRepository()
     private val auth = FirebaseAuth.getInstance()
 
+    // Estado do formulário
     private val _uiState = MutableStateFlow(ContactUiState())
     val uiState: StateFlow<ContactUiState> = _uiState.asStateFlow()
+
+    // Lista de contatos cadastrados
+    private val _contacts = MutableStateFlow<List<Contact>>(emptyList())
+    val contacts: StateFlow<List<Contact>> = _contacts.asStateFlow()
+
+    // Estado de carregamento da lista
+    private val _isLoadingContacts = MutableStateFlow(false)
+    val isLoadingContacts: StateFlow<Boolean> = _isLoadingContacts.asStateFlow()
+
+    // Mensagem de erro da consulta
+    private val _contactsError = MutableStateFlow<String?>(null)
+    val contactsError: StateFlow<String?> = _contactsError.asStateFlow()
 
     fun onNameChange(value: String) {
         _uiState.update {
@@ -73,6 +86,7 @@ class ContactsViewModel : ViewModel() {
                 _uiState.update {
                     it.copy(isLoading = false)
                 }
+
                 onSuccess()
             }
 
@@ -84,6 +98,35 @@ class ContactsViewModel : ViewModel() {
                     )
                 }
             }
+        }
+    }
+
+    fun loadContacts() {
+        val userId = auth.currentUser?.uid
+
+        if (userId == null) {
+            _contactsError.value = "Usuário não autenticado."
+            return
+        }
+
+        viewModelScope.launch {
+            _isLoadingContacts.value = true
+            _contactsError.value = null
+
+            val result = repository.getContacts(userId)
+
+            result.onSuccess { contactList ->
+                _contacts.value = contactList.sortedBy {
+                    it.name.lowercase()
+                }
+            }
+
+            result.onFailure {
+                _contactsError.value =
+                    "Não foi possível carregar os contatos."
+            }
+
+            _isLoadingContacts.value = false
         }
     }
 }
