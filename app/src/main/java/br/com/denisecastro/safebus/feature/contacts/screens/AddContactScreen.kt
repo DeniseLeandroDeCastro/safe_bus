@@ -18,31 +18,52 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.denisecastro.safebus.R
 import br.com.denisecastro.safebus.feature.contacts.components.form.ContactForm
+import br.com.denisecastro.safebus.feature.contacts.viewmodel.ContactsViewModel
 import br.com.denisecastro.safebus.ui.components.buttons.primary.PrimaryButton
 import br.com.denisecastro.safebus.ui.theme.SafeBusTheme
+import br.com.denisecastro.safebus.feature.contacts.data.model.ContactUiState
 
 @Composable
 fun AddContactScreen(
     onBackClick: () -> Unit,
-    onSaveClick: (String, String, String) -> Unit,
+    onSaveSuccess: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: ContactsViewModel = viewModel()
+) {
+    val uiState by viewModel.uiState.collectAsState()
+
+    AddContactContent(
+        uiState = uiState,
+        onNameChange = viewModel::onNameChange,
+        onPhoneChange = viewModel::onPhoneChange,
+        onRelationshipChange = viewModel::onRelationshipChange,
+        onBackClick = onBackClick,
+        onSaveClick = {
+            viewModel.saveContact(onSuccess = onSaveSuccess)
+        },
+        modifier = modifier
+    )
+}
+
+@Composable
+private fun AddContactContent(
+    uiState: ContactUiState,
+    onNameChange: (String) -> Unit,
+    onPhoneChange: (String) -> Unit,
+    onRelationshipChange: (String) -> Unit,
+    onBackClick: () -> Unit,
+    onSaveClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var name by rememberSaveable { mutableStateOf("") }
-    var phone by rememberSaveable { mutableStateOf("") }
-    var relationship by rememberSaveable { mutableStateOf("") }
-
-    val canSave = name.isNotBlank() && phone.isNotBlank()
-
     Surface(
         modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -77,50 +98,65 @@ fun AddContactScreen(
             )
 
             ContactForm(
-                name = name,
-                onNameChange = { name = it },
-                phone = phone,
-                onPhoneChange = { phone = it },
-                relationship = relationship,
-                onRelationshipChange = { relationship = it }
+                name = uiState.name,
+                onNameChange = onNameChange,
+                phone = uiState.phone,
+                onPhoneChange = onPhoneChange,
+                relationship = uiState.relationship,
+                onRelationshipChange = onRelationshipChange
             )
+
+            uiState.errorMessage?.let { message ->
+                Text(
+                    text = message,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
 
             PrimaryButton(
                 text = stringResource(R.string.contact_save),
-                onClick = {
-                    onSaveClick(
-                        name.trim(),
-                        phone.trim(),
-                        relationship.trim()
-                    )
-                },
-                enabled = canSave,
+                onClick = onSaveClick,
+                enabled = uiState.isFormValid && !uiState.isLoading,
+                isLoading = uiState.isLoading,
                 modifier = Modifier.fillMaxWidth()
             )
         }
     }
 }
 
-@Preview(name = "Adicionar contato - Claro", showSystemUi = true)
+@Preview(
+    name = "Adicionar contato - Claro",
+    showSystemUi = true
+)
 @Composable
 private fun AddContactScreenLightPreview() {
     SafeBusTheme(darkTheme = false) {
-        AddContactScreen(
+        AddContactContent(
+            uiState = ContactUiState(),
+            onNameChange = {},
+            onPhoneChange = {},
+            onRelationshipChange = {},
             onBackClick = {},
-            onSaveClick = { _, _, _ -> }
+            onSaveClick = {}
         )
     }
 }
 
-@Preview(name = "Adicionar contato - Escuro", showSystemUi = true)
+@Preview(
+    name = "Adicionar contato - Escuro",
+    showSystemUi = true
+)
 @Composable
 private fun AddContactScreenDarkPreview() {
     SafeBusTheme(darkTheme = true) {
-        AddContactScreen(
+        AddContactContent(
+            uiState = ContactUiState(),
+            onNameChange = {},
+            onPhoneChange = {},
+            onRelationshipChange = {},
             onBackClick = {},
-            onSaveClick = { _, _, _ -> }
+            onSaveClick = {}
         )
     }
 }
-
-

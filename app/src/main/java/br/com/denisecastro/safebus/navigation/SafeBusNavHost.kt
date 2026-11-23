@@ -565,8 +565,8 @@ fun SafeBusNavHost(
                     onBackClick = {
                         navController.popBackStack()
                     },
-                    onSaveClick = { name, phone, relationship ->
-                        // Integraremos o cadastro ao Firestore na próxima etapa.
+                    onSaveSuccess = {
+                        navController.popBackStack()
                     }
                 )
             }
