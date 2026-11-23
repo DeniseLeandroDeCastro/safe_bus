@@ -2,6 +2,8 @@ package br.com.denisecastro.safebus.feature.contacts.components.form
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Call
@@ -31,13 +33,14 @@ fun ContactForm(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         StandardTextField(
             value = name,
             onValueChange = onNameChange,
             label = stringResource(R.string.contact_name),
+            modifier = Modifier.heightIn(min = 64.dp),
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Outlined.PersonOutline,
@@ -50,6 +53,7 @@ fun ContactForm(
             value = phone,
             onValueChange = onPhoneChange,
             label = stringResource(R.string.contact_phone),
+            modifier = Modifier.heightIn(min = 64.dp),
             keyboardType = KeyboardType.Phone,
             leadingIcon = {
                 Icon(
@@ -63,6 +67,7 @@ fun ContactForm(
             value = relationship,
             onValueChange = onRelationshipChange,
             label = stringResource(R.string.contact_relationship),
+            modifier = Modifier.heightIn(min = 64.dp),
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Outlined.PeopleOutline,
@@ -73,7 +78,7 @@ fun ContactForm(
     }
 }
 
-@Preview(name = "Formulário de contato - Claro", showBackground = true)
+@Preview(name = "Formulário - Claro", showBackground = true)
 @Composable
 private fun ContactFormLightPreview() {
     SafeBusTheme(darkTheme = false) {
@@ -91,7 +96,7 @@ private fun ContactFormLightPreview() {
     }
 }
 
-@Preview(name = "Formulário de contato - Escuro", showBackground = true)
+@Preview(name = "Formulário - Escuro", showBackground = true)
 @Composable
 private fun ContactFormDarkPreview() {
     SafeBusTheme(darkTheme = true) {
